@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import { subjects, type Subject } from '../../data/subjects';
+
+export const getStaticPaths = (() =>
+  subjects.map((subject) => ({ params: { subject: subject.id }, props: { subject } }))) satisfies GetStaticPaths;
+
+interface Props {
+  subject: Subject;
+}
+
+const { subject } = Astro.props;
+---
+
+<Base title={subject.name}>
+  <h1>{subject.name}</h1>
+  <p>{subject.description}</p>
+  <p>課程、公式與定理即將上線。</p>
+</Base>

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Math from '../components/Math.astro';
+import { subjects } from '../data/subjects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base>
+  <h1>數學筆記本</h1>
+  <p>給高中到大一學生的數學入門筆記：課程、公式與定理，選一個科目開始吧。</p>
+
+  <ul class="subject-list">
+    {
+      subjects.map((s) => (
+        <li>
+          <a href={`${base}/${s.id}/`}>
+            <h2>{s.name}</h2>
+            <p>{s.description}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <section>
+    <h2>測試算式</h2>
+    <p>尤拉恆等式：<Math latex="e^{i\pi}+1=0" /></p>
+    <Math latex="e^{i\pi}+1=0" display />
+  </section>
+</Base>

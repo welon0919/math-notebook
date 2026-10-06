@@ -1,0 +1,49 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+import { subjects } from '../data/subjects';
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+const fullTitle = title ? `${title}｜數學筆記本` : '數學筆記本';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-title" href={`${base}/`}>數學筆記本</a>
+      <nav aria-label="科目">
+        <ul>
+          {
+            subjects.map((s) => {
+              const href = `${base}/${s.id}/`;
+              const current = path.startsWith(href);
+              return (
+                <li>
+                  <a href={href} aria-current={current ? 'page' : undefined}>
+                    {s.name}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
