@@ -77,5 +77,7 @@ const { tabs, label } = Astro.props;
 
     window.addEventListener('hashchange', () => select(indexFromHash()));
     select(indexFromHash());
+    // Hand control from the pre-JS CSS rules (global.css) to the `hidden` attributes.
+    root.dataset.ready = '';
   }
 </script>

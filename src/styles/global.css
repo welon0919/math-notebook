@@ -247,6 +247,20 @@ main > *,
   margin-bottom: 2rem;
 }
 
+/*
+ * Until the tab script runs, show only the panel it will select (the URL's
+ * #target, else the first) so the other panels don't flash on page load.
+ * Without JS there is no .js class and every panel stays visible.
+ */
+.js [data-tabs]:not([data-ready]) .tab-panel {
+  display: none;
+}
+
+.js [data-tabs]:not([data-ready]) .tab-panel:target,
+.js [data-tabs]:not([data-ready]):not(:has(.tab-panel:target)) .tab-panel:first-of-type {
+  display: block;
+}
+
 .lesson-list {
   padding-left: 1.5rem;
 }
