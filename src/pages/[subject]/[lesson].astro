@@ -27,7 +27,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base title={lesson.data.title}>
-  <p><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
+  <p class="back-link"><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
   <h1>{lesson.data.title}</h1>
   <article class="lesson-body">
     <Content />

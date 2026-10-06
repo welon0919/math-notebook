@@ -57,7 +57,6 @@ const { tabs, label } = Astro.props;
     panels.forEach((panel, i) => {
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('aria-labelledby', tabs[i].id);
-      panel.tabIndex = 0;
     });
 
     tabs.forEach((tab, i) => {
