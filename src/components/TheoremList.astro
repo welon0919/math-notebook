@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { renderMathText } from '../lib/math';
 import { normalize } from '../lib/search';
+import { itemHref, slugOf } from '../lib/items';
 
 interface Props {
   theorems: CollectionEntry<'theorems'>[];
@@ -24,9 +25,14 @@ const { theorems } = Astro.props;
           data-search-item
           data-search-text={normalize(`${t.data.name} ${t.data.statement} ${t.data.note ?? ''}`)}
         >
-          <h3>{t.data.name}</h3>
-          <div class="statement" set:html={renderMathText(t.data.statement)} />
-          {t.data.note && <p class="note" set:html={renderMathText(t.data.note)} />}
+          <a class="card-link" href={itemHref(t)} aria-labelledby={`${slugOf(t)}-name ${slugOf(t)}-hint`}>
+            <h3 id={`${slugOf(t)}-name`}>{t.data.name}</h3>
+            <div class="statement" set:html={renderMathText(t.data.statement)} />
+            {t.data.note && <p class="note" set:html={renderMathText(t.data.note)} />}
+            <span class="card-hint">
+              <span id={`${slugOf(t)}-hint`}>查看用途與證明</span> <span aria-hidden="true">→</span>
+            </span>
+          </a>
         </li>
       ))
     }

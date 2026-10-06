@@ -54,3 +54,20 @@ export async function loadItems() {
   }
   return { formulas, theorems, bySlug };
 }
+
+export const kindLabel = { formulas: '公式', theorems: '定理' } as const;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Detail page URL, e.g. `/algebra/formulas/quadratic-formula/`. */
+export const itemHref = (item: Item): string => `${base}/${item.data.subject}/${item.collection}/${slugOf(item)}/`;
+
+/** The subject page with this item's list tab open, e.g. `/algebra/#formulas`. */
+export const listHref = (item: Item): string => `${base}/${item.data.subject}/#${item.collection}`;
+
+/** Previous and next item in the same list (same subject and kind), by `order`. */
+export function neighbors(item: Item, all: { formulas: Formula[]; theorems: Theorem[] }) {
+  const list: Item[] = all[item.collection].filter((i) => i.data.subject === item.data.subject);
+  const index = list.findIndex((i) => i.id === item.id);
+  return { prev: list[index - 1], next: list[index + 1] };
+}

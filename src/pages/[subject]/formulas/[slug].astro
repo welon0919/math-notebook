@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ItemDetail from '../../../components/ItemDetail.astro';
+import { loadItems, slugOf, type Item } from '../../../lib/items';
+
+export const getStaticPaths = (async () => {
+  const { formulas } = await loadItems();
+  return formulas.map((item) => ({ params: { subject: item.data.subject, slug: slugOf(item) }, props: { item } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  item: Item;
+}
+---
+
+<ItemDetail item={Astro.props.item} />

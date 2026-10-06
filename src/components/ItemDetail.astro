@@ -1,0 +1,109 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Math from './Math.astro';
+import { renderMathText } from '../lib/math';
+import { itemHref, kindLabel, listHref, loadItems, neighbors, type Item } from '../lib/items';
+import { subjects } from '../data/subjects';
+
+interface Props {
+  item: Item;
+}
+
+const { item } = Astro.props;
+const all = await loadItems();
+const subject = subjects.find((s) => s.id === item.data.subject)!;
+const kind = kindLabel[item.collection];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const isTheorem = item.collection === 'theorems';
+const proofLabel = item.collection === 'theorems' && item.data.proofType === 'sketch' ? '證明概要' : '證明';
+const hasBody = Boolean(item.body?.trim());
+const { Content } = await render(item);
+
+const related = item.data.related.map((slug) => all.bySlug.get(slug)!);
+const { prev, next } = neighbors(item, all);
+const subjectName = (i: Item) => subjects.find((s) => s.id === i.data.subject)!.name;
+
+const description = isTheorem
+  ? `${subject.name}定理「${item.data.name}」：白話解釋、使用時機、例題與${proofLabel}。`
+  : `${subject.name}公式「${item.data.name}」：符號說明、使用時機、例題與推導。`;
+const placeholder = isTheorem
+  ? `白話解釋、使用時機、例題與${proofLabel}即將補上。`
+  : '符號說明、使用時機、例題與推導即將補上。';
+---
+
+<Base title={`${item.data.name}｜${subject.name}${kind}`} description={description}>
+  <nav class="breadcrumb" aria-label="麵包屑">
+    <ol>
+      <li><a href={`${base}/${subject.id}/`}>{subject.name}</a></li>
+      <li><a href={listHref(item)}>{kind}</a></li>
+      <li aria-current="page">{item.data.name}</li>
+    </ol>
+  </nav>
+  <p class="back-link"><a href={listHref(item)}>← 回到{subject.name}{kind}列表</a></p>
+
+  <header class="item-header">
+    <h1>{item.data.name}</h1>
+    {item.collection === 'formulas' && <Math latex={item.data.latex} display />}
+    {item.collection === 'theorems' && <div class="item-statement" set:html={renderMathText(item.data.statement)} />}
+    {item.data.note && <p class="item-note" set:html={renderMathText(item.data.note)} />}
+    {item.collection === 'theorems' && (
+      <p class="proof-type">
+        {item.data.proofType === 'sketch' ? '本頁提供證明概要，完整證明需要更進階的工具。' : '本頁提供完整證明。'}
+      </p>
+    )}
+  </header>
+
+  <article class="prose">
+    {
+      hasBody ? (
+        <Content />
+      ) : (
+        <p class="placeholder">
+          <strong>內容整理中</strong>：{placeholder}
+        </p>
+      )
+    }
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="related" aria-labelledby="related-heading">
+        <h2 id="related-heading">相關公式與定理</h2>
+        <ul>
+          {related.map((r) => (
+            <li>
+              <a href={itemHref(r)}>{r.data.name}</a>
+              <span class="item-tag">
+                {r.data.subject === item.data.subject ? '' : `${subjectName(r)} · `}
+                {kindLabel[r.collection]}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <nav class="prev-next" aria-label={`${subject.name}${kind}的上一條與下一條`}>
+    {
+      prev ? (
+        <a class="prev" href={itemHref(prev)} rel="prev">
+          <span class="prev-next-label">← 上一條{kind}</span>
+          <span>{prev.data.name}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next && (
+        <a class="next" href={itemHref(next)} rel="next">
+          <span class="prev-next-label">下一條{kind} →</span>
+          <span>{next.data.name}</span>
+        </a>
+      )
+    }
+  </nav>
+</Base>

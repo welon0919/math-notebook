@@ -159,7 +159,7 @@ main {
 main,
 main > *,
 .tab-panel,
-.lesson-body {
+.prose {
   min-width: 0;
 }
 
@@ -314,10 +314,60 @@ main > *,
 
 .card {
   min-width: 0;
+}
+
+/* The whole card is one link to the item's detail page. */
+.card-link {
+  display: block;
+  height: 100%;
   padding: var(--space);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  border-color: var(--link);
+}
+
+.card-link:focus-visible {
+  border-radius: var(--radius);
+}
+
+.card-hint {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--link);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/*
+ * With a mouse, the hint appears in the top-right corner on hover without taking
+ * up a line of its own; touch screens always show it below the content.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .card-link {
+    position: relative;
+  }
+
+  .card-hint {
+    position: absolute;
+    top: var(--space);
+    right: var(--space);
+    margin: 0;
+    padding-left: 0.5rem;
+    background: var(--surface);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .card-link:hover .card-hint,
+  .card-link:focus-visible .card-hint {
+    opacity: 1;
+  }
 }
 
 .card[hidden] {
@@ -338,12 +388,12 @@ main > *,
   margin-top: 0;
 }
 
-/* Lesson */
-.lesson-body h2 {
+/* Lesson and detail-page articles */
+.prose h2 {
   margin-top: 2rem;
 }
 
-.lesson-body table {
+.prose table {
   display: block;
   max-width: 100%;
   overflow-x: auto;
@@ -390,4 +440,114 @@ main > *,
 
 .example-solution[open] summary {
   margin-bottom: 0.75rem;
+}
+
+/* Formula / theorem detail pages */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-muted);
+}
+
+.breadcrumb li + li::before {
+  content: '›' / '';
+  margin: 0 0.5rem;
+}
+
+.breadcrumb [aria-current='page'] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.item-header .math-display,
+.item-statement {
+  margin: 1rem 0;
+  padding: 0.5rem var(--space);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.item-statement {
+  padding-block: 0.75rem;
+  font-size: 1.05rem;
+}
+
+.item-note {
+  color: var(--ink-muted);
+}
+
+.proof-type {
+  display: inline-block;
+  margin: 0;
+  padding: 0.125rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.placeholder {
+  margin: 2rem 0;
+  padding: var(--space);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-muted);
+}
+
+.placeholder strong {
+  color: var(--ink);
+}
+
+.related ul {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.item-tag {
+  margin-left: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.prev-next {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space);
+  margin: 2.5rem 0 1rem;
+}
+
+.prev-next a {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.75rem var(--space);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.prev-next a:hover {
+  border-color: var(--link);
+}
+
+.prev-next a:focus-visible {
+  border-radius: var(--radius);
+}
+
+.prev-next .next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.prev-next-label {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
 }

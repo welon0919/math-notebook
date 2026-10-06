@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import Math from './Math.astro';
 import { renderMathText } from '../lib/math';
 import { normalize } from '../lib/search';
+import { itemHref, slugOf } from '../lib/items';
 
 interface Props {
   formulas: CollectionEntry<'formulas'>[];
@@ -21,9 +22,14 @@ const { formulas } = Astro.props;
     {
       formulas.map((f) => (
         <li class="card" data-search-item data-search-text={normalize(`${f.data.name} ${f.data.note ?? ''}`)}>
-          <h3>{f.data.name}</h3>
-          <Math latex={f.data.latex} display />
-          {f.data.note && <p class="note" set:html={renderMathText(f.data.note)} />}
+          <a class="card-link" href={itemHref(f)} aria-labelledby={`${slugOf(f)}-name ${slugOf(f)}-hint`}>
+            <h3 id={`${slugOf(f)}-name`}>{f.data.name}</h3>
+            <Math latex={f.data.latex} display />
+            {f.data.note && <p class="note" set:html={renderMathText(f.data.note)} />}
+            <span class="card-hint">
+              <span id={`${slugOf(f)}-hint`}>查看用途與推導</span> <span aria-hidden="true">→</span>
+            </span>
+          </a>
         </li>
       ))
     }

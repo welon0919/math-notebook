@@ -5,9 +5,13 @@ import { subjects } from '../data/subjects';
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = '給高中到大一學生的數學入門筆記：代數、三角函數、微積分、線性代數的課程、公式與定理。',
+} = Astro.props;
 const fullTitle = title ? `${title}｜數學筆記本` : '數學筆記本';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const path = Astro.url.pathname;
@@ -20,6 +24,7 @@ const path = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>{fullTitle}</title>
+    <meta name="description" content={description} />
     {/* Runs before the body renders so CSS can set up JS-only initial states without a flash. */}
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
