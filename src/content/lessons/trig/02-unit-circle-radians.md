@@ -1,0 +1,38 @@
+---
+subject: trig
+order: 2
+title: 單位圓與弧度
+example: 求 $\sin\dfrac{5\pi}{6}$ 與 $\cos\dfrac{5\pi}{6}$。
+solution: $\dfrac{5\pi}{6}=150^\circ$ 在第二象限，參考角為 $30^\circ$。第二象限 $x<0$、$y>0$，所以 $\sin\dfrac{5\pi}{6}=\dfrac{1}{2}$，$\cos\dfrac{5\pi}{6}=-\dfrac{\sqrt{3}}{2}$。
+---
+
+直角三角形只能處理 $0^\circ$ 到 $90^\circ$ 的角。為了定義任意角的三角函數，我們改用**單位圓**。
+
+## 弧度
+
+在半徑為 $r$ 的圓上，弧長為 $s$ 的圓心角大小定義為
+
+$$
+\theta=\frac{s}{r}\ \text{弧度}
+$$
+
+一整圈的弧長是 $2\pi r$，所以 $360^\circ=2\pi$，也就是 $180^\circ=\pi$。用弧度時，弧長公式就是簡單的 $s=r\theta$。
+
+## 單位圓上的三角函數
+
+以原點為圓心、半徑 $1$ 畫圓。從正 $x$ 軸逆時針轉 $\theta$，落在圓上的點 $P(x,y)$ 定義
+
+$$
+\cos\theta=x,\qquad \sin\theta=y,\qquad \tan\theta=\frac{y}{x}\ (x\neq 0)
+$$
+
+當 $\theta$ 是銳角時，這和直角三角形的定義完全一致。
+
+## 各象限的正負
+
+- 第一象限：全部為正
+- 第二象限：只有 $\sin$ 為正
+- 第三象限：只有 $\tan$ 為正
+- 第四象限：只有 $\cos$ 為正
+
+另外，轉一整圈會回到原處，所以 $\sin(\theta+2\pi)=\sin\theta$，$\cos(\theta+2\pi)=\cos\theta$，週期為 $2\pi$。

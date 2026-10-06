@@ -1,0 +1,41 @@
+---
+subject: linear
+order: 2
+title: 矩陣運算
+example: 設 $A=\begin{pmatrix}1&2\\3&4\end{pmatrix}$，$B=\begin{pmatrix}0&1\\1&0\end{pmatrix}$，求 $AB$ 與 $BA$。
+solution: $AB=\begin{pmatrix}1\cdot0+2\cdot1 & 1\cdot1+2\cdot0\\3\cdot0+4\cdot1 & 3\cdot1+4\cdot0\end{pmatrix}=\begin{pmatrix}2&1\\4&3\end{pmatrix}$，$BA=\begin{pmatrix}3&4\\1&2\end{pmatrix}$。兩者不相等，可見矩陣乘法沒有交換律。
+---
+
+$m\times n$ **矩陣**是排成 $m$ 列、$n$ 行的數字表格，$a_{ij}$ 表示第 $i$ 列第 $j$ 行的元素。
+
+## 加法與係數積
+
+同大小的矩陣對應元素相加；係數積是每個元素都乘上該數。
+
+## 矩陣乘法
+
+$A$ 為 $m\times n$、$B$ 為 $n\times p$ 時，$AB$ 是 $m\times p$ 矩陣，其元素為「$A$ 的第 $i$ 列」與「$B$ 的第 $j$ 行」的內積：
+
+$$
+(AB)_{ij}=\sum_{k=1}^{n}a_{ik}b_{kj}
+$$
+
+注意：
+
+- $A$ 的行數必須等於 $B$ 的列數才能相乘。
+- 一般來說 $AB\neq BA$。
+- 單位矩陣 $I$ 滿足 $AI=IA=A$。
+
+## 轉置
+
+把列和行對調得到**轉置矩陣** $A^T$，即 $(A^T)_{ij}=a_{ji}$。
+
+## 反矩陣與行列式
+
+若方陣 $A$ 存在 $A^{-1}$ 使 $AA^{-1}=A^{-1}A=I$，則 $A$ **可逆**。二階矩陣的情形：
+
+$$
+\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}
+$$
+
+其中 $ad-bc$ 是**行列式**；行列式為 $0$ 時矩陣不可逆。

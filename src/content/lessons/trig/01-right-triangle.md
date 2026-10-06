@@ -1,0 +1,31 @@
+---
+subject: trig
+order: 1
+title: 直角三角形與三角比
+example: 直角三角形中，$\angle C=90^\circ$，斜邊 $c=10$，$\angle A=30^\circ$，求 $a$ 與 $b$。
+solution: $a$ 是 $\angle A$ 的對邊，$a=c\sin 30^\circ=10\cdot\dfrac{1}{2}=5$；$b$ 是鄰邊，$b=c\cos 30^\circ=10\cdot\dfrac{\sqrt{3}}{2}=5\sqrt{3}$。
+---
+
+在直角三角形中，取一個銳角 $\theta$，三個邊分別叫做**對邊**（$\theta$ 對面的股）、**鄰邊**（$\theta$ 旁邊的股）和**斜邊**。
+
+## 三角比
+
+$$
+\sin\theta=\frac{\text{對邊}}{\text{斜邊}},\qquad
+\cos\theta=\frac{\text{鄰邊}}{\text{斜邊}},\qquad
+\tan\theta=\frac{\text{對邊}}{\text{鄰邊}}
+$$
+
+三角比只跟角度有關，跟三角形的大小無關，因為相同角度的直角三角形都相似。
+
+## 特殊角
+
+用正三角形切一半（$30^\circ$–$60^\circ$–$90^\circ$，邊長比 $1:\sqrt{3}:2$）和等腰直角三角形（$45^\circ$–$45^\circ$–$90^\circ$，邊長比 $1:1:\sqrt{2}$），可以算出
+
+$$
+\sin 30^\circ=\frac{1}{2},\quad \sin 45^\circ=\frac{\sqrt{2}}{2},\quad \sin 60^\circ=\frac{\sqrt{3}}{2}
+$$
+
+## 基本關係
+
+由畢氏定理可得 $\sin^2\theta+\cos^2\theta=1$；另外，互餘的兩個角滿足 $\sin(90^\circ-\theta)=\cos\theta$。

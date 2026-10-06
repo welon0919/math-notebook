@@ -1,0 +1,37 @@
+---
+subject: linear
+order: 1
+title: 向量與內積
+example: 求 $\mathbf{u}=(1,2,2)$ 與 $\mathbf{v}=(2,-1,2)$ 的夾角。
+solution: $\mathbf{u}\cdot\mathbf{v}=2-2+4=4$，$|\mathbf{u}|=\sqrt{1+4+4}=3$，$|\mathbf{v}|=\sqrt{4+1+4}=3$。$\cos\theta=\dfrac{4}{3\cdot 3}=\dfrac{4}{9}$，所以 $\theta=\cos^{-1}\dfrac{4}{9}\approx 63.6^\circ$。
+---
+
+**向量**是有大小、有方向的量，可以寫成座標 $\mathbf{v}=(v_1,v_2,\dots,v_n)$。
+
+## 加法與係數積
+
+$$
+\mathbf{u}+\mathbf{v}=(u_1+v_1,\dots,u_n+v_n),\qquad c\,\mathbf{v}=(cv_1,\dots,cv_n)
+$$
+
+幾何上，向量相加是「頭接尾」，係數積是把向量伸縮（$c<0$ 時反向）。
+
+## 長度
+
+$$
+|\mathbf{v}|=\sqrt{v_1^2+v_2^2+\cdots+v_n^2}
+$$
+
+長度為 $1$ 的向量稱為**單位向量**，$\dfrac{\mathbf{v}}{|\mathbf{v}|}$ 就是和 $\mathbf{v}$ 同方向的單位向量。
+
+## 內積
+
+$$
+\mathbf{u}\cdot\mathbf{v}=u_1v_1+u_2v_2+\cdots+u_nv_n=|\mathbf{u}|\,|\mathbf{v}|\cos\theta
+$$
+
+內積把兩個向量變成一個數，用來判斷夾角：
+
+- $\mathbf{u}\cdot\mathbf{v}>0$：夾角為銳角
+- $\mathbf{u}\cdot\mathbf{v}=0$：互相**垂直**
+- $\mathbf{u}\cdot\mathbf{v}<0$：夾角為鈍角

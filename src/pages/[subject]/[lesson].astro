@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { renderMathText } from '../../lib/math';
+import { subjects } from '../../data/subjects';
+
+export const getStaticPaths = (async () => {
+  const lessons = await getCollection('lessons');
+  return lessons.map((lesson) => {
+    const [folder, slug] = lesson.id.split('/');
+    if (folder !== lesson.data.subject || !slug) {
+      throw new Error(`Lesson "${lesson.id}" must live in src/content/lessons/${lesson.data.subject}/.`);
+    }
+    return { params: { subject: folder, lesson: slug }, props: { lesson } };
+  });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  lesson: CollectionEntry<'lessons'>;
+}
+
+const { lesson } = Astro.props;
+const subject = subjects.find((s) => s.id === lesson.data.subject)!;
+const { Content } = await render(lesson);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title={lesson.data.title}>
+  <p><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
+  <h1>{lesson.data.title}</h1>
+  <Content />
+
+  <section>
+    <h2>例題</h2>
+    <p set:html={renderMathText(lesson.data.example)} />
+    <h3>解答</h3>
+    <p set:html={renderMathText(lesson.data.solution)} />
+  </section>
+</Base>

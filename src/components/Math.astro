@@ -1,5 +1,5 @@
 ---
-import katex from 'katex';
+import { renderLatex } from '../lib/math';
 
 interface Props {
   latex: string;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { latex, display = false } = Astro.props;
-const html = katex.renderToString(latex, { displayMode: display, throwOnError: true });
+const html = renderLatex(latex, display);
 ---
 
 {display ? <div class="math-display" set:html={html} /> : <span set:html={html} />}

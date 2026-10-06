@@ -1,0 +1,33 @@
+---
+subject: linear
+order: 3
+title: 線性方程組
+example: 解 $\begin{cases}x+y+z=6\\2x-y+z=3\\x+2y-z=2\end{cases}$。
+solution: 第二式減第一式的 $2$ 倍得 $-3y-z=-9$；第三式減第一式得 $y-2z=-4$。由後者 $y=2z-4$，代入前者得 $-3(2z-4)-z=-9$，即 $z=3$，於是 $y=2$，$x=6-2-3=1$。解為 $(x,y,z)=(1,2,3)$。
+---
+
+多個一次方程式放在一起，可以寫成矩陣形式 $A\mathbf{x}=\mathbf{b}$：
+
+$$
+\begin{cases}x+2y=5\\3x+4y=6\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{pmatrix}1&2\\3&4\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}5\\6\end{pmatrix}
+$$
+
+## 高斯消去法
+
+把係數和常數寫成**增廣矩陣** $[A\mid\mathbf{b}]$，用三種**列運算**化成階梯形：
+
+1. 交換兩列
+2. 某列乘上非零常數
+3. 某列加上另一列的倍數
+
+這些運算不會改變方程組的解。化成階梯形後，由最後一列往回代入即可。
+
+## 解的情形
+
+- **唯一解**：$A$ 為可逆方陣（$\det A\neq 0$），此時 $\mathbf{x}=A^{-1}\mathbf{b}$。
+- **無限多解**：消去後出現 $0=0$ 的列，有自由變數。
+- **無解**：消去後出現 $0=c$（$c\neq 0$）的矛盾列。
+
+幾何上，兩個變數的方程組就是兩條直線：相交一點、重合、或平行不相交。

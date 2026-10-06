@@ -1,0 +1,41 @@
+---
+subject: linear
+order: 4
+title: 特徵值與特徵向量
+example: 求 $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$ 的特徵值與特徵向量。
+solution: $\det(A-\lambda I)=(2-\lambda)^2-1=(\lambda-1)(\lambda-3)=0$，特徵值 $\lambda=1,3$。$\lambda=3$ 時解 $(A-3I)\mathbf{x}=\mathbf{0}$ 得 $\mathbf{x}=t(1,1)$；$\lambda=1$ 時得 $\mathbf{x}=t(1,-1)$（$t\neq 0$）。
+---
+
+一般來說，矩陣乘上向量會同時改變向量的長度和方向。但有些特別的向量，乘完之後**方向不變**，只被伸縮：
+
+$$
+A\mathbf{x}=\lambda\mathbf{x},\qquad \mathbf{x}\neq\mathbf{0}
+$$
+
+這樣的 $\mathbf{x}$ 稱為**特徵向量**，伸縮倍率 $\lambda$ 稱為**特徵值**。
+
+## 求法
+
+把 $A\mathbf{x}=\lambda\mathbf{x}$ 移項成 $(A-\lambda I)\mathbf{x}=\mathbf{0}$。要有非零解，係數矩陣必須不可逆：
+
+$$
+\det(A-\lambda I)=0
+$$
+
+這是 $\lambda$ 的多項式方程式（**特徵方程式**），解出特徵值後，再分別代回去解出特徵向量。
+
+## 性質
+
+- 特徵值的和等於**跡**（主對角線和）：$\lambda_1+\cdots+\lambda_n=\operatorname{tr}A$。
+- 特徵值的積等於行列式：$\lambda_1\cdots\lambda_n=\det A$。
+- $A$ 可逆若且唯若 $0$ 不是特徵值。
+
+## 對角化
+
+若 $n$ 階方陣有 $n$ 個線性獨立的特徵向量，把它們排成矩陣 $P$，就有
+
+$$
+P^{-1}AP=D=\begin{pmatrix}\lambda_1&&\\&\ddots&\\&&\lambda_n\end{pmatrix}
+$$
+
+對角化後計算 $A^k=PD^kP^{-1}$ 就容易多了。

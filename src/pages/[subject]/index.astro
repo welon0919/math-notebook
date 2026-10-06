@@ -1,6 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Math from '../../components/Math.astro';
+import { renderMathText } from '../../lib/math';
 import { subjects, type Subject } from '../../data/subjects';
 
 export const getStaticPaths = (() =>
@@ -11,10 +14,53 @@ interface Props {
 }
 
 const { subject } = Astro.props;
+const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) => a.data.order - b.data.order;
+const lessons = (await getCollection('lessons', (e) => e.data.subject === subject.id)).sort(byOrder);
+const formulas = (await getCollection('formulas', (e) => e.data.subject === subject.id)).sort(byOrder);
+const theorems = (await getCollection('theorems', (e) => e.data.subject === subject.id)).sort(byOrder);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base title={subject.name}>
   <h1>{subject.name}</h1>
   <p>{subject.description}</p>
-  <p>課程、公式與定理即將上線。</p>
+
+  <section>
+    <h2>課程</h2>
+    <ol>
+      {
+        lessons.map((lesson) => (
+          <li>
+            <a href={`${base}/${lesson.id}/`}>{lesson.data.title}</a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section>
+    <h2>公式</h2>
+    {
+      formulas.map((f) => (
+        <article>
+          <h3>{f.data.name}</h3>
+          <Math latex={f.data.latex} display />
+          {f.data.note && <p set:html={renderMathText(f.data.note)} />}
+        </article>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>定理</h2>
+    {
+      theorems.map((t) => (
+        <article>
+          <h3>{t.data.name}</h3>
+          <p set:html={renderMathText(t.data.statement)} />
+          {t.data.note && <p set:html={renderMathText(t.data.note)} />}
+        </article>
+      ))
+    }
+  </section>
 </Base>

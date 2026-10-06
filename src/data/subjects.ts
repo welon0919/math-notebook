@@ -7,3 +7,5 @@ export const subjects = [
 
 export type Subject = (typeof subjects)[number];
 export type SubjectId = Subject['id'];
+
+export const subjectIds = subjects.map((s) => s.id) as [SubjectId, ...SubjectId[]];

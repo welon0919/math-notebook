@@ -1,0 +1,22 @@
+[
+  {
+    "name": "秩–零化度定理",
+    "statement": "若 $A$ 為 $m\\times n$ 矩陣，則 $\\operatorname{rank}A+\\operatorname{nullity}A=n$。",
+    "note": "輸入空間的維度，等於「保留下來的維度」加上「被壓成零的維度」。"
+  },
+  {
+    "name": "可逆矩陣定理",
+    "statement": "對 $n$ 階方陣 $A$，下列敘述等價：$A$ 可逆；$\\det A\\neq 0$；$A\\mathbf{x}=\\mathbf{0}$ 只有零解；$\\operatorname{rank}A=n$；$0$ 不是 $A$ 的特徵值。",
+    "note": "這些條件說的都是同一件事：$A$ 沒有把任何方向壓扁。"
+  },
+  {
+    "name": "柯西–施瓦茨不等式",
+    "statement": "$|\\mathbf{u}\\cdot\\mathbf{v}|\\le|\\mathbf{u}|\\,|\\mathbf{v}|$，等號成立若且唯若兩向量平行（其中一個是另一個的倍數）。",
+    "note": "內積的大小不會超過兩個長度相乘，因為 $|\\cos\\theta|\\le 1$。"
+  },
+  {
+    "name": "譜定理",
+    "statement": "實對稱矩陣 $A$（$A^T=A$）的特徵值都是實數，且可被正交對角化：存在正交矩陣 $Q$ 使 $Q^TAQ$ 為對角矩陣。",
+    "note": "對稱矩陣的作用，只是沿著幾個互相垂直的方向各自伸縮。"
+  }
+]

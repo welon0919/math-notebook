@@ -1,0 +1,45 @@
+---
+subject: calculus
+order: 3
+title: 積分
+example: 求 $y=x^2$ 與 $x$ 軸在 $0\le x\le 3$ 之間所圍的面積。
+solution: 面積 $=\displaystyle\int_0^3 x^2\,dx=\left[\frac{x^3}{3}\right]_0^3=\frac{27}{3}-0=9$。
+---
+
+## 定積分：面積
+
+把區間 $[a,b]$ 切成 $n$ 段，每段寬 $\Delta x$，用長方形面積 $f(x_i)\Delta x$ 近似，再讓 $n\to\infty$：
+
+$$
+\int_a^b f(x)\,dx=\lim_{n\to\infty}\sum_{i=1}^{n}f(x_i)\,\Delta x
+$$
+
+這就是曲線下方的（有號）面積：在 $x$ 軸下方的部分算負的。
+
+## 不定積分：反導數
+
+若 $F'(x)=f(x)$，就稱 $F$ 是 $f$ 的反導數，記作
+
+$$
+\int f(x)\,dx=F(x)+C
+$$
+
+例如 $\displaystyle\int x^n\,dx=\frac{x^{n+1}}{n+1}+C$（$n\neq -1$）。
+
+## 微積分基本定理
+
+定積分可以用反導數來算：
+
+$$
+\int_a^b f(x)\,dx=F(b)-F(a)
+$$
+
+原本需要無限多個長方形相加的問題，變成只要找到反導數再代兩個值相減。
+
+## 換元積分
+
+連鎖律反過來用。例如令 $u=x^2+1$，$du=2x\,dx$：
+
+$$
+\int 2x\,(x^2+1)^3\,dx=\int u^3\,du=\frac{u^4}{4}+C=\frac{(x^2+1)^4}{4}+C
+$$

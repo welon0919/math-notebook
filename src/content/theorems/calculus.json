@@ -1,0 +1,22 @@
+[
+  {
+    "name": "微積分基本定理",
+    "statement": "若 $f$ 在 $[a,b]$ 連續且 $F'=f$，則 $\\displaystyle\\int_a^b f(x)\\,dx=F(b)-F(a)$；此外 $\\dfrac{d}{dx}\\displaystyle\\int_a^x f(t)\\,dt=f(x)$。",
+    "note": "微分和積分互為逆運算：要算面積，只要找到反導數。"
+  },
+  {
+    "name": "均值定理",
+    "statement": "若 $f$ 在 $[a,b]$ 連續、在 $(a,b)$ 可微，則存在 $c\\in(a,b)$ 使 $f'(c)=\\dfrac{f(b)-f(a)}{b-a}$。",
+    "note": "一趟車程的平均時速是 60 公里，途中一定有某個瞬間的時速剛好是 60 公里。"
+  },
+  {
+    "name": "中間值定理",
+    "statement": "若 $f$ 在 $[a,b]$ 連續，且 $k$ 介於 $f(a)$ 與 $f(b)$ 之間，則存在 $c\\in[a,b]$ 使 $f(c)=k$。",
+    "note": "一條不斷開的曲線從低處走到高處，中間每個高度都一定會經過。"
+  },
+  {
+    "name": "羅必達法則",
+    "statement": "若 $\\displaystyle\\lim_{x\\to a}\\frac{f(x)}{g(x)}$ 為 $\\dfrac{0}{0}$ 或 $\\dfrac{\\infty}{\\infty}$ 型，且 $\\displaystyle\\lim_{x\\to a}\\frac{f'(x)}{g'(x)}$ 存在，則兩個極限相等。",
+    "note": "遇到 $\\dfrac{0}{0}$ 這類不定型，可以分子、分母各自微分後再求極限。"
+  }
+]
