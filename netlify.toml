@@ -1,0 +1,16 @@
+# Netlify build settings. Used both by `netlify deploy --build` and by
+# Git-connected builds if the site is later linked to a repository.
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 needs Node >= 22.12; keep pnpm in sync with package.json "packageManager".
+  NODE_VERSION = "22"
+  PNPM_VERSION = "11.9.0"
+
+# Astro puts hashed, never-changing assets (CSS, JS, KaTeX fonts) in /_astro/.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
