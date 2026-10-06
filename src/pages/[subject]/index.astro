@@ -6,6 +6,7 @@ import SubjectTabs from '../../components/SubjectTabs.astro';
 import FormulaList from '../../components/FormulaList.astro';
 import TheoremList from '../../components/TheoremList.astro';
 import { subjects, type Subject } from '../../data/subjects';
+import { loadItems } from '../../lib/items';
 
 export const getStaticPaths = (() =>
   subjects.map((subject) => ({ params: { subject: subject.id }, props: { subject } }))) satisfies GetStaticPaths;
@@ -17,8 +18,9 @@ interface Props {
 const { subject } = Astro.props;
 const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) => a.data.order - b.data.order;
 const lessons = (await getCollection('lessons', (e) => e.data.subject === subject.id)).sort(byOrder);
-const formulas = (await getCollection('formulas', (e) => e.data.subject === subject.id)).sort(byOrder);
-const theorems = (await getCollection('theorems', (e) => e.data.subject === subject.id)).sort(byOrder);
+const items = await loadItems();
+const formulas = items.formulas.filter((e) => e.data.subject === subject.id);
+const theorems = items.theorems.filter((e) => e.data.subject === subject.id);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const tabs = [

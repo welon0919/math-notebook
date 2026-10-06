@@ -26,9 +26,10 @@ src/
 ├─ content.config.ts        # 內容格式（zod schema），格式錯誤會讓建置失敗
 ├─ content/
 │  ├─ lessons/<科目>/*.md   # 課程
-│  ├─ formulas/<科目>.json  # 公式
-│  └─ theorems/<科目>.json  # 定理
+│  ├─ formulas/<科目>/*.md  # 公式（每條一個檔案）
+│  └─ theorems/<科目>/*.md  # 定理（每條一個檔案）
 ├─ data/subjects.ts         # 科目清單（代號、名稱、簡介）
+├─ lib/items.ts             # 載入公式與定理，檢查 slug 與 related
 ├─ components/              # 分頁、公式/定理清單、例題
 ├─ layouts/Base.astro
 ├─ pages/
@@ -61,24 +62,43 @@ $$
 
 ## 新增公式或定理
 
-在對應科目的 JSON 陣列中加一筆，順序就是網站上的顯示順序：
+每條公式或定理是一個 Markdown 檔，放在 `src/content/formulas/<科目代號>/` 或 `src/content/theorems/<科目代號>/`。**檔名就是 slug**：英文小寫、用連字號連接（例如 `quadratic-formula.md`），而且全站（所有科目的公式與定理）不能重複。
 
-```json
-{ "name": "二次公式", "latex": "x=\\dfrac{-b\\pm\\sqrt{b^2-4ac}}{2a}", "note": "選填，可含 $...$" }
+公式：
+
+```md
+---
+subject: algebra
+order: 1                       # 在列表中的順序（同科目內不可重複）
+name: 二次公式
+latex: x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}
+note: 選填，可含 $...$
+related: [vieta]               # 選填：其他公式或定理的 slug，可跨科目
+---
 ```
 
-```json
-{ "name": "餘式定理", "statement": "多項式 $f(x)$ 除以 $x-a$ 的餘式為 $f(a)$。", "note": "選填：一句白話說明" }
+定理：
+
+```md
+---
+subject: algebra
+order: 1
+name: 餘式定理
+statement: 多項式 $f(x)$ 除以 $x-a$ 的餘式等於 $f(a)$。
+note: 選填：一句白話說明
+proofType: full                # full（完整證明）或 sketch（證明概要）
+related: [factor-theorem]
+---
 ```
 
-**JSON 裡的反斜線要寫兩次**（`\\frac`、`\\theta`）。只寫一個時，`\t`、`\n`、`\f` 等會被當成控制字元，建置會失敗並提示你。
+frontmatter 裡的 LaTeX 直接照寫，反斜線**只寫一個**。若內容以 `|`、`[`、`{` 等符號開頭，或含有「: 」，請用單引號包起來，例如 `latex: '|\mathbf{v}|=...'`。**不要用雙引號**：雙引號會把 `\t`、`\f`、`\n` 當成控制字元（建置會失敗並提示）。
 
 ## 建置檢查
 
 `pnpm build` 會在以下情況失敗並指出檔案：
 
 - 欄位缺漏或型別錯誤
-- JSON 格式錯誤，或 LaTeX 反斜線沒有跳脫
+- 公式或定理的 slug 重複、檔案放錯科目資料夾、`order` 重複，或 `related` 指向不存在的 slug
 - 任何算式有 KaTeX 錯誤（包含課程正文、例題、公式、定理）
 
 ## 部署（Netlify）
