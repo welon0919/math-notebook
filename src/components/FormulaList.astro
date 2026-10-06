@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Math from './Math.astro';
+import { renderMathText } from '../lib/math';
+import { normalize } from '../lib/search';
+
+interface Props {
+  formulas: CollectionEntry<'formulas'>[];
+}
+
+const { formulas } = Astro.props;
+---
+
+<div class="search-list" data-search="公式">
+  <label class="search-box">
+    <span>搜尋公式</span>
+    <input type="search" placeholder="例如：對數、級數" autocomplete="off" />
+  </label>
+  <p class="search-status" data-search-status role="status"></p>
+  <ul class="card-list">
+    {
+      formulas.map((f) => (
+        <li class="card" data-search-item data-search-text={normalize(`${f.data.name} ${f.data.note ?? ''}`)}>
+          <h3>{f.data.name}</h3>
+          <Math latex={f.data.latex} display />
+          {f.data.note && <p class="note" set:html={renderMathText(f.data.note)} />}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  import '../scripts/search';
+</script>

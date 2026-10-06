@@ -2,8 +2,9 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Math from '../../components/Math.astro';
-import { renderMathText } from '../../lib/math';
+import SubjectTabs from '../../components/SubjectTabs.astro';
+import FormulaList from '../../components/FormulaList.astro';
+import TheoremList from '../../components/TheoremList.astro';
 import { subjects, type Subject } from '../../data/subjects';
 
 export const getStaticPaths = (() =>
@@ -19,48 +20,40 @@ const lessons = (await getCollection('lessons', (e) => e.data.subject === subjec
 const formulas = (await getCollection('formulas', (e) => e.data.subject === subject.id)).sort(byOrder);
 const theorems = (await getCollection('theorems', (e) => e.data.subject === subject.id)).sort(byOrder);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const tabs = [
+  { id: 'lessons', label: '課程' },
+  { id: 'formulas', label: '公式' },
+  { id: 'theorems', label: '定理' },
+];
 ---
 
 <Base title={subject.name}>
   <h1>{subject.name}</h1>
   <p>{subject.description}</p>
 
-  <section>
-    <h2>課程</h2>
-    <ol>
-      {
-        lessons.map((lesson) => (
-          <li>
-            <a href={`${base}/${lesson.id}/`}>{lesson.data.title}</a>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
+  <SubjectTabs tabs={tabs} label={`${subject.name}內容`}>
+    <section id="lessons" class="tab-panel">
+      <h2 class="visually-hidden">課程</h2>
+      <ol class="lesson-list">
+        {
+          lessons.map((lesson) => (
+            <li>
+              <a href={`${base}/${lesson.id}/`}>{lesson.data.title}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
 
-  <section>
-    <h2>公式</h2>
-    {
-      formulas.map((f) => (
-        <article>
-          <h3>{f.data.name}</h3>
-          <Math latex={f.data.latex} display />
-          {f.data.note && <p set:html={renderMathText(f.data.note)} />}
-        </article>
-      ))
-    }
-  </section>
+    <section id="formulas" class="tab-panel">
+      <h2 class="visually-hidden">公式</h2>
+      <FormulaList formulas={formulas} />
+    </section>
 
-  <section>
-    <h2>定理</h2>
-    {
-      theorems.map((t) => (
-        <article>
-          <h3>{t.data.name}</h3>
-          <p set:html={renderMathText(t.data.statement)} />
-          {t.data.note && <p set:html={renderMathText(t.data.note)} />}
-        </article>
-      ))
-    }
-  </section>
+    <section id="theorems" class="tab-panel">
+      <h2 class="visually-hidden">定理</h2>
+      <TheoremList theorems={theorems} />
+    </section>
+  </SubjectTabs>
 </Base>

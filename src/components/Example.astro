@@ -1,0 +1,19 @@
+---
+import { renderMathText } from '../lib/math';
+
+interface Props {
+  example: string;
+  solution: string;
+}
+
+const { example, solution } = Astro.props;
+---
+
+<section class="example" aria-labelledby="example-heading">
+  <h2 id="example-heading">例題</h2>
+  <div class="example-question" set:html={renderMathText(example)} />
+  <details class="example-solution">
+    <summary>看解答</summary>
+    <div set:html={renderMathText(solution)} />
+  </details>
+</section>

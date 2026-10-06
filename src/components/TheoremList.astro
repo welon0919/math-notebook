@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { renderMathText } from '../lib/math';
+import { normalize } from '../lib/search';
+
+interface Props {
+  theorems: CollectionEntry<'theorems'>[];
+}
+
+const { theorems } = Astro.props;
+---
+
+<div class="search-list" data-search="定理">
+  <label class="search-box">
+    <span>搜尋定理</span>
+    <input type="search" placeholder="例如：三角形、不等式" autocomplete="off" />
+  </label>
+  <p class="search-status" data-search-status role="status"></p>
+  <ul class="card-list">
+    {
+      theorems.map((t) => (
+        <li
+          class="card"
+          data-search-item
+          data-search-text={normalize(`${t.data.name} ${t.data.statement} ${t.data.note ?? ''}`)}
+        >
+          <h3>{t.data.name}</h3>
+          <div class="statement" set:html={renderMathText(t.data.statement)} />
+          {t.data.note && <p class="note" set:html={renderMathText(t.data.note)} />}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  import '../scripts/search';
+</script>

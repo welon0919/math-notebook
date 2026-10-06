@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { renderMathText } from '../../lib/math';
+import Example from '../../components/Example.astro';
 import { subjects } from '../../data/subjects';
 
 export const getStaticPaths = (async () => {
@@ -29,12 +29,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <Base title={lesson.data.title}>
   <p><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
   <h1>{lesson.data.title}</h1>
-  <Content />
+  <article class="lesson-body">
+    <Content />
+  </article>
 
-  <section>
-    <h2>例題</h2>
-    <p set:html={renderMathText(lesson.data.example)} />
-    <h3>解答</h3>
-    <p set:html={renderMathText(lesson.data.solution)} />
-  </section>
+  <Example example={lesson.data.example} solution={lesson.data.solution} />
 </Base>

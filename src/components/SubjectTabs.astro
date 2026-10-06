@@ -1,0 +1,82 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  tabs: Tab[];
+  label: string;
+}
+
+const { tabs, label } = Astro.props;
+---
+
+<div class="tabs" data-tabs>
+  {/* Without JS these are plain in-page links and every panel stays visible. */}
+  <div class="tab-list" role="tablist" aria-label={label}>
+    {
+      tabs.map((tab, i) => (
+        <a
+          class="tab"
+          role="tab"
+          id={`tab-${tab.id}`}
+          href={`#${tab.id}`}
+          aria-controls={tab.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >
+          {tab.label}
+        </a>
+      ))
+    }
+  </div>
+  <slot />
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
+    const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[role="tab"]')];
+    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')!)!);
+
+    const select = (index: number, { focus = false, updateHash = false } = {}) => {
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        panels[i].hidden = !active;
+      });
+      if (focus) tabs[index].focus();
+      if (updateHash) history.replaceState(null, '', `#${panels[index].id}`);
+    };
+
+    const indexFromHash = () => {
+      const i = panels.findIndex((panel) => `#${panel.id}` === location.hash);
+      return i === -1 ? 0 : i;
+    };
+
+    panels.forEach((panel, i) => {
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', tabs[i].id);
+      panel.tabIndex = 0;
+    });
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        select(i, { updateHash: true });
+      });
+      tab.addEventListener('keydown', (event) => {
+        const last = tabs.length - 1;
+        const next = { ArrowRight: i === last ? 0 : i + 1, ArrowLeft: i === 0 ? last : i - 1, Home: 0, End: last }[
+          event.key
+        ];
+        if (next === undefined) return;
+        event.preventDefault();
+        select(next, { focus: true, updateHash: true });
+      });
+    });
+
+    window.addEventListener('hashchange', () => select(indexFromHash()));
+    select(indexFromHash());
+  }
+</script>
