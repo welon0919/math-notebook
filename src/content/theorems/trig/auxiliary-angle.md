@@ -5,5 +5,84 @@ name: 疊合
 statement: $a\sin\theta+b\cos\theta=r\sin(\theta+\varphi)$，其中 $r=\sqrt{a^2+b^2}$，$\cos\varphi=\dfrac{a}{r}$，$\sin\varphi=\dfrac{b}{r}$。
 note: 兩個同週期的正弦波相加還是一個正弦波，所以最大值是 $\sqrt{a^2+b^2}$。
 proofType: full
-related: []
+related: [angle-sum, pythagorean-identities]
 ---
+
+## 白話解釋
+
+$a\sin\theta+b\cos\theta$ 是兩個「同週期的波」相加，結果還是一個正弦波，只是**振幅變成 $r=\sqrt{a^2+b^2}$**、**整體平移了一個角度 $\varphi$**。
+
+因為 $\sin$ 的值在 $-1$ 到 $1$ 之間，所以 $a\sin\theta+b\cos\theta$ 的最大值是 $\sqrt{a^2+b^2}$，最小值是 $-\sqrt{a^2+b^2}$。（這裡 $a$、$b$ 不同時為 $0$。）
+
+## 使用時機
+
+- 求 $a\sin\theta+b\cos\theta$ 的**最大值、最小值**。
+- **解方程式** $a\sin\theta+b\cos\theta=k$：化成 $r\sin(\theta+\varphi)=k$，只剩一個三角函數。
+- 物理中兩個**同頻率振動的合成**，例如交流電、簡諧運動。
+
+## 例題
+
+**例題 1**　求 $f(\theta)=\sqrt{3}\sin\theta+\cos\theta$ 的最大值與最小值，以及取得最大值的 $\theta$（$0^\circ\le\theta<360^\circ$）。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$a=\sqrt{3}$、$b=1$，$r=\sqrt{3+1}=2$。$\cos\varphi=\frac{\sqrt{3}}{2}$、$\sin\varphi=\frac{1}{2}$，所以 $\varphi=30^\circ$：
+
+$$
+f(\theta)=2\sin(\theta+30^\circ).
+$$
+
+最大值 $2$：$\theta+30^\circ=90^\circ$，$\theta=60^\circ$。最小值 $-2$：$\theta+30^\circ=270^\circ$，$\theta=240^\circ$。
+
+**驗算**：$f(60^\circ)=\sqrt{3}\cdot\frac{\sqrt{3}}{2}+\frac{1}{2}=\frac{3}{2}+\frac{1}{2}=2$；$f(240^\circ)=\sqrt{3}\cdot\left(-\frac{\sqrt{3}}{2}\right)+\left(-\frac{1}{2}\right)=-2$。
+
+</details>
+
+**例題 2**　解 $\sin\theta+\cos\theta=1$，$0^\circ\le\theta<360^\circ$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$a=b=1$，$r=\sqrt{2}$，$\cos\varphi=\sin\varphi=\frac{\sqrt{2}}{2}$，$\varphi=45^\circ$：
+
+$$
+\begin{aligned}\sqrt{2}\sin(\theta+45^\circ)&=1,\\ \sin(\theta+45^\circ)&=\frac{\sqrt{2}}{2}.\end{aligned}
+$$
+
+$\theta$ 在 $[0^\circ,360^\circ)$，所以 $\theta+45^\circ$ 在 $[45^\circ,405^\circ)$。在這個範圍內 $\sin x=\frac{\sqrt{2}}{2}$ 的解是 $x=45^\circ$ 和 $x=135^\circ$（下一個解 $405^\circ$ 不在範圍內）。
+
+所以 $\theta=0^\circ$ 或 $\theta=90^\circ$。
+
+**驗算**：$\sin 0^\circ+\cos 0^\circ=0+1=1$；$\sin 90^\circ+\cos 90^\circ=1+0=1$。
+
+</details>
+
+## 證明
+
+設 $a$、$b$ 不同時為 $0$，令 $r=\sqrt{a^2+b^2}>0$。
+
+**找到角 $\varphi$**：點 $\left(\frac{a}{r},\frac{b}{r}\right)$ 滿足
+
+$$
+\left(\frac{a}{r}\right)^2+\left(\frac{b}{r}\right)^2=\frac{a^2+b^2}{r^2}=1,
+$$
+
+所以它在單位圓上。單位圓上的每一點都對應某個角，因此存在角 $\varphi$ 使
+
+$$
+\cos\varphi=\frac{a}{r},\qquad \sin\varphi=\frac{b}{r}.
+$$
+
+**展開驗證**：由和角公式 $\sin(\theta+\varphi)=\sin\theta\cos\varphi+\cos\theta\sin\varphi$：
+
+$$
+\begin{aligned}
+r\sin(\theta+\varphi)&=r\sin\theta\cos\varphi\\
+&\quad+r\cos\theta\sin\varphi\\
+&=r\sin\theta\cdot\frac{a}{r}+r\cos\theta\cdot\frac{b}{r}\\
+&=a\sin\theta+b\cos\theta.
+\end{aligned}
+$$
+
+**最大值與最小值**：$-1\le\sin(\theta+\varphi)\le 1$，且兩端都取得到（$\theta+\varphi=90^\circ$ 或 $270^\circ$），所以 $a\sin\theta+b\cos\theta$ 的最大值為 $r$、最小值為 $-r$。

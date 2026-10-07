@@ -5,5 +5,86 @@ name: 餘弦定理
 statement: $\triangle ABC$ 中，$c^2=a^2+b^2-2ab\cos C$（其餘兩邊同理）。
 note: 畢氏定理的推廣；$C=90^\circ$ 時就變回 $c^2=a^2+b^2$。
 proofType: full
-related: []
+related: [pythagorean-theorem, law-of-sines, triangle-area]
 ---
+
+## 白話解釋
+
+餘弦定理是畢氏定理的**推廣**，適用於任何三角形：
+
+$$
+c^2=a^2+b^2-2ab\cos C.
+$$
+
+最後一項 $-2ab\cos C$ 是「修正量」：
+
+- $C=90^\circ$：$\cos C=0$，變回畢氏定理。
+- $C$ 是銳角：$\cos C>0$，$c^2$ 比 $a^2+b^2$ 小。
+- $C$ 是鈍角：$\cos C<0$，$c^2$ 比 $a^2+b^2$ 大。
+
+## 使用時機
+
+- 已知**兩邊和夾角**，求第三邊。
+- 已知**三邊**，求任一個角：$\cos C=\frac{a^2+b^2-c^2}{2ab}$。
+- **判斷**三角形是銳角、直角還是鈍角三角形：只要看最大邊所對的角，也就是 $a^2+b^2-c^2$ 的正負（$c$ 為最大邊）。
+
+## 例題
+
+**例題 1**　$\triangle ABC$ 中，$a=3$、$b=5$、$C=120^\circ$，求 $c$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$\cos 120^\circ=-\frac{1}{2}$：
+
+$$
+\begin{aligned}
+c^2&=3^2+5^2-2\cdot 3\cdot 5\cdot\left(-\frac{1}{2}\right)\\
+&=9+25+15=49,
+\end{aligned}
+$$
+
+所以 $c=7$。
+
+**驗算**：反過來由三邊求角，$\cos C=\frac{9+25-49}{2\cdot 3\cdot 5}=\frac{-15}{30}=-\frac{1}{2}$，確實是 $120^\circ$。
+
+</details>
+
+**例題 2**　三邊長為 $4$、$5$、$6$ 的三角形，是銳角、直角還是鈍角三角形？
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+最大的角在最長邊 $6$ 的對面，設為 $C$：
+
+$$
+\begin{aligned}\cos C&=\frac{4^2+5^2-6^2}{2\cdot 4\cdot 5}=\frac{16+25-36}{40}\\&=\frac{5}{40}=\frac{1}{8}>0.\end{aligned}
+$$
+
+最大角 $C$ 是銳角（約 $82.8^\circ$），其他兩角更小，所以是**銳角三角形**。
+
+**驗算**：$4^2+5^2=41>36=6^2$，和「$a^2+b^2>c^2$ 時 $C$ 為銳角」一致。
+
+</details>
+
+## 證明
+
+用坐標。把 $C$ 放在原點，邊 $CA$ 放在 $x$ 軸正向上，$B$ 在上半平面：
+
+- $A=(b,\,0)$，因為 $CA=b$。
+- $B=(a\cos C,\ a\sin C)$，因為 $CB=a$，且 $CB$ 和 $x$ 軸正向的夾角是 $C$（由三角函數的定義，距離原點 $a$、角度 $C$ 的點就是這個坐標；$C$ 是鈍角時同樣成立）。
+
+$c$ 是 $A$、$B$ 的距離，用距離公式：
+
+$$
+\begin{aligned}
+c^2&=(a\cos C-b)^2+(a\sin C)^2\\
+&=a^2\cos^2 C-2ab\cos C+b^2\\
+&\quad+a^2\sin^2 C\\
+&=a^2(\cos^2 C+\sin^2 C)\\
+&\quad+b^2-2ab\cos C\\
+&=a^2+b^2-2ab\cos C.
+\end{aligned}
+$$
+
+第二步用乘法公式展開 $(a\cos C-b)^2$，最後一步用 $\cos^2 C+\sin^2 C=1$。另外兩個式子（$a^2=\ldots$、$b^2=\ldots$）只要把不同的角放在原點，證法相同。
