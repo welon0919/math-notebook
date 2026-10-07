@@ -40,10 +40,10 @@ $$
 <details class="example-solution">
 <summary>看解答</summary>
 
-由平方關係 $1+\tan^2\theta=\frac{1}{\cos^2\theta}$：
+由平方關係 $\tan^2\theta+1=\frac{1}{\cos^2\theta}$：
 
 $$
-\begin{aligned}\frac{1}{\cos^2\theta}&=1+\frac{9}{16}=\frac{25}{16},\\ \cos^2\theta&=\frac{16}{25}.\end{aligned}
+\begin{aligned}\frac{1}{\cos^2\theta}&=\frac{9}{16}+1=\frac{25}{16},\\ \cos^2\theta&=\frac{16}{25}.\end{aligned}
 $$
 
 第四象限的 $\cos$ 是正的，所以 $\cos\theta=\frac{4}{5}$。再由 $\tan\theta=\frac{\sin\theta}{\cos\theta}$：
