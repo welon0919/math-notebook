@@ -2,7 +2,7 @@
 subject: trig
 order: 3
 name: 商數關係
-latex: \tan\theta=\dfrac{\sin\theta}{\cos\theta},\qquad \cot\theta=\dfrac{\cos\theta}{\sin\theta}
+latex: \begin{aligned}\tan\theta&=\dfrac{\sin\theta}{\cos\theta}\\ \cot\theta&=\dfrac{\cos\theta}{\sin\theta}\end{aligned}
 related: [pythagorean-identities, special-angles]
 ---
 

@@ -2,7 +2,7 @@
 subject: calculus
 order: 8
 name: 重要極限
-latex: \lim_{x\to 0}\dfrac{\sin x}{x}=1,\qquad \lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^n=e
+latex: \begin{aligned}\lim_{x\to 0}\dfrac{\sin x}{x}&=1\\ \lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^n&=e\end{aligned}
 note: 第一式中 $x$ 以弧度為單位。
 related: [common-derivatives, derivative-definition, degree-radian-conversion]
 ---
@@ -101,7 +101,7 @@ $$
 - **遞增**：$n$ 變大時，每個括號 $1-\frac{j}{n}$ 都變大，而且還多出新的正項，所以 $a_n<a_{n+1}$。
 - **有上界**：每個括號都小於 $1$，且 $k!\ge 2^{k-1}$（$k\ge 1$），所以
   $$
-  a_n<1+1+\frac{1}{2}+\frac{1}{4}+\cdots<1+2=3.
+  \begin{aligned}a_n&<1+1+\frac{1}{2}+\frac{1}{4}+\cdots\\&<1+2=3.\end{aligned}
   $$
 
 一個遞增而且有上界的數列一定有極限（這是實數的基本性質，稱為**單調收斂定理**），這個極限就定義為 $e$。
