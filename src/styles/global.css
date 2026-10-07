@@ -397,6 +397,19 @@ main > *,
   display: block;
   max-width: 100%;
   overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.prose th,
+.prose td {
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.prose th {
+  border-bottom-width: 2px;
 }
 
 .example {
@@ -485,7 +498,7 @@ main > *,
   margin: 0;
   padding: 0.125rem 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   color: var(--ink-muted);
   font-size: 0.9rem;
 }

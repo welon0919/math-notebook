@@ -5,5 +5,86 @@ name: 微積分基本定理
 statement: 若 $f$ 在 $[a,b]$ 連續且 $F'=f$，則 $\displaystyle\int_a^b f(x)\,dx=F(b)-F(a)$；此外 $\dfrac{d}{dx}\displaystyle\int_a^x f(t)\,dt=f(x)$。
 note: 微分和積分互為逆運算：要算面積，只要找到反導數。
 proofType: full
-related: []
+related: [mean-value-theorem, basic-integrals, intermediate-value-theorem]
 ---
+
+## 白話解釋
+
+微積分基本定理說的是：**微分和積分互為反運算**。它有兩個部分：
+
+1. **算定積分只要找反導數**：曲線下的面積 $\int_a^b f(x)\,dx$，本來要用無限多個長方形去逼近；現在只要找到一個 $F$ 使 $F'=f$，面積就是 $F(b)-F(a)$。
+2. **面積的增加速度就是函數值**：從 $a$ 累積到 $x$ 的面積 $A(x)=\int_a^x f(t)\,dt$，當 $x$ 往右移一點點，增加的面積大約是「高 $f(x)$ 乘以寬度」，所以 $A'(x)=f(x)$。
+
+## 使用時機
+
+- **計算定積分**：先找反導數，再代上下限相減。
+- **微分以積分定義的函數**，例如 $\frac{d}{dx}\int_0^{x^2}\cos t\,dt$（再搭配連鎖律）。
+- **物理**：速度對時間積分得到位移，$\int_{t_1}^{t_2}v(t)\,dt=s(t_2)-s(t_1)$。
+
+## 例題
+
+**例題 1**　求 $\int_1^3(x^2+1)\,dx$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$F(x)=\frac{x^3}{3}+x$ 是 $x^2+1$ 的反導數：
+
+$$
+\begin{aligned}
+\int_1^3(x^2+1)\,dx&=F(3)-F(1)\\
+&=(9+3)-\left(\frac{1}{3}+1\right)\\
+&=12-\frac{4}{3}=\frac{32}{3}.
+\end{aligned}
+$$
+
+**驗算**：把 $[1,3]$ 切成 $1000$ 等分、用中點高度近似，長方形面積總和約 $10.6666660$，而 $\frac{32}{3}=10.6666\ldots$。
+
+</details>
+
+**例題 2**　設 $G(x)=\int_0^{x^2}\cos t\,dt$，求 $G'(x)$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+令 $A(u)=\int_0^{u}\cos t\,dt$，由定理第二部分 $A'(u)=\cos u$。$G(x)=A(x^2)$，用連鎖律（內層 $u=x^2$ 的導數是 $2x$）：
+
+$$
+G'(x)=A'(x^2)\cdot 2x=2x\cos(x^2).
+$$
+
+**驗算**：直接算積分，$G(x)=\big[\sin t\big]_0^{x^2}=\sin(x^2)$，微分得 $\cos(x^2)\cdot 2x$，相同。
+
+</details>
+
+## 證明
+
+以下用到兩個關於連續函數的性質（高中、大一課本都承認不證）：**閉區間上的連續函數可積分**，而且**一定有最大值和最小值**；另外，若 $m\le f\le M$ 在 $[p,q]$ 上成立，則 $m(q-p)\le\int_p^q f\le M(q-p)$（由黎曼和直接比較得到）。
+
+**第一部分：$\int_a^b f(x)\,dx=F(b)-F(a)$。** 把 $[a,b]$ 任意分割成 $a=x_0<x_1<\cdots<x_n=b$。先把 $F(b)-F(a)$ 拆成一段一段相加（中間的項兩兩抵消）：
+
+$$
+F(b)-F(a)=\sum_{i=1}^{n}\big[F(x_i)-F(x_{i-1})\big].
+$$
+
+$F$ 在每一段可微，由均值定理，每一段裡有一點 $c_i$ 使
+
+$$
+\begin{aligned}F(x_i)-F(x_{i-1})&=F'(c_i)(x_i-x_{i-1})\\&=f(c_i)\,\Delta x_i.\end{aligned}
+$$
+
+所以 $F(b)-F(a)=\sum f(c_i)\,\Delta x_i$，右邊正是 $f$ 的一個**黎曼和**。不論怎麼分割，等式左邊都是同一個數；而分割越來越細時，黎曼和會趨近 $\int_a^b f(x)\,dx$（$f$ 連續所以可積）。因此兩者相等。
+
+**第二部分：$\frac{d}{dx}\int_a^x f(t)\,dt=f(x)$。** 令 $A(x)=\int_a^x f(t)\,dt$。對 $h>0$：
+
+$$
+\frac{A(x+h)-A(x)}{h}=\frac{1}{h}\int_x^{x+h}f(t)\,dt.
+$$
+
+設 $m_h$、$M_h$ 是 $f$ 在 $[x,x+h]$ 上的最小值和最大值，則
+
+$$
+m_h\le\frac{1}{h}\int_x^{x+h}f(t)\,dt\le M_h.
+$$
+
+$f$ 在 $x$ 連續，所以 $h\to 0$ 時，區間縮到 $x$ 一點，$m_h$ 和 $M_h$ 都趨近 $f(x)$。中間的差商被夾住，也趨近 $f(x)$。$h<0$ 時用 $[x+h,x]$ 同樣處理。所以 $A'(x)=f(x)$。
