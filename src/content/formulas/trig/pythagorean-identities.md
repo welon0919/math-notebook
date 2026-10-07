@@ -2,7 +2,7 @@
 subject: trig
 order: 2
 name: 平方關係
-latex: \begin{aligned}\sin^2\theta+\cos^2\theta&=1\\ 1+\tan^2\theta&=\sec^2\theta\\ 1+\cot^2\theta&=\csc^2\theta\end{aligned}
+latex: \begin{aligned}&\sin^2\theta+\cos^2\theta=1\\ &1+\tan^2\theta=\sec^2\theta\\ &1+\cot^2\theta=\csc^2\theta\end{aligned}
 note: 第一式就是單位圓上的畢氏定理，後兩式由它同除 $\cos^2\theta$ 或 $\sin^2\theta$ 得到。
 related: [pythagorean-theorem, quotient-identities, double-angle]
 ---
