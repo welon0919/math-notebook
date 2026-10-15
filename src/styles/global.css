@@ -584,14 +584,18 @@ main > *,
 .graph-box {
   position: relative;
   width: 100%;
+  margin: 0 auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   overflow: hidden;
 }
 
-/* Without JavaScript the <noscript> description replaces the empty board. */
-html:not(.js) .graph-box {
+/* Without JavaScript the <noscript> description replaces the empty board,
+   and a proof lists all its steps instead of showing one at a time. */
+html:not(.js) .graph-box,
+html:not(.js) .graph-controls,
+html.js .graph-steps {
   display: none;
 }
 
@@ -655,4 +659,62 @@ html:not(.js) .graph-box {
   color: var(--ink-muted);
   font-size: 0.95rem;
   text-align: center;
+}
+
+/* Proof mode: the current step under the graph, and the matching proof paragraphs. */
+.graph-step {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-left: 4px solid var(--focus);
+  background: var(--surface);
+}
+
+.graph-step p {
+  margin: 0;
+}
+
+.graph-step .graph-step-count {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.proof-step {
+  margin: 1rem 0;
+  padding: 0.25rem 0.75rem;
+  border-left: 4px solid var(--border);
+  cursor: pointer;
+}
+
+.proof-step[aria-current='step'] {
+  border-left-color: var(--focus);
+  background: var(--surface);
+}
+
+.proof-step-label {
+  padding: 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.proof-step[aria-current='step'] .proof-step-label {
+  border-color: var(--focus);
+  color: var(--ink);
+}
+
+/* Without JavaScript the paragraphs aren't linked to anything; keep only the label. */
+html:not(.js) .proof-step {
+  cursor: auto;
+}
+
+html:not(.js) .proof-step-label {
+  border: 0;
+  padding: 0;
+  cursor: auto;
 }

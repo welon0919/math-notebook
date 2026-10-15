@@ -1,0 +1,17 @@
+---
+/**
+ * One step of a proof that follows the page's `<Graph proof>`: step `n` here matches
+ * the graph's `steps[n - 1]`. Clicking the paragraph or its label moves the graph there,
+ * and the paragraph is marked while the graph shows its step.
+ */
+interface Props {
+  n: number;
+}
+
+const { n } = Astro.props;
+---
+
+<div class="proof-step" data-proof-step={n}>
+  <button type="button" class="proof-step-label" aria-label={`在圖上顯示步驟 ${n}`}>步驟 {n}</button>
+  <slot />
+</div>

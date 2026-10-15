@@ -56,28 +56,45 @@ $$
 
 ## 證明
 
-設直角三角形的兩股為 $a$、$b$，斜邊為 $c$。
+設直角三角形的兩股為 $a$、$b$，斜邊為 $c$。在同一個大正方形裡用兩種方式擺放四個這樣的三角形，比較剩下的面積。按「下一步」或點選下面的步驟，圖形會跟著變化。
 
-<figure class="proof-figure">
-<svg viewBox="-16 -16 172 172" width="200" height="200" role="img" aria-label="邊長 a+b 的大正方形，四個角落各有一個兩股為 a、b 的直角三角形，中間圍出邊長 c 的正方形">
-  <rect x="0" y="0" width="140" height="140" fill="none" stroke="currentColor" stroke-width="1.5"/>
-  <polygon points="50,0 140,50 90,140 0,90" fill="currentColor" fill-opacity="0.1" stroke="currentColor" stroke-width="1.5"/>
-  <g font-size="13" font-style="italic" fill="currentColor" text-anchor="middle">
-    <text x="25" y="-4">a</text><text x="95" y="-4">b</text>
-    <text x="150" y="29">a</text><text x="150" y="99">b</text>
-    <text x="115" y="153">a</text><text x="45" y="153">b</text>
-    <text x="-9" y="119">a</text><text x="-9" y="49">b</text>
-    <text x="88" y="38">c</text><text x="102" y="94">c</text>
-    <text x="52" y="106">c</text><text x="38" y="52">c</text>
-  </g>
-</svg>
-</figure>
+<Graph name="trig/pythagoras-proof" proof />
+
+<ProofStep n={1}>
 
 **排列**：畫一個邊長 $a+b$ 的大正方形。在每一邊上，從一個頂點量出 $a$（依同一個轉向），把相鄰兩邊上的分點連起來。這樣四個角落各得到一個直角三角形，它的兩股是 $a$ 和 $b$、夾角是正方形的直角，所以和原來的三角形全等（兩邊夾一角相等），斜邊都是 $c$。
 
+</ProofStep>
+
+<ProofStep n={2}>
+
 **中間是正方形**：中間的四邊形四邊都是 $c$。看大正方形某一邊上的分點，那裡有三個角排成一直線（共 $180^\circ$）：兩側各是一個直角三角形的銳角，中間是四邊形的內角。這兩側的銳角，一個是 $a$ 的對角、一個是 $b$ 的對角；四個三角形全等，所以它們的和就等於一個直角三角形兩個銳角的和，也就是 $180^\circ-90^\circ=90^\circ$。因此四邊形的內角是 $180^\circ-90^\circ=90^\circ$。四邊相等、四個角都是直角，所以它是邊長 $c$ 的正方形。
 
-**算面積**：大正方形的面積，等於四個直角三角形加上中間正方形：
+</ProofStep>
+
+<ProofStep n={3}>
+
+**重新排列**：把其中三個三角形平移（不旋轉）。左上角的三角形移到右下角，和原本在那裡的三角形沿斜邊拼成一個寬 $b$、高 $a$ 的長方形；右上角的三角形向左平移 $b$、左下角的三角形向上平移 $a$，兩個沿斜邊拼成一個寬 $a$、高 $b$ 的長方形，位在左上角。兩個全等的直角三角形把直角放在對角、沿斜邊拼起來，剛好是一個兩邊為 $a$、$b$ 的長方形。
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**剩下兩個正方形**：右下角的長方形佔去底邊右側的 $b$ 和右邊下方的 $a$；左上角的長方形佔去左邊上方的 $b$ 和頂邊左側的 $a$。大正方形剩下左下角邊長 $a$ 的正方形和右上角邊長 $b$ 的正方形，面積合計 $a^2+b^2$。
+
+</ProofStep>
+
+<ProofStep n={5}>
+
+**比較面積**：兩種排法都是在同一個邊長 $a+b$ 的大正方形裡放進四個全等的直角三角形，彼此不重疊，所以剩下的面積相等：
+
+$$
+c^2=a^2+b^2.
+$$
+
+</ProofStep>
+
+**也可以直接計算**：第一種排法中，大正方形的面積等於四個直角三角形加上中間的正方形：
 
 $$
 \begin{aligned}

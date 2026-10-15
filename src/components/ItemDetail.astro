@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Math from './Math.astro';
 import Graph from './Graph.astro';
+import ProofStep from './ProofStep.astro';
 import { renderMathText } from '../lib/math';
 import { itemHref, kindLabel, listHref, loadItems, neighbors, type Item } from '../lib/items';
 import { subjects } from '../data/subjects';
@@ -59,7 +60,7 @@ const placeholder = isTheorem
   <article class="prose">
     {
       hasBody ? (
-        <Content components={{ Graph }} />
+        <Content components={{ Graph, ProofStep }} />
       ) : (
         <p class="placeholder">
           <strong>內容整理中</strong>：{placeholder}

@@ -30,8 +30,20 @@ export interface GraphContext {
   readout(render: () => string): void;
   /** Rounds to two decimal places for display, e.g. `1.25`, `-0.50`. */
   fmt(x: number): string;
-  /** True when the reader prefers reduced motion: skip animations. */
-  reducedMotion: boolean;
+  /** KaTeX HTML for a label, e.g. `board.create('text', [x, y, ctx.tex('c^2')])`. */
+  tex(latex: string): string;
+  /**
+   * Proof mode: names objects so `steps` can show, hide and highlight them.
+   * Calling it again with the same name adds more objects to that name.
+   * A polygon's borders follow the polygon.
+   */
+  name<T extends JXG.GeometryElement>(id: string, el: T): T;
+  /**
+   * Proof mode: how far step `n` (1-based) has played, from 0 to 1. Before step `n`
+   * it is 0, after it 1, and during an `animate` step it runs from 0 to 1.
+   * Compute moving coordinates from it, e.g. `() => x0 + ctx.progress(3) * dx`.
+   */
+  progress(n: number): number;
 }
 
 export interface ProofStep {
@@ -39,8 +51,12 @@ export interface ProofStep {
   text: string;
   /** Names of objects that appear from this step on. */
   show?: string[];
-  /** Names of objects drawn in the highlight color during this step. */
+  /** Names of objects that disappear from this step on. */
+  hide?: string[];
+  /** Names of objects drawn in the highlight color during this step; everything else fades. */
   highlight?: string[];
+  /** Play `ctx.progress(n)` from 0 to 1 when arriving from the previous step. */
+  animate?: boolean;
 }
 
 /**
@@ -60,6 +76,8 @@ export interface GraphDef {
   boundingBox: [number, number, number, number];
   /** Width / height of the graph; `<Graph aspect>` overrides it. Default 4/3. */
   aspect?: number;
+  /** Draw x and y axes. Default true. */
+  axis?: boolean;
   build(board: JXG.Board, ctx: GraphContext): void;
   steps?: ProofStep[];
 }

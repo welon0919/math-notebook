@@ -1,33 +1,73 @@
 ---
 import type { GraphDef } from '../graphs/types';
+import { renderMathText } from '../lib/math';
 
 interface Props {
   /** `<subject>/<name>`, matching `src/graphs/<subject>/<name>.ts` */
   name: string;
+  /** Step-by-step proof: shows the graph's `steps` with previous / next / restart buttons. */
+  proof?: boolean;
   /** Width / height; defaults to the graph's own `aspect`, then 4/3. */
   aspect?: number;
 }
 
-const { name, aspect } = Astro.props;
+const { name, proof = false, aspect } = Astro.props;
 
-// Read at build time only for the caption and description; the browser loads the graph lazily.
+// Read at build time only for the caption, description and step texts; the browser loads the graph lazily.
 const defs = import.meta.glob<{ default: GraphDef }>('../graphs/*/*.ts', { eager: true });
 const def = defs[`../graphs/${name}.ts`]?.default;
 if (!def) {
   throw new Error(`<Graph name="${name}">: src/graphs/${name}.ts does not exist.`);
 }
+const steps = proof ? def.steps : undefined;
+if (proof && !steps?.length) {
+  throw new Error(`<Graph name="${name}" proof>: the graph has no steps.`);
+}
 const ratio = aspect ?? def.aspect ?? 4 / 3;
+// Square or tall graphs would fill the whole screen at full width; cap their height.
+const size = `aspect-ratio: ${ratio}; width: min(100%, ${(70 * ratio).toFixed(2)}vh)`;
 ---
 
-<figure class="graph" data-graph={name}>
-  <div class="graph-box" style={`aspect-ratio: ${ratio}`} role="group" aria-label={def.description}>
+<figure class="graph" data-graph={name} data-graph-proof={steps?.length}>
+  <div class="graph-box" style={size} role="group" aria-label={def.description}>
     <div class="graph-board" data-graph-board></div>
     <p class="graph-status" data-graph-status>圖形載入中…</p>
   </div>
   <noscript><p class="graph-noscript">{def.description}</p></noscript>
   <div class="graph-readout" data-graph-readout hidden></div>
+  {
+    steps && (
+      <>
+        {/* All steps for readers without JavaScript; the script shows one at a time in data-graph-step. */}
+        <ol class="graph-steps" data-graph-steps>
+          {steps.map((step) => (
+            <li set:html={renderMathText(step.text)} />
+          ))}
+        </ol>
+        <div class="graph-step" data-graph-step aria-live="polite" hidden />
+      </>
+    )
+  }
   <div class="graph-controls">
-    <button type="button" class="graph-button" data-graph-reset disabled>重設</button>
+    {
+      steps ? (
+        <>
+          <button type="button" class="graph-button" data-graph-prev disabled>
+            ← 上一步
+          </button>
+          <button type="button" class="graph-button" data-graph-next disabled>
+            下一步 →
+          </button>
+          <button type="button" class="graph-button" data-graph-restart disabled>
+            重來
+          </button>
+        </>
+      ) : (
+        <button type="button" class="graph-button" data-graph-reset disabled>
+          重設
+        </button>
+      )
+    }
   </div>
   <figcaption>{def.title}</figcaption>
 </figure>

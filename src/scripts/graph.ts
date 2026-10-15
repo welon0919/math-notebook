@@ -14,7 +14,8 @@ const defLoaders = import.meta.glob<{ default: GraphDef }>('../graphs/*/*.ts');
 let jxg: Promise<JXGModule> | undefined;
 const loadJXG = () => (jxg ??= import('jsxgraph').then((m) => m.default));
 
-let math: Promise<typeof import('../lib/math')> | undefined;
+type MathModule = typeof import('../lib/math');
+let math: Promise<MathModule> | undefined;
 const loadMath = () => (math ??= import('../lib/math'));
 
 const dark = matchMedia('(prefers-color-scheme: dark)');
@@ -104,29 +105,72 @@ function fmt(x: number): string {
 
 let boxCount = 0;
 
+/** Styles a proof step changes, saved right after `build` so every step starts from them. */
+interface Style {
+  strokeColor: string;
+  fillColor: string;
+  strokeOpacity: number;
+  fillOpacity: number;
+}
+
+/** How much the objects outside a step's `highlight` fade. */
+const fadedOpacity = 0.3;
+const animationMs = 1200;
+const ease = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
+
 class GraphMount {
   private board: JXG.Board | undefined;
+  private colors: GraphColors | undefined;
   private readouts: { render: () => string; el: HTMLElement; last?: string }[] = [];
   private frame = 0;
   private boardEl: HTMLElement;
   private readonly status: HTMLElement;
   private readonly readoutEl: HTMLElement;
-  private readonly resetButton: HTMLButtonElement;
+  private readonly buttons: HTMLButtonElement[];
+
+  // Proof mode
+  private readonly steps;
+  private step = 0;
+  /** `progress[i]` is `ctx.progress(i + 1)`. */
+  private progress: number[] = [];
+  private tween = 0;
+  private named = new Map<string, JXG.GeometryElement[]>();
+  private styles = new Map<JXG.GeometryElement, Style>();
+  private readonly stepTexts: string[] = [];
+  private readonly stepEl: HTMLElement | null;
+  private readonly prevButton: HTMLButtonElement | null;
+  private readonly nextButton: HTMLButtonElement | null;
 
   constructor(
     private readonly JXG: JXGModule,
     private readonly def: GraphDef,
-    private readonly renderMathText: (text: string) => string,
-    root: HTMLElement,
+    private readonly mathLib: MathModule,
+    private readonly root: HTMLElement,
   ) {
     this.boardEl = root.querySelector('[data-graph-board]')!;
     this.status = root.querySelector('[data-graph-status]')!;
     this.readoutEl = root.querySelector('[data-graph-readout]')!;
-    this.resetButton = root.querySelector('[data-graph-reset]')!;
-    this.resetButton.addEventListener('click', () => this.draw());
+    this.buttons = [...root.querySelectorAll<HTMLButtonElement>('.graph-controls button')];
+    root.querySelector('[data-graph-reset]')?.addEventListener('click', () => this.draw());
+
+    this.steps = 'graphProof' in root.dataset ? (def.steps ?? []) : [];
+    this.stepEl = root.querySelector('[data-graph-step]');
+    this.prevButton = root.querySelector('[data-graph-prev]');
+    this.nextButton = root.querySelector('[data-graph-next]');
+    for (const li of root.querySelectorAll('[data-graph-steps] > li')) this.stepTexts.push(li.innerHTML);
+    this.prevButton?.addEventListener('click', () => this.goTo(this.step - 1));
+    this.nextButton?.addEventListener('click', () => this.goTo(this.step + 1));
+    root.querySelector('[data-graph-restart]')?.addEventListener('click', () => {
+      this.step = 0;
+      this.draw();
+      this.updateStepUI();
+    });
   }
 
-  /** (Re)builds the board from scratch: used for the first draw, reset, and theme changes. */
+  /**
+   * (Re)builds the board from scratch: used for the first draw, reset, and theme changes.
+   * In proof mode the current step is kept, shown in its finished state.
+   */
   draw() {
     const { JXG, def } = this;
     if (this.board) JXG.JSXGraph.freeBoard(this.board);
@@ -141,17 +185,21 @@ class GraphMount {
     this.boardEl.replaceWith(container);
     this.boardEl = container;
     cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.tween);
     this.readouts = [];
     this.readoutEl.replaceChildren();
+    this.named = new Map();
+    this.setProgress();
 
     const colors = readColors();
+    this.colors = colors;
     JXG.themes['math-notebook'] = theme(colors);
     const board = JXG.JSXGraph.initBoard(this.boardEl.id, {
       boundingbox: [...def.boundingBox],
       // JSXGraph uses this as the board's aria-label.
       title: def.title,
       theme: 'math-notebook',
-      axis: true,
+      axis: def.axis ?? true,
       keepAspectRatio: false,
       showCopyright: false,
       showNavigation: false,
@@ -167,16 +215,41 @@ class GraphMount {
     const ctx: GraphContext = {
       color: colors,
       fmt,
-      reducedMotion: reducedMotion.matches,
+      tex: (latex) => this.mathLib.renderLatex(latex),
       readout: (render) => {
         const el = document.createElement('p');
         this.readoutEl.append(el);
         this.readouts.push({ render, el });
       },
+      name: (id, el) => {
+        const list = this.named.get(id) ?? [];
+        list.push(el);
+        // A polygon's borders are separate elements; they show, hide and highlight with it.
+        const borders = (el as Partial<JXG.Polygon>).borders;
+        if (borders) list.push(...borders);
+        this.named.set(id, list);
+        return el;
+      },
+      progress: (n) => this.progress[n - 1] ?? 0,
     };
     board.suspendUpdate();
     def.build(board, ctx);
     markDraggable(board, colors);
+    this.styles = new Map(
+      Object.values(board.objects).map((el) => [
+        el,
+        {
+          strokeColor: el.visProp.strokecolor,
+          fillColor: el.visProp.fillcolor,
+          strokeOpacity: el.visProp.strokeopacity,
+          fillOpacity: el.visProp.fillopacity,
+        },
+      ]),
+    );
+    if (this.steps.length > 0) {
+      this.checkStepNames();
+      this.applyStep();
+    }
     board.unsuspendUpdate();
 
     this.readoutEl.hidden = this.readouts.length === 0;
@@ -192,31 +265,146 @@ class GraphMount {
       const text = r.render();
       if (text === r.last) continue;
       r.last = text;
-      r.el.innerHTML = this.renderMathText(text);
+      r.el.innerHTML = this.mathLib.renderMathText(text);
     }
   }
 
   show() {
     this.status.remove();
-    this.resetButton.disabled = false;
+    for (const button of this.buttons) button.disabled = false;
+    if (this.steps.length > 0) this.updateStepUI();
+  }
+
+  /**
+   * Proof mode: moves to step `k` (0-based). Only stepping forward by one plays the
+   * step's animation; going back or jumping shows the finished state directly.
+   */
+  goTo(k: number) {
+    const board = this.board;
+    if (!board || k < 0 || k >= this.steps.length) return;
+    cancelAnimationFrame(this.tween);
+    const play = k === this.step + 1 && this.steps[k].animate && !reducedMotion.matches;
+    this.step = k;
+    this.setProgress();
+    this.applyStep();
+    this.updateStepUI();
+    if (!play) {
+      board.update();
+      return;
+    }
+    this.progress[k] = 0;
+    const start = performance.now();
+    const frame = (now: number) => {
+      const t = Math.min(1, (now - start) / animationMs);
+      this.progress[k] = ease(t);
+      board.update();
+      if (t < 1) this.tween = requestAnimationFrame(frame);
+    };
+    this.tween = requestAnimationFrame(frame);
+  }
+
+  /** Steps before and at the current one are finished; later ones haven't started. */
+  private setProgress() {
+    this.progress = this.steps.map((_, i) => (i <= this.step ? 1 : 0));
+  }
+
+  private elementsOf(names: string[] | undefined): JXG.GeometryElement[] {
+    return (names ?? []).flatMap((n) => this.named.get(n) ?? []);
+  }
+
+  /** Visibility and highlighting for the current step. */
+  private applyStep() {
+    const shown = new Map<string, boolean>();
+    // Named objects that some step shows start hidden; the rest are always visible.
+    for (const step of this.steps) for (const n of step.show ?? []) shown.set(n, false);
+    for (const step of this.steps.slice(0, this.step + 1)) {
+      for (const n of step.show ?? []) shown.set(n, true);
+      for (const n of step.hide ?? []) shown.set(n, false);
+    }
+    for (const [n, visible] of shown) {
+      for (const el of this.named.get(n) ?? []) el.setAttribute({ visible });
+    }
+
+    const highlighted = new Set(this.elementsOf(this.steps[this.step].highlight));
+    const c = this.colors!;
+    for (const [el, style] of this.styles) {
+      if (highlighted.size === 0) {
+        el.setAttribute(style);
+      } else if (highlighted.has(el)) {
+        el.setAttribute({
+          ...style,
+          strokeColor: c.highlight,
+          fillColor: c.highlight,
+          fillOpacity: Math.max(style.fillOpacity, 0.35),
+        });
+      } else {
+        el.setAttribute({
+          ...style,
+          strokeOpacity: style.strokeOpacity * fadedOpacity,
+          fillOpacity: style.fillOpacity * fadedOpacity,
+        });
+      }
+    }
+  }
+
+  private updateStepUI() {
+    const n = this.step + 1;
+    const total = this.steps.length;
+    if (this.stepEl) {
+      this.stepEl.hidden = false;
+      this.stepEl.innerHTML =
+        `<p class="graph-step-count">步驟 ${n}／${total}</p>` + `<p>${this.stepTexts[this.step] ?? ''}</p>`;
+    }
+    // Keep keyboard focus on a step button when the one in focus becomes disabled.
+    const focused = document.activeElement;
+    if (this.prevButton) this.prevButton.disabled = n === 1;
+    if (this.nextButton) this.nextButton.disabled = n === total;
+    if (focused === this.prevButton && n === 1) this.nextButton?.focus();
+    if (focused === this.nextButton && n === total) this.prevButton?.focus();
+    for (const el of proofSteps()) {
+      if (Number(el.dataset.proofStep) === n) el.setAttribute('aria-current', 'step');
+      else el.removeAttribute('aria-current');
+    }
+  }
+
+  /** Mistyped names in `steps` would silently do nothing, so report them. */
+  private checkStepNames() {
+    for (const [i, step] of this.steps.entries()) {
+      for (const n of [...(step.show ?? []), ...(step.hide ?? []), ...(step.highlight ?? [])]) {
+        if (!this.named.has(n)) console.error(`Graph ${this.root.dataset.graph}, step ${i + 1}: no object named "${n}".`);
+      }
+    }
   }
 }
 
-const mounts: GraphMount[] = [];
+/** Paragraphs marked with <ProofStep n>, which follow the page's proof graph. */
+const proofSteps = () => document.querySelectorAll<HTMLElement>('[data-proof-step]');
 
-async function mount(root: HTMLElement) {
+const mounts = new Map<HTMLElement, Promise<GraphMount>>();
+
+function ensureMounted(root: HTMLElement): Promise<GraphMount> {
+  let m = mounts.get(root);
+  if (!m) {
+    observer.unobserve(root);
+    m = mount(root);
+    mounts.set(root, m);
+  }
+  return m;
+}
+
+async function mount(root: HTMLElement): Promise<GraphMount> {
   const name = root.dataset.graph!;
   const status = root.querySelector<HTMLElement>('[data-graph-status]')!;
   try {
-    const [JXG, def, { renderMathText }] = await Promise.all([
+    const [JXG, def, mathLib] = await Promise.all([
       loadJXG(),
       defLoaders[`../graphs/${name}.ts`]().then((m) => m.default),
       loadMath(),
     ]);
-    const m = new GraphMount(JXG, def, renderMathText, root);
+    const m = new GraphMount(JXG, def, mathLib, root);
     m.draw();
     m.show();
-    mounts.push(m);
+    return m;
   } catch (error) {
     status.textContent = '圖形無法載入，請重新整理頁面再試一次。';
     throw error;
@@ -226,9 +414,7 @@ async function mount(root: HTMLElement) {
 const observer = new IntersectionObserver(
   (entries) => {
     for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      observer.unobserve(entry.target);
-      void mount(entry.target as HTMLElement);
+      if (entry.isIntersecting) void ensureMounted(entry.target as HTMLElement);
     }
   },
   { rootMargin: '200px 0px' },
@@ -238,7 +424,34 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-graph]')) {
   observer.observe(root);
 }
 
+// Clicking a proof paragraph (or its "步驟 n" button) moves the proof graph to that step.
+const proofRoot = document.querySelector<HTMLElement>('[data-graph-proof]');
+if (proofRoot) {
+  const total = Number(proofRoot.dataset.graphProof);
+  const marked = [...proofSteps()];
+  if (marked.length > 0 && marked.map((el) => el.dataset.proofStep).join() !== Array.from({ length: total }, (_, i) => i + 1).join()) {
+    console.error(`The page's <ProofStep> paragraphs must be numbered 1 to ${total}, matching the graph's steps.`);
+  }
+  for (const el of marked) {
+    el.addEventListener('click', (event) => {
+      // Leave links, solutions and text selection alone.
+      const target = event.target as Element;
+      if (target.closest('a, details')) return;
+      if (!target.closest('button') && getSelection()?.toString()) return;
+      const k = Number(el.dataset.proofStep) - 1;
+      void ensureMounted(proofRoot).then((m) => m.goTo(k));
+      // The graph may have scrolled away while reading; bring it back if it is completely hidden.
+      const box = proofRoot.getBoundingClientRect();
+      if (box.bottom < 0 || box.top > innerHeight) {
+        proofRoot.scrollIntoView({ block: 'nearest', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      }
+    });
+  }
+}
+
 // Colors come from CSS variables, so redraw when the color scheme changes.
-dark.addEventListener('change', () => {
-  for (const m of mounts) m.draw();
+dark.addEventListener('change', async () => {
+  for (const result of await Promise.allSettled(mounts.values())) {
+    if (result.status === 'fulfilled') result.value.draw();
+  }
 });
