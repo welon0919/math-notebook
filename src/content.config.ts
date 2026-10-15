@@ -17,7 +17,7 @@ const subject = z.enum(subjectIds);
 const lessons = defineCollection({
   // deferRender: the glob loader only logs eager render errors, so a KaTeX error
   // would leave the lesson blank; rendering at page build time fails the build instead.
-  loader: glob({ pattern: '**/*.md', base: './src/content/lessons', deferRender: true }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lessons', deferRender: true }),
   schema: z.object({
     subject,
     order: z.number().int().positive(),
@@ -36,7 +36,7 @@ const related = z.array(slug).default([]);
 
 // Same reason as lessons for deferRender: KaTeX errors in the body must fail the build.
 const itemLoader = (kind: string) =>
-  glob({ pattern: '**/*.md', base: `./src/content/${kind}`, deferRender: true });
+  glob({ pattern: '**/*.{md,mdx}', base: `./src/content/${kind}`, deferRender: true });
 
 const formulas = defineCollection({
   loader: itemLoader('formulas'),

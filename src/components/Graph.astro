@@ -1,0 +1,37 @@
+---
+import type { GraphDef } from '../graphs/types';
+
+interface Props {
+  /** `<subject>/<name>`, matching `src/graphs/<subject>/<name>.ts` */
+  name: string;
+  /** Width / height; defaults to the graph's own `aspect`, then 4/3. */
+  aspect?: number;
+}
+
+const { name, aspect } = Astro.props;
+
+// Read at build time only for the caption and description; the browser loads the graph lazily.
+const defs = import.meta.glob<{ default: GraphDef }>('../graphs/*/*.ts', { eager: true });
+const def = defs[`../graphs/${name}.ts`]?.default;
+if (!def) {
+  throw new Error(`<Graph name="${name}">: src/graphs/${name}.ts does not exist.`);
+}
+const ratio = aspect ?? def.aspect ?? 4 / 3;
+---
+
+<figure class="graph" data-graph={name}>
+  <div class="graph-box" style={`aspect-ratio: ${ratio}`} role="group" aria-label={def.description}>
+    <div class="graph-board" data-graph-board></div>
+    <p class="graph-status" data-graph-status>圖形載入中…</p>
+  </div>
+  <noscript><p class="graph-noscript">{def.description}</p></noscript>
+  <div class="graph-readout" data-graph-readout hidden></div>
+  <div class="graph-controls">
+    <button type="button" class="graph-button" data-graph-reset disabled>重設</button>
+  </div>
+  <figcaption>{def.title}</figcaption>
+</figure>
+
+<script>
+  import '../scripts/graph';
+</script>

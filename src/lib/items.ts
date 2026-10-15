@@ -25,7 +25,7 @@ export async function loadItems() {
   for (const item of all) {
     const where = item.filePath ?? item.id;
     const parts = item.id.split('/');
-    const fileSlug = item.filePath?.split('/').at(-1)?.replace(/\.md$/, '');
+    const fileSlug = item.filePath?.split('/').at(-1)?.replace(/\.mdx?$/, '');
     if (parts.length !== 2 || parts[0] !== item.data.subject) {
       errors.push(`${where}: must be in the "${item.data.subject}/" folder (matching its subject).`);
     }

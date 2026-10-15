@@ -575,3 +575,84 @@ main > *,
   max-width: 100%;
   height: auto;
 }
+
+/* Interactive graphs (src/components/Graph.astro) */
+.graph {
+  margin: 1.5rem 0;
+}
+
+.graph-box {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Without JavaScript the <noscript> description replaces the empty board. */
+html:not(.js) .graph-box {
+  display: none;
+}
+
+.graph-board {
+  position: absolute;
+  inset: 0;
+}
+
+/* JSXGraph's own stylesheet isn't loaded; this is the part it needs. */
+.graph-board svg text {
+  user-select: none;
+}
+
+.graph-status,
+.graph-noscript {
+  margin: 0;
+  padding: var(--space);
+  color: var(--ink-muted);
+}
+
+.graph-noscript {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.graph-readout {
+  margin-top: 0.5rem;
+}
+
+.graph-readout p {
+  margin: 0.25rem 0;
+}
+
+.graph-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.graph-button {
+  padding: 0.25rem 0.75rem;
+  border: 2px solid var(--link);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--link);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.graph-button:disabled {
+  border-color: var(--border);
+  color: var(--ink-muted);
+  cursor: default;
+}
+
+.graph figcaption {
+  margin-top: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  text-align: center;
+}
