@@ -81,3 +81,48 @@ $$
 $$
 
 **等號何時成立**：上面每一步都是等價的變形，所以等號成立 $\iff\left(\sqrt{a}-\sqrt{b}\right)^2=0\iff\sqrt{a}=\sqrt{b}$。兩個非負數的平方根相等，表示它們本身相等（兩邊平方即可），所以 $\iff a=b$。
+
+## 圖解證明
+
+同一個不等式也可以在半圓裡看出來：半徑是算術平均，垂線是幾何平均。$a$ 或 $b$ 為 $0$ 時 $\sqrt{ab}=0$，不等式顯然成立，以下設 $a,b>0$。
+
+<Graph name="algebra/am-gm" proof />
+
+<ProofStep n={1}>
+
+**作圖**：在一條直線上依序取 $A$、$C$、$B$，使 $AC=a$、$CB=b$。以 $AB$ 為直徑畫半圓，圓心 $O$ 是 $AB$ 的中點，半徑是 $\dfrac{AB}{2}=\dfrac{a+b}{2}$。
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+**作垂線**：過 $C$ 作 $AB$ 的垂線，交半圓於 $D$。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+**垂線長 $\sqrt{ab}$**：連 $AD$、$BD$。$\angle ADB$ 是直徑所對的圓周角，所以 $\angle ADB=90^\circ$。在直角三角形 $ACD$ 中 $\angle CAD=90^\circ-\angle ADC$；又 $\angle CDB=\angle ADB-\angle ADC=90^\circ-\angle ADC$，所以 $\angle CAD=\angle CDB$。再加上 $\angle ACD=\angle DCB=90^\circ$，得 $\triangle ACD\sim\triangle DCB$（AA 相似）。對應邊成比例：
+
+$$
+\frac{CD}{AC}=\frac{CB}{CD}\quad\Longrightarrow\quad CD^2=ab\quad\Longrightarrow\quad CD=\sqrt{ab}.
+$$
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**比較長度**：連 $OD$，它是半徑，$OD=\dfrac{a+b}{2}$。若 $C\neq O$，三角形 $OCD$ 在 $C$ 是直角，由畢氏定理 $OD^2=OC^2+CD^2\ge CD^2$；若 $C=O$，$OD$ 和 $CD$ 是同一條線段。兩種情形都有 $OD\ge CD$，也就是
+
+$$
+\frac{a+b}{2}\ge\sqrt{ab}.
+$$
+
+</ProofStep>
+
+<ProofStep n={5}>
+
+**等號何時成立**：$OD=CD\iff OC=0\iff C$ 就是圓心 $O\iff AC=CB$，也就是 $a=b$。
+
+</ProofStep>
+

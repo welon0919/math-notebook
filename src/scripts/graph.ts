@@ -109,9 +109,14 @@ let boxCount = 0;
 interface Style {
   strokeColor: string;
   fillColor: string;
-  strokeOpacity: number;
-  fillOpacity: number;
+  strokeOpacity: Opacity;
+  fillOpacity: Opacity;
 }
+
+/** Graphs may give opacity as a function (e.g. shading that depends on a slider). */
+type Opacity = number | (() => number);
+const scaleOpacity = (o: Opacity, k: number): Opacity => (typeof o === 'function' ? () => o() * k : o * k);
+const atLeast = (o: Opacity, min: number): Opacity => (typeof o === 'function' ? () => Math.max(o(), min) : Math.max(o, min));
 
 /** How much the objects outside a step's `highlight` fade. */
 const fadedOpacity = 0.3;
@@ -136,6 +141,8 @@ class GraphMount {
   private tween = 0;
   private named = new Map<string, JXG.GeometryElement[]>();
   private styles = new Map<JXG.GeometryElement, Style>();
+  /** Objects a graph hides itself (e.g. a polygon's borders); steps never show them. */
+  private hiddenByGraph = new Set<JXG.GeometryElement>();
   private readonly stepTexts: string[] = [];
   private readonly stepEl: HTMLElement | null;
   private readonly prevButton: HTMLButtonElement | null;
@@ -246,6 +253,7 @@ class GraphMount {
         },
       ]),
     );
+    this.hiddenByGraph = new Set(Object.values(board.objects).filter((el) => el.visProp.visible === false));
     if (this.steps.length > 0) {
       this.checkStepNames();
       this.applyStep();
@@ -322,7 +330,9 @@ class GraphMount {
       for (const n of step.hide ?? []) shown.set(n, false);
     }
     for (const [n, visible] of shown) {
-      for (const el of this.named.get(n) ?? []) el.setAttribute({ visible });
+      for (const el of this.named.get(n) ?? []) {
+        if (!this.hiddenByGraph.has(el)) el.setAttribute({ visible });
+      }
     }
 
     const highlighted = new Set(this.elementsOf(this.steps[this.step].highlight));
@@ -335,13 +345,13 @@ class GraphMount {
           ...style,
           strokeColor: c.highlight,
           fillColor: c.highlight,
-          fillOpacity: Math.max(style.fillOpacity, 0.35),
+          fillOpacity: atLeast(style.fillOpacity, 0.35),
         });
       } else {
         el.setAttribute({
           ...style,
-          strokeOpacity: style.strokeOpacity * fadedOpacity,
-          fillOpacity: style.fillOpacity * fadedOpacity,
+          strokeOpacity: scaleOpacity(style.strokeOpacity, fadedOpacity),
+          fillOpacity: scaleOpacity(style.fillOpacity, fadedOpacity),
         });
       }
     }
