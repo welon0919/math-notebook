@@ -78,11 +78,38 @@ $$
 
 取倒數，就得到 $\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}$。
 
-**第二部分：比值等於 $2R$。** 畫出外接圓，圓心 $O$、半徑 $R$。從 $B$ 經過 $O$ 作直徑 $BD$，$BD=2R$，連接 $CD$。
+**第二部分：比值等於 $2R$。** 跟著圖一步一步看；沿著圓拖動 $A$，可以看到 $A$ 是銳角和鈍角兩種情形。
 
-- $\angle BCD$ 是半圓上的圓周角，所以 $\angle BCD=90^\circ$，$\triangle BCD$ 是直角三角形，$\sin\angle BDC=\frac{BC}{BD}=\frac{a}{2R}$。
+<Graph name="trig/law-of-sines" proof />
+
+<ProofStep n={1}>
+
+畫出 $\triangle ABC$ 的外接圓，圓心 $O$、半徑 $R$。
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+從 $B$ 經過 $O$ 作直徑 $BD$，$BD=2R$，連接 $CD$。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+$\angle BCD$ 是半圓上的圓周角，所以 $\angle BCD=90^\circ$，$\triangle BCD$ 是直角三角形，$\sin\angle BDC=\frac{BC}{BD}=\frac{a}{2R}$。
+
+</ProofStep>
+
+<ProofStep n={4}>
+
 - 若 $A$ 是銳角：$A$ 和 $D$ 在弦 $BC$ 的同一側，同弧 $BC$ 所對的圓周角相等，$\angle BDC=A$，所以 $\sin A=\frac{a}{2R}$。
 - 若 $A$ 是鈍角：$A$ 和 $D$ 在弦 $BC$ 的兩側，$ABDC$ 是圓內接四邊形，對角互補，$\angle BDC=180^\circ-A$，而 $\sin(180^\circ-A)=\sin A$，結果相同。
 - 若 $A=90^\circ$：$BC$ 本身就是直徑，$a=2R$，$\sin A=1=\frac{a}{2R}$。
 
+</ProofStep>
+
+<ProofStep n={5}>
+
 三種情形都有 $\frac{a}{\sin A}=2R$。再由第一部分，三個比值都等於 $2R$。
+
+</ProofStep>

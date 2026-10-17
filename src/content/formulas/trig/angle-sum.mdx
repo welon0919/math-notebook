@@ -129,3 +129,49 @@ $$
 &=\frac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta}.
 \end{aligned}
 $$
+
+## 圖解：銳角的情形
+
+上面的推導對任意角都成立。當 $\alpha$、$\beta$ 和 $\alpha+\beta$ 都是銳角時，也可以用疊放的直角三角形直接看出 $\sin(\alpha+\beta)$ 的公式：
+
+<Graph name="trig/angle-sum" proof />
+
+<ProofStep n={1}>
+
+**單位長的斜邊**：取 $OP=1$，和 $x$ 軸夾 $\alpha+\beta$。從 $P$ 作 $x$ 軸的垂線，垂足 $B$，則 $PB=\sin(\alpha+\beta)$。
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+**第一個直角三角形**：在 $OP$ 下方作 $\angle POQ=\beta$，並從 $P$ 作 $OQ$ 的垂線，垂足 $Q$。直角三角形 $OQP$ 的斜邊 $OP=1$，所以 $OQ=\cos\beta$、$QP=\sin\beta$。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+**第二個直角三角形**：從 $Q$ 作 $x$ 軸的垂線，垂足 $A$。$\angle QOA=(\alpha+\beta)-\beta=\alpha$，直角三角形 $OAQ$ 的斜邊 $OQ=\cos\beta$，所以 $AQ=OQ\sin\alpha=\sin\alpha\cos\beta$。
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**上面那一段**：過 $Q$ 作水平線交 $PB$ 於 $R$。$QR\parallel OA$，所以 $\angle RQO=\angle QOA=\alpha$（內錯角）。$\angle OQP=90^\circ$，所以 $\angle PQR=90^\circ-\alpha$；在直角三角形 $PRQ$（$R$ 是直角）中，$\angle RPQ=90^\circ-\angle PQR=\alpha$。斜邊 $QP=\sin\beta$，所以 $PR=QP\cos\alpha=\cos\alpha\sin\beta$。
+
+</ProofStep>
+
+<ProofStep n={5}>
+
+**相加**：$RB$ 和 $AQ$ 都垂直 $x$ 軸，$QR$ 是水平線，所以 $RBAQ$ 是長方形，$RB=AQ$。因此
+
+$$
+\begin{aligned}
+\sin(\alpha+\beta)&=PB=RB+PR\\
+&=\sin\alpha\cos\beta+\cos\alpha\sin\beta,
+\end{aligned}
+$$
+
+和上面推導的結果一致。
+
+</ProofStep>
+

@@ -69,12 +69,38 @@ $$
 
 ## 證明
 
+<Graph name="trig/law-of-cosines" proof />
+
+<ProofStep n={1}>
+
 用坐標。把 $C$ 放在原點，邊 $CA$ 放在 $x$ 軸正向上，$B$ 在上半平面：
 
 - $A=(b,\,0)$，因為 $CA=b$。
 - $B=(a\cos C,\ a\sin C)$，因為 $CB=a$，且 $CB$ 和 $x$ 軸正向的夾角是 $C$（由三角函數的定義，距離原點 $a$、角度 $C$ 的點就是這個坐標；$C$ 是鈍角時同樣成立）。
 
-$c$ 是 $A$、$B$ 的距離，用距離公式：
+</ProofStep>
+
+<ProofStep n={2}>
+
+**作高**：從 $B$ 作 $x$ 軸的垂線，垂足是 $H=(a\cos C,\,0)$，所以 $BH=a\sin C$（$B$ 在上半平面，$\sin C>0$）。$H$ 的位置由 $a\cos C$ 決定：$C$ 是銳角時 $H$ 在 $C$ 的右邊，鈍角時 $\cos C<0$，$H$ 在 $C$ 的左邊，直角時 $H$ 就是 $C$。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+**直角三角形 $ABH$**：$BH$ 垂直 $x$ 軸，所以 $\triangle ABH$ 在 $H$ 是直角，兩股是 $BH=a\sin C$ 和 $HA=|b-a\cos C|$。由畢氏定理（平方後絕對值不影響；$H=A$ 時 $c=BH$，下式也成立）：
+
+$$
+c^2=(a\sin C)^2+(a\cos C-b)^2.
+$$
+
+這就是用距離公式算 $A$、$B$ 兩點的距離。
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**展開**：
 
 $$
 \begin{aligned}
@@ -87,4 +113,8 @@ c^2&=(a\cos C-b)^2+(a\sin C)^2\\
 \end{aligned}
 $$
 
-第二步用乘法公式展開 $(a\cos C-b)^2$，最後一步用 $\cos^2 C+\sin^2 C=1$。另外兩個式子（$a^2=\ldots$、$b^2=\ldots$）只要把不同的角放在原點，證法相同。
+第二步用乘法公式展開 $(a\cos C-b)^2$，最後一步用 $\cos^2 C+\sin^2 C=1$。
+
+</ProofStep>
+
+另外兩個式子（$a^2=\ldots$、$b^2=\ldots$）只要把不同的角放在原點，證法相同。
