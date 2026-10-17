@@ -26,6 +26,9 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 
+# feature files
+features/
+
 # Playwright output and screenshots for review
 screenshots/
 test-results/
