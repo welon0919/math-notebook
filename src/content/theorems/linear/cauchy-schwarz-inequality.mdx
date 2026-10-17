@@ -85,3 +85,47 @@ $$
 兩邊乘以 $|\mathbf{v}|^2>0$：$(\mathbf{u}\cdot\mathbf{v})^2\le|\mathbf{u}|^2|\mathbf{v}|^2$。兩邊開根號（都不是負數），得 $|\mathbf{u}\cdot\mathbf{v}|\le|\mathbf{u}|\,|\mathbf{v}|$。
 
 **等號何時成立**：等號成立表示上面取的 $t$ 使 $|\mathbf{u}-t\mathbf{v}|^2=0$，也就是 $\mathbf{u}=t\mathbf{v}$，兩向量平行。反過來，若 $\mathbf{u}=s\mathbf{v}$，左邊 $|s|\,|\mathbf{v}|^2$、右邊 $|s|\,|\mathbf{v}|\cdot|\mathbf{v}|$，相等。
+
+## 圖解證明
+
+在平面上，上面的證明可以畫成圖：取的 $t$ 正是投影的係數，而 $|\mathbf{u}-t\mathbf{v}|^2\ge 0$ 就是「斜邊不短於股」。以下設 $\mathbf{v}\neq\mathbf{0}$。
+
+<Graph name="linear/cauchy-schwarz" proof />
+
+<ProofStep n={1}>
+
+**投影**：把 $\mathbf{u}$ 投影到 $\mathbf{v}$ 的方向，得到 $\mathbf{p}=\dfrac{\mathbf{u}\cdot\mathbf{v}}{|\mathbf{v}|^2}\,\mathbf{v}$。它的長度是
+
+$$
+|\mathbf{p}|=\frac{|\mathbf{u}\cdot\mathbf{v}|}{|\mathbf{v}|^2}\,|\mathbf{v}|=\frac{|\mathbf{u}\cdot\mathbf{v}|}{|\mathbf{v}|}.
+$$
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+**直角三角形**：$\mathbf{u}-\mathbf{p}$ 和 $\mathbf{v}$ 垂直，因為
+
+$$
+(\mathbf{u}-\mathbf{p})\cdot\mathbf{v}=\mathbf{u}\cdot\mathbf{v}-\frac{\mathbf{u}\cdot\mathbf{v}}{|\mathbf{v}|^2}\,(\mathbf{v}\cdot\mathbf{v})=0.
+$$
+
+$\mathbf{p}$ 是 $\mathbf{v}$ 的倍數，所以 $\mathbf{u}-\mathbf{p}$ 也和 $\mathbf{p}$ 垂直。$\mathbf{u}=\mathbf{p}+(\mathbf{u}-\mathbf{p})$，三個向量圍成以 $\mathbf{u}$ 為斜邊的直角三角形。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+**斜邊不短於股**：由畢氏定理 $|\mathbf{u}|^2=|\mathbf{p}|^2+|\mathbf{u}-\mathbf{p}|^2\ge|\mathbf{p}|^2$，所以 $|\mathbf{p}|\le|\mathbf{u}|$，也就是
+
+$$
+\frac{|\mathbf{u}\cdot\mathbf{v}|}{|\mathbf{v}|}\le|\mathbf{u}|\quad\Longrightarrow\quad|\mathbf{u}\cdot\mathbf{v}|\le|\mathbf{u}|\,|\mathbf{v}|.
+$$
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**等號何時成立**：等號成立 $\iff|\mathbf{u}-\mathbf{p}|=0\iff\mathbf{u}=\mathbf{p}$，也就是 $\mathbf{u}$ 是 $\mathbf{v}$ 的倍數，兩向量平行。
+
+</ProofStep>

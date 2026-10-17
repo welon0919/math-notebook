@@ -32,6 +32,14 @@ export interface GraphContext {
   fmt(x: number): string;
   /** KaTeX HTML for a label, e.g. `board.create('text', [x, y, ctx.tex('c^2')])`. */
   tex(latex: string): string;
+  /** Adds a button under the graph, before 重設. Buttons are rebuilt whenever the graph is. */
+  button(label: string, onClick: () => void): void;
+  /**
+   * Plays an animation: calls `frame(p)` with p easing from 0 to 1 over `ms` milliseconds,
+   * redrawing the board after each call. With reduced motion it calls `frame(1)` once.
+   * Starting another animation stops the one in progress.
+   */
+  animate(ms: number, frame: (p: number) => void): void;
   /**
    * Proof mode: names objects so `steps` can show, hide and highlight them.
    * Calling it again with the same name adds more objects to that name.

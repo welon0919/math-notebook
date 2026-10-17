@@ -68,3 +68,49 @@ export function shadeUnder(
   };
   return region;
 }
+
+/** Faint unit grid for reading coordinates. */
+export function unitGrid(board: JXG.Board, ctx: GraphContext) {
+  const line = { strokeColor: ctx.color.grid, strokeOpacity: 0.6 };
+  board.create('grid', [], { ...line, majorStep: 1, minorElements: 0, highlight: false, major: { face: 'line', ...line } });
+}
+
+/** A draggable vector tip from the origin, moving freely inside `area`. */
+export function vectorTip(
+  board: JXG.Board,
+  ctx: GraphContext,
+  opts: { at: [number, number]; name: string; color: string; area: [number, number, number, number]; arrow?: object },
+) {
+  const { at, name, color, area, arrow = {} } = opts;
+  const tip = board.create('point', at, {
+    name: ctx.tex(name),
+    strokeColor: color,
+    fillColor: color,
+    label: { offset: [8, 8], strokeColor: color },
+  });
+  keepInside(tip, area);
+  board.create('arrow', [[0, 0], tip], { strokeColor: color, strokeWidth: 3, fixed: true, ...arrow });
+  return tip;
+}
+
+/**
+ * Lets a freely dragged vector tip land exactly on special directions relative to another
+ * vector (e.g. 90° for perpendicular, 0° and 180° for parallel): within `toleranceDeg`
+ * it is rotated onto that direction, keeping its length. Call it for both vectors.
+ */
+export function magnet(tip: JXG.Point, other: JXG.Point, anglesDeg: number[], toleranceDeg = 1.5) {
+  tip.on('drag', () => {
+    const r = Math.hypot(tip.X(), tip.Y());
+    if (r < 1e-9 || Math.hypot(other.X(), other.Y()) < 1e-9) return;
+    const base = Math.atan2(other.Y(), other.X());
+    const rel = Math.atan2(tip.Y(), tip.X()) - base;
+    for (const deg of anglesDeg) {
+      const target = (deg * Math.PI) / 180;
+      const gap = Math.atan2(Math.sin(rel - target), Math.cos(rel - target));
+      if (Math.abs(gap) < (toleranceDeg * Math.PI) / 180) {
+        tip.moveTo([r * Math.cos(base + target), r * Math.sin(base + target)]);
+        return;
+      }
+    }
+  });
+}

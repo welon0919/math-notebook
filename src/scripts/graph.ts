@@ -132,6 +132,8 @@ class GraphMount {
   private readonly status: HTMLElement;
   private readonly readoutEl: HTMLElement;
   private readonly buttons: HTMLButtonElement[];
+  /** Buttons added by the graph with `ctx.button`, removed before each rebuild. */
+  private graphButtons: HTMLButtonElement[] = [];
 
   // Proof mode
   private readonly steps;
@@ -141,8 +143,11 @@ class GraphMount {
   private tween = 0;
   private named = new Map<string, JXG.GeometryElement[]>();
   private styles = new Map<JXG.GeometryElement, Style>();
-  /** Objects a graph hides itself (e.g. a polygon's borders); steps never show them. */
-  private hiddenByGraph = new Set<JXG.GeometryElement>();
+  /**
+   * Each object's own visibility from `build`: steps never show what a graph hides itself
+   * (e.g. a polygon's borders), and showing restores a visibility rule given as a function.
+   */
+  private ownVisibility = new Map<JXG.GeometryElement, unknown>();
   private readonly stepTexts: string[] = [];
   private readonly stepEl: HTMLElement | null;
   private readonly prevButton: HTMLButtonElement | null;
@@ -195,6 +200,8 @@ class GraphMount {
     cancelAnimationFrame(this.tween);
     this.readouts = [];
     this.readoutEl.replaceChildren();
+    for (const b of this.graphButtons) b.remove();
+    this.graphButtons = [];
     this.named = new Map();
     this.setProgress();
 
@@ -223,6 +230,32 @@ class GraphMount {
       color: colors,
       fmt,
       tex: (latex) => this.mathLib.renderLatex(latex),
+      button: (label, onClick) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'graph-button';
+        button.textContent = label;
+        button.addEventListener('click', onClick);
+        const controls = this.root.querySelector('.graph-controls')!;
+        controls.insertBefore(button, controls.querySelector('[data-graph-reset]'));
+        this.graphButtons.push(button);
+      },
+      animate: (ms, frame) => {
+        cancelAnimationFrame(this.tween);
+        if (reducedMotion.matches) {
+          frame(1);
+          board.update();
+          return;
+        }
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = Math.min(1, (now - start) / ms);
+          frame(ease(t));
+          board.update();
+          if (t < 1) this.tween = requestAnimationFrame(step);
+        };
+        this.tween = requestAnimationFrame(step);
+      },
       readout: (render) => {
         const el = document.createElement('p');
         this.readoutEl.append(el);
@@ -253,7 +286,7 @@ class GraphMount {
         },
       ]),
     );
-    this.hiddenByGraph = new Set(Object.values(board.objects).filter((el) => el.visProp.visible === false));
+    this.ownVisibility = new Map(Object.values(board.objects).map((el) => [el, el.visProp.visible]));
     if (this.steps.length > 0) {
       this.checkStepNames();
       this.applyStep();
@@ -331,7 +364,8 @@ class GraphMount {
     }
     for (const [n, visible] of shown) {
       for (const el of this.named.get(n) ?? []) {
-        if (!this.hiddenByGraph.has(el)) el.setAttribute({ visible });
+        const own = this.ownVisibility.get(el);
+        el.setAttribute({ visible: visible && own !== false ? (own ?? true) : false });
       }
     }
 
