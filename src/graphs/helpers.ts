@@ -45,3 +45,26 @@ export function piTicks(board: JXG.Board, ctx: GraphContext, opts: { x0?: number
     }
   }
 }
+
+/**
+ * A filled region between y = f(x) and y = base, for from() ≤ x ≤ to(), recomputed on every update.
+ * Use it to shade an area under a curve.
+ */
+export function shadeUnder(
+  board: JXG.Board,
+  f: (x: number) => number,
+  from: () => number,
+  to: () => number,
+  attrs: object,
+  base = 0,
+) {
+  const region = board.create('curve', [[0], [0]], { fixed: true, strokeWidth: 0, highlight: false, ...attrs });
+  region.updateDataArray = function () {
+    const [a, b] = [from(), to()];
+    const n = 100;
+    const xs = Array.from({ length: n + 1 }, (_, i) => a + ((b - a) * i) / n);
+    this.dataX = [a, ...xs, b];
+    this.dataY = [base, ...xs.map(f), base];
+  };
+  return region;
+}

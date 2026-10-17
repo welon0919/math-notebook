@@ -565,16 +565,6 @@ main > *,
   font-size: 0.9rem;
 }
 
-/* Inline SVG diagrams inside proofs; drawn with currentColor so they follow the theme. */
-.proof-figure {
-  margin: 1rem 0;
-  text-align: center;
-}
-
-.proof-figure svg {
-  max-width: 100%;
-  height: auto;
-}
 
 /* Interactive graphs (src/components/Graph.astro) */
 .graph {

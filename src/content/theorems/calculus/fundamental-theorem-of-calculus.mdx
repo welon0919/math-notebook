@@ -75,11 +75,27 @@ $$
 
 所以 $F(b)-F(a)=\sum f(c_i)\,\Delta x_i$，右邊正是 $f$ 的一個**黎曼和**。不論怎麼分割，等式左邊都是同一個數；而分割越來越細時，黎曼和會趨近 $\int_a^b f(x)\,dx$（$f$ 連續所以可積）。因此兩者相等。
 
-**第二部分：$\frac{d}{dx}\int_a^x f(t)\,dt=f(x)$。** 令 $A(x)=\int_a^x f(t)\,dt$。對 $h>0$：
+**第二部分：$\frac{d}{dx}\int_a^x f(t)\,dt=f(x)$。** 跟著圖一步一步看（圖中 $a=0$，可以拖動 $x$ 和改變 $h$）：
+
+<Graph name="calculus/ftc" proof />
+
+<ProofStep n={1}>
+
+令 $A(x)=\int_a^x f(t)\,dt$，也就是從 $a$ 到 $x$、曲線 $y=f(t)$ 底下的面積。
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+對 $h>0$，$A(x+h)-A(x)$ 是從 $x$ 到 $x+h$ 那一條的面積：
 
 $$
 \frac{A(x+h)-A(x)}{h}=\frac{1}{h}\int_x^{x+h}f(t)\,dt.
 $$
+
+</ProofStep>
+
+<ProofStep n={3}>
 
 設 $m_h$、$M_h$ 是 $f$ 在 $[x,x+h]$ 上的最小值和最大值，則
 
@@ -87,4 +103,10 @@ $$
 m_h\le\frac{1}{h}\int_x^{x+h}f(t)\,dt\le M_h.
 $$
 
+</ProofStep>
+
+<ProofStep n={4}>
+
 $f$ 在 $x$ 連續，所以 $h\to 0$ 時，區間縮到 $x$ 一點，$m_h$ 和 $M_h$ 都趨近 $f(x)$。中間的差商被夾住，也趨近 $f(x)$。$h<0$ 時用 $[x+h,x]$ 同樣處理。所以 $A'(x)=f(x)$。
+
+</ProofStep>

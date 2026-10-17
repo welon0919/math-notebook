@@ -61,22 +61,35 @@ $$
 
 ## 推導
 
-**第一式**。先看 $0<x<\frac{\pi}{2}$。在單位圓上取 $O$ 為原點、$A(1,0)$、角度 $x$ 的點 $P(\cos x,\sin x)$，延長 $OP$ 交過 $A$ 的垂直線於 $T(1,\tan x)$。
+**第一式**。先看 $0<x<\frac{\pi}{2}$。跟著圖一步一步看，也可以用滑桿改變 $x$：
 
-<figure class="proof-figure">
-<svg viewBox="-14 6 170 150" width="190" height="168" role="img" aria-label="單位圓的四分之一，三角形 OAP 在扇形 OAP 內，扇形又在三角形 OAT 內">
-  <path d="M130,140 A120,120 0 0,0 10,20" fill="none" stroke="currentColor" stroke-width="1.2"/>
-  <polygon points="10,140 130,140 130,39.3" fill="currentColor" fill-opacity="0.07" stroke="currentColor" stroke-width="1.2"/>
-  <path d="M10,140 L130,140 A120,120 0 0,0 101.9,62.9 Z" fill="currentColor" fill-opacity="0.1" stroke="none"/>
-  <polygon points="10,140 130,140 101.9,62.9" fill="currentColor" fill-opacity="0.12" stroke="currentColor" stroke-width="1.2"/>
-  <path d="M34,140 A24,24 0 0,0 28.4,124.6" fill="none" stroke="currentColor" stroke-width="1"/>
-  <g font-size="13" fill="currentColor">
-    <text x="-2" y="152">O</text><text x="132" y="153">A</text>
-    <text x="92" y="58">P</text><text x="135" y="40">T</text>
-    <text x="38" y="134" font-style="italic">x</text>
-  </g>
-</svg>
-</figure>
+<Graph name="calculus/sinx-over-x" proof />
+
+<ProofStep n={1}>
+
+在單位圓上取 $O$ 為原點、$A(1,0)$、角度 $x$ 的點 $P(\cos x,\sin x)$，延長 $OP$ 交過 $A$ 的垂直線於 $T(1,\tan x)$。
+
+</ProofStep>
+
+<ProofStep n={2}>
+
+$\triangle OAP$ 的底 $OA=1$、高是 $P$ 的 $y$ 坐標 $\sin x$，面積 $\frac{1}{2}\sin x$。
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+扇形 $OAP$ 的半徑 $1$、圓心角 $x$，面積 $\frac{1}{2}r^2x=\frac{1}{2}x$（扇形面積公式需要 $x$ 用弧度）。
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+$\triangle OAT$ 的底 $OA=1$、高 $AT=\tan x$，面積 $\frac{1}{2}\tan x$。
+
+</ProofStep>
+
+<ProofStep n={5}>
 
 三個圖形一個包含一個：$\triangle OAP\subset$ 扇形 $OAP\subset\triangle OAT$，所以面積
 
@@ -84,13 +97,15 @@ $$
 \frac{1}{2}\sin x<\frac{1}{2}x<\frac{1}{2}\tan x.
 $$
 
-（扇形面積 $\frac{1}{2}r^2x$ 需要 $x$ 用弧度，$r=1$。）全部除以 $\frac{1}{2}\sin x$（是正數）再取倒數，不等號方向反過來：
+全部除以 $\frac{1}{2}\sin x$（是正數）再取倒數，不等號方向反過來：
 
 $$
 \cos x<\frac{\sin x}{x}<1.
 $$
 
 $x\to 0^+$ 時 $\cos x\to 1$，$\frac{\sin x}{x}$ 被夾在兩個都趨近 $1$ 的式子中間（夾擠定理），所以趨近 $1$。$x<0$ 時，$\frac{\sin x}{x}=\frac{\sin(-x)}{-x}$，化成正的情形，結果相同。
+
+</ProofStep>
 
 **第二式**。設 $a_n=\left(1+\frac{1}{n}\right)^n$，用二項式定理展開並整理第 $k$ 項：
 
