@@ -13,7 +13,7 @@ export default {
   boundingBox: [-6, 6.5, 6, -2.5],
   build(board, ctx) {
     const slider = (y: number, name: string, min: number, start: number, max: number) =>
-      board.create('slider', [[-5.4, y], [-0.6, y], [min, start, max]], { name, snapWidth: step, digits: 1 });
+      board.create('slider', [[-5.6, y], [-2.6, y], [min, start, max]], { name, snapWidth: step, digits: 1 });
     const sa = slider(5.7, 'a', -2, 1, 2);
     const sb = slider(4.9, 'b', -5, -1, 5);
     const sc = slider(4.1, 'c', -5, -2, 5);

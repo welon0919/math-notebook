@@ -612,6 +612,22 @@ html.js .graph-steps {
   background: var(--surface);
 }
 
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+}
+
+.graph-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .graph-readout {
   margin-top: 0.5rem;
 }

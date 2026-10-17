@@ -28,8 +28,8 @@ export default {
     unitGrid(board, ctx);
     // The target columns of A, dragged by the reader; dashed until the transformation reaches them.
     const ghost = { dash: 2, strokeWidth: 2, strokeOpacity: 0.6 };
-    const E1 = vectorTip(board, ctx, { at: [1.5, 0.5], name: 'A\\mathbf{e}_1', color: color.accent, area, arrow: ghost });
-    const E2 = vectorTip(board, ctx, { at: [-0.5, 1], name: 'A\\mathbf{e}_2', color: color.accent2, area, arrow: ghost });
+    const E1 = vectorTip(board, ctx, { at: [2.5, 0.5], name: 'A\\mathbf{e}_1', color: color.accent, area, arrow: ghost });
+    const E2 = vectorTip(board, ctx, { at: [-1, 2], name: 'A\\mathbf{e}_2', color: color.accent2, area, arrow: ghost });
     // Free dragging, with a magnet so collinear columns (det = 0) can be reached exactly.
     magnet(E1, E2, [0, 180]);
     magnet(E2, E1, [0, 180]);
@@ -61,7 +61,7 @@ export default {
     board.create('arrow', [O, P2], { fixed: true, strokeColor: color.accent2, strokeWidth: 3 });
 
     // A third vector x and its image M(t)x, which ends at Ax.
-    const X = board.create('point', [1, 1.5], { name: ctx.tex('\\mathbf{x}'), strokeColor: color.muted, fillColor: color.muted, label: { offset: [8, -14], strokeColor: color.muted } });
+    const X = board.create('point', [1.5, -1], { name: ctx.tex('\\mathbf{x}'), strokeColor: color.muted, fillColor: color.muted, label: { offset: [8, -14], strokeColor: color.muted } });
     keepInside(X, area);
     board.create('arrow', [O, X], { fixed: true, strokeColor: color.muted, strokeWidth: 2, dash: 2 });
     const x = (): Vec => [X.X(), X.Y()];

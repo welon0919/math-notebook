@@ -9,7 +9,7 @@ export default {
   title: '疊合：兩個波相加還是一個波',
   description:
     '用滑桿改變 a、b。圖中畫出 y = a sin θ、y = b cos θ、兩者相加的波，以及 y = r sin(θ + φ)，其中 r = √(a² + b²)、cos φ = a/r、sin φ = b/r。相加的波和 r sin(θ + φ) 永遠完全重疊。',
-  boundingBox: [-0.7, 6.2, 7.7, -4.2],
+  boundingBox: [-0.7, 5.6, 7.7, -4.2],
   axis: false,
   build(board, ctx) {
     const { color } = ctx;
@@ -25,8 +25,8 @@ export default {
 
     const slider = (y: number, name: string, start: number) =>
       board.create('slider', [[0.3, y], [2.8, y], [-2.5, start, 2.5]], { name, snapWidth: step, digits: 1 });
-    const sa = slider(5.6, 'a', 2);
-    const sb = slider(4.9, 'b', 1);
+    const sa = slider(5.1, 'a', 2);
+    const sb = slider(4.4, 'b', 1);
     const a = () => snap(sa.Value(), step);
     const b = () => snap(sb.Value(), step);
     const r = () => Math.hypot(a(), b());
@@ -39,15 +39,12 @@ export default {
     wave((t) => a() * Math.sin(t) + b() * Math.cos(t), { strokeColor: color.ink, strokeWidth: 6, strokeOpacity: 0.35 });
     wave((t) => r() * Math.sin(t + phi()), { strokeColor: color.highlight, strokeWidth: 2.5 });
 
-    // Legend, top right.
-    const legend = (y: number, latex: string, attrs: object) => {
-      board.create('segment', [[4.6, y], [5.0, y]], { fixed: true, ...attrs });
-      board.create('text', [5.1, y, ctx.tex(latex)], { anchorX: 'left', anchorY: 'middle', fixed: true, fontSize: 13 });
-    };
-    legend(5.7, 'a\\sin\\theta', { strokeColor: color.accent, strokeWidth: 2, dash: 2 });
-    legend(5.1, 'b\\cos\\theta', { strokeColor: color.accent2, strokeWidth: 2, dash: 2 });
-    legend(4.5, 'a\\sin\\theta+b\\cos\\theta', { strokeColor: color.ink, strokeWidth: 6, strokeOpacity: 0.35 });
-    legend(3.9, 'r\\sin(\\theta+\\varphi)', { strokeColor: color.highlight, strokeWidth: 2.5 });
+    ctx.legend([
+      { label: '$a\\sin\\theta$', color: color.accent, dash: true, width: 2 },
+      { label: '$b\\cos\\theta$', color: color.accent2, dash: true, width: 2 },
+      { label: '$a\\sin\\theta+b\\cos\\theta$', color: color.ink, width: 6, opacity: 0.35 },
+      { label: '$r\\sin(\\theta+\\varphi)$', color: color.highlight, width: 2.5 },
+    ]);
 
     const f = ctx.fmt;
     const zero = () => r() < eps;

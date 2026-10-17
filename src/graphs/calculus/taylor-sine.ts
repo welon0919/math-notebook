@@ -33,12 +33,10 @@ export default {
     board.create('functiongraph', [Math.sin], { strokeColor: color.ink, strokeWidth: 5, strokeOpacity: 0.35 });
     board.create('functiongraph', [(x: number) => taylor(m(), x)], { strokeColor: color.accent, strokeWidth: 2.5 });
 
-    const legend = (y: number, latex: string, attrs: object) => {
-      board.create('segment', [[3.4, y], [4.2, y]], { fixed: true, ...attrs });
-      board.create('text', [4.4, y, ctx.tex(latex)], { fixed: true, anchorX: 'left', anchorY: 'middle', fontSize: 13 });
-    };
-    legend(3.3, 'y=\\sin x', { strokeColor: color.ink, strokeWidth: 5, strokeOpacity: 0.35 });
-    legend(2.7, 'y=T(x)', { strokeColor: color.accent, strokeWidth: 2.5 });
+    ctx.legend([
+      { label: '$y=\\sin x$', color: color.ink, width: 5, opacity: 0.35 },
+      { label: '$y=T(x)$（泰勒多項式）', color: color.accent },
+    ]);
 
     const fm = ctx.fmt;
     ctx.readout(() => {

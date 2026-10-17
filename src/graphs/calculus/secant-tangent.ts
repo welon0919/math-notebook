@@ -29,13 +29,10 @@ export default {
     board.create('line', [() => [secant() * x() - f(x()), -secant(), 1]], { strokeColor: color.accent2, strokeWidth: 2 });
     board.create('line', [() => [df(x()) * x() - f(x()), -df(x()), 1]], { strokeColor: color.highlight, strokeWidth: 2, dash: 3 });
 
-    // Legend under the slider (the curve passes through the top right): which line is which.
-    const legend = (y: number, text: string, attrs: object) => {
-      board.create('segment', [[-3.6, y], [-3.0, y]], { fixed: true, ...attrs });
-      board.create('text', [-2.85, y, text], { fixed: true, anchorX: 'left', anchorY: 'middle', fontSize: 13 });
-    };
-    legend(3.7, '割線 PQ', { strokeColor: color.accent2, strokeWidth: 2 });
-    legend(3.2, 'P 點的切線', { strokeColor: color.highlight, strokeWidth: 2, dash: 3 });
+    ctx.legend([
+      { label: '割線 $PQ$', color: color.accent2 },
+      { label: '$P$ 點的切線（黃色虛線）', color: color.highlight, dash: true },
+    ]);
 
     const fm = ctx.fmt;
     ctx.readout(() =>

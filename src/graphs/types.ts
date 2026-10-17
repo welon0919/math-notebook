@@ -32,6 +32,11 @@ export interface GraphContext {
   fmt(x: number): string;
   /** KaTeX HTML for a label, e.g. `board.create('text', [x, y, ctx.tex('c^2')])`. */
   tex(latex: string): string;
+  /**
+   * A legend under the graph (HTML, so it never covers the drawing): one entry per line style,
+   * e.g. `{ label: '$y=\\sin x$', color: ctx.color.accent, dash: true }`.
+   */
+  legend(items: LegendItem[]): void;
   /** Adds a button under the graph, before 重設. Buttons are rebuilt whenever the graph is. */
   button(label: string, onClick: () => void): void;
   /**
@@ -52,6 +57,15 @@ export interface GraphContext {
    * Compute moving coordinates from it, e.g. `() => x0 + ctx.progress(3) * dx`.
    */
   progress(n: number): number;
+}
+
+export interface LegendItem {
+  /** Text, may contain `$...$` math. */
+  label: string;
+  color: string;
+  dash?: boolean;
+  width?: number;
+  opacity?: number;
 }
 
 export interface ProofStep {

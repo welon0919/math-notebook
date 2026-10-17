@@ -119,7 +119,9 @@ const scaleOpacity = (o: Opacity, k: number): Opacity => (typeof o === 'function
 const atLeast = (o: Opacity, min: number): Opacity => (typeof o === 'function' ? () => Math.max(o(), min) : Math.max(o, min));
 
 /** How much the objects outside a step's `highlight` fade. */
-const fadedOpacity = 0.3;
+const fadedOpacity = 0.45;
+/** Reference elements that keep their look in every step. */
+const neverFaded = new Set(['grid', 'axis', 'ticks']);
 const animationMs = 1200;
 const ease = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
 
@@ -134,6 +136,7 @@ class GraphMount {
   private readonly buttons: HTMLButtonElement[];
   /** Buttons added by the graph with `ctx.button`, removed before each rebuild. */
   private graphButtons: HTMLButtonElement[] = [];
+  private legendEl: HTMLElement | undefined;
 
   // Proof mode
   private readonly steps;
@@ -202,6 +205,8 @@ class GraphMount {
     this.readoutEl.replaceChildren();
     for (const b of this.graphButtons) b.remove();
     this.graphButtons = [];
+    this.legendEl?.remove();
+    this.legendEl = undefined;
     this.named = new Map();
     this.setProgress();
 
@@ -230,6 +235,18 @@ class GraphMount {
       color: colors,
       fmt,
       tex: (latex) => this.mathLib.renderLatex(latex),
+      legend: (items) => {
+        const list = document.createElement('ul');
+        list.className = 'graph-legend';
+        for (const { label, color, dash = false, width = 2.5, opacity = 1 } of items) {
+          const li = document.createElement('li');
+          const sample = `<svg width="28" height="10" aria-hidden="true"><line x1="1" y1="5" x2="27" y2="5" stroke="${color}" stroke-width="${width}" stroke-opacity="${opacity}"${dash ? ' stroke-dasharray="5 3"' : ''}/></svg>`;
+          li.innerHTML = `${sample}<span>${this.mathLib.renderMathText(label)}</span>`;
+          list.append(li);
+        }
+        this.readoutEl.before(list);
+        this.legendEl = list;
+      },
       button: (label, onClick) => {
         const button = document.createElement('button');
         button.type = 'button';
@@ -381,6 +398,8 @@ class GraphMount {
           fillColor: c.highlight,
           fillOpacity: atLeast(style.fillOpacity, 0.35),
         });
+      } else if (neverFaded.has(el.elType)) {
+        el.setAttribute(style);
       } else {
         el.setAttribute({
           ...style,
