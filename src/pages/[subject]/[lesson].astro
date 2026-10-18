@@ -39,7 +39,7 @@ const { position, prev, next } = lessonNav(lesson, lessons);
 const subjectName = (id: string) => subjects.find((s) => s.id === id)!.name;
 ---
 
-<Base title={lesson.data.title} description={`${subject.name}課程「${lesson.data.title}」：${lesson.data.summary}`}>
+<Base title={lesson.data.title} description={`${subject.name}課程「${lesson.data.title}」：${lesson.data.summary.replaceAll('$', '')}`}>
   <p class="back-link"><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
   <h1>{lesson.data.title}</h1>
 
