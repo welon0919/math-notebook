@@ -1,0 +1,197 @@
+---
+subject: algebra
+unit: exponents-logarithms
+order: 13
+title: 對數與對數函數
+summary: 對數是指數的反運算；用對數律與換底公式計算，並認識對數函數的圖形。
+prerequisites: [exponential-functions, inverse-functions]
+formulas: [logarithm-laws, change-of-base]
+---
+
+## 學習目標
+
+- 學完這課，你能在指數式與對數式之間互換，並求出簡單的對數值。
+- 學完這課，你能用對數律和換底公式化簡與計算。
+- 學完這課，你能說明 $y=\log_a x$ 和 $y=a^x$ 的圖形為什麼對 $y=x$ 對稱，並說出對數函數的性質。
+
+## 概念說明
+
+### 對數的定義
+
+$2^x=8$ 的解是 $x=3$，很容易看出來；但 $2^x=5$ 的解是多少？$2^2=4$、$2^3=8$，所以解在 $2$ 和 $3$ 之間，卻沒有現成的寫法。我們給這個數一個名字：
+
+$$
+\log_a b=x \iff a^x=b \qquad (a>0,\ a\neq 1,\ b>0)
+$$
+
+$\log_a b$ 讀作「以 $a$ 為底 $b$ 的對數」，回答的問題是：**$a$ 的幾次方等於 $b$？** $a$ 稱為**底數**，$b$ 稱為**真數**。所以 $2^x=5$ 的解就是 $x=\log_2 5$。
+
+條件的來由：
+
+- $b>0$：由〈指數與指數函數〉，$a^x$ 永遠是正數，真數若是 $0$ 或負數就找不到 $x$。
+- $a\neq 1$：$1^x$ 永遠是 $1$，$\log_1 5$ 找不到答案，$\log_1 1$ 則每個 $x$ 都是答案。
+- $a>0$：指數函數只對正的底數定義。
+
+由定義直接得到：$\log_a 1=0$（因為 $a^0=1$）、$\log_a a=1$、$\log_a a^x=x$、$a^{\log_a b}=b$。
+
+### 對數律
+
+指數把乘法變成指數相加，所以對數也把乘法變成加法。設 $\log_a x=m$、$\log_a y=n$，也就是 $x=a^m$、$y=a^n$（$x,y>0$）：
+
+- **乘法**：$xy=a^m a^n=a^{m+n}$，所以 $\log_a(xy)=m+n=\log_a x+\log_a y$。
+- **除法**：$\dfrac{x}{y}=\dfrac{a^m}{a^n}=a^{m-n}$，所以 $\log_a\dfrac{x}{y}=\log_a x-\log_a y$。
+- **次方**：$x^r=(a^m)^r=a^{mr}$，所以 $\log_a x^r=r\log_a x$。
+
+### 換底公式
+
+計算機通常只有以 $10$ 為底的對數。要算 $\log_2 5$，設 $\log_a b=x$，即 $a^x=b$。兩邊取以 $c$ 為底的對數，再用次方的對數律：
+
+$$
+\log_c a^x=\log_c b \;\Longrightarrow\; x\log_c a=\log_c b \;\Longrightarrow\; \log_a b=\frac{\log_c b}{\log_c a}
+$$
+
+這就是**換底公式**（$c>0$，$c\neq1$）。取 $c=b$ 還得到 $\log_a b=\dfrac{1}{\log_b a}$。
+
+### 常用對數
+
+以 $10$ 為底的對數稱為**常用對數**，簡寫成 $\log x$。常用的近似值：
+
+$$
+\log 2\approx 0.3010,\qquad \log 3\approx 0.4771
+$$
+
+很多數可以由它們算出來，例如 $\log 5=\log\dfrac{10}{2}=1-\log 2\approx 0.6990$。
+
+常用對數可以看出一個數有幾位：$n$ 位的正整數 $N$ 滿足 $10^{n-1}\le N<10^n$，取對數得 $n-1\le\log N<n$。所以 **$\log N$ 的整數部分加 $1$，就是 $N$ 的位數**。
+
+### 對數函數
+
+$y=\log_a x$ 是 $y=a^x$ 的**反函數**：$y=\log_a x \iff a^y=x$，就是把 $y=a^x$ 的 $x$、$y$ 對調。由〈反函數〉，它的圖形是 $y=a^x$ 對直線 $y=x$ 鏡射，性質也全部對調過來：
+
+| | $y=a^x$ | $y=\log_a x$ |
+|---|---|---|
+| 定義域 | 所有實數 | $x>0$ |
+| 值域 | $y>0$ | 所有實數 |
+| 必經點 | $(0,1)$ | $(1,0)$ |
+| $a>1$ | 遞增 | 遞增 |
+| $0<a<1$ | 遞減 | 遞減 |
+
+拖動 $y=a^x$ 上的點 $P$，把坐標對調就得到 $y=\log_a x$ 上的點 $Q$：
+
+<Graph name="algebra/exp-log" />
+
+## 例題
+
+### 例題 1
+
+求值：(a) $\log_2 32$　(b) $\log_3\dfrac19$　(c) $\log_4 8$
+
+<Solution>
+
+每一題都在問「底數的幾次方等於真數」。
+
+(a) $2^5=32$，所以 $\log_2 32=5$。
+
+(b) $\dfrac19=3^{-2}$，所以 $\log_3\dfrac19=-2$。
+
+(c) 把 $4$ 和 $8$ 都寫成 $2$ 的次方：設 $\log_4 8=x$，則 $4^x=8$，$2^{2x}=2^3$，$2x=3$，所以 $\log_4 8=\dfrac32$。
+
+</Solution>
+
+### 例題 2
+
+化簡：(a) $\log_2 48-\log_2 3$　(b) $2\log_3 6-\log_3 4$　(c) $\log_2 9\cdot\log_3 8$
+
+<Solution>
+
+(a) 相減變成相除：$\log_2\dfrac{48}{3}=\log_2 16=4$。
+
+(b) 先把係數移到真數的次方：$2\log_3 6=\log_3 36$。再相減：$\log_3\dfrac{36}{4}=\log_3 9=2$。
+
+(c) 底數不同，用換底公式都換成常用對數：
+
+$$
+\log_2 9\cdot\log_3 8=\frac{\log 9}{\log 2}\cdot\frac{\log 8}{\log 3}=\frac{2\log 3}{\log 2}\cdot\frac{3\log 2}{\log 3}=6
+$$
+
+</Solution>
+
+### 例題 3
+
+$2^{100}$ 是幾位數？（$\log 2\approx 0.3010$）
+
+<Solution>
+
+$\log 2^{100}=100\log 2\approx 30.10$。所以 $30\le\log 2^{100}<31$，也就是
+
+$$
+10^{30}\le 2^{100}<10^{31}
+$$
+
+比 $10^{30}$（$31$ 位數中最小的）大，比 $10^{31}$（$32$ 位數中最小的）小，所以 $2^{100}$ 是 $31$ 位數。
+
+（$\log 2$ 的近似值有誤差，但 $100\log 2$ 的真正值在 $30.1029\ldots$，離 $30$ 和 $31$ 都很遠，不影響答案。）
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把對數的和拆錯。**
+
+- 錯誤寫法：$\log(x+y)=\log x+\log y$。
+- 為什麼錯：對數律說的是**乘積**的對數等於對數的和。檢查：$\log(10+10)=\log 20\approx1.30$，但 $\log10+\log10=2$。
+- 正確寫法：$\log x+\log y=\log(xy)$；$\log(x+y)$ 一般不能再拆。
+
+**錯誤 2：把兩個對數相除當成真數相除。**
+
+- 錯誤寫法：$\dfrac{\log 8}{\log 2}=\log\dfrac82=\log 4$。
+- 為什麼錯：真數相除對應的是對數**相減**。兩個對數相除是換底公式：$\dfrac{\log 8}{\log 2}=\log_2 8$。
+- 正確寫法：$\dfrac{\log 8}{\log 2}=\log_2 8=3$。
+
+**錯誤 3：把 $(\log x)^2$ 和 $\log x^2$ 當成一樣。**
+
+- 錯誤寫法：$\log 1000^2=(\log1000)^2=9$。
+- 為什麼錯：次方的對數律是 $\log x^r=r\log x$，次方變成**係數**，不是把對數平方。
+- 正確寫法：$\log1000^2=2\log1000=6$。
+
+## 練習題
+
+**1.** 把 $3^4=81$ 改寫成對數式，把 $\log_5\dfrac{1}{25}=-2$ 改寫成指數式。
+
+<Solution answer>
+
+$\log_3 81=4$；$5^{-2}=\dfrac{1}{25}$。
+
+</Solution>
+
+**2.** 求 $\log_6 4+\log_6 9$。
+
+<Solution answer>
+
+$\log_6(4\cdot9)=\log_6 36=2$。
+
+</Solution>
+
+**3.** 求 $\log_2 3\cdot\log_3 4\cdot\log_4 8$。
+
+<Solution answer>
+
+換底：$\dfrac{\log3}{\log2}\cdot\dfrac{\log4}{\log3}\cdot\dfrac{\log8}{\log4}=\dfrac{\log8}{\log2}=\log_2 8=3$。
+
+</Solution>
+
+**4.** 已知 $\log2\approx0.3010$、$\log3\approx0.4771$，求 $\log12$ 與 $\log1.5$ 的近似值。
+
+<Solution answer>
+
+$\log12=\log(2^2\cdot3)=2\log2+\log3\approx1.0791$。$\log1.5=\log\dfrac32=\log3-\log2\approx0.1761$。
+
+</Solution>
+
+**5.** 求 $f(x)=2^{x+1}$ 的反函數及其定義域。（需要〈反函數〉）
+
+<Solution answer>
+
+$y=2^{x+1}$，由對數的定義 $x+1=\log_2 y$，所以 $x=\log_2 y-1$。$f^{-1}(x)=\log_2 x-1$，定義域是 $f$ 的值域 $x>0$。
+
+</Solution>

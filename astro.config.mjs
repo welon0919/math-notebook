@@ -13,7 +13,9 @@ export default defineConfig({
   // Lesson URLs used to start with a number; sorting now comes from `order` alone.
   redirects: {
     '/algebra/01-quadratic': '/algebra/quadratic-equations',
-    '/algebra/02-exponents-logarithms': '/algebra/exponents-logarithms',
+    // 指數與對數 was split into 指數與指數函數 and 對數與對數函數; both old URLs go to the first.
+    '/algebra/02-exponents-logarithms': '/algebra/exponential-functions',
+    '/algebra/exponents-logarithms': '/algebra/exponential-functions',
     '/algebra/03-sequences-series': '/algebra/sequences-series',
     '/trig/01-right-triangle': '/trig/right-triangle-trig',
     '/trig/02-unit-circle-radians': '/trig/unit-circle-radians',
