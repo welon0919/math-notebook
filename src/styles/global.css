@@ -531,6 +531,19 @@ main > *,
   margin-bottom: 0.75rem;
 }
 
+/* <Solution> inside a lesson body */
+.prose .example-solution {
+  margin: 0.75rem 0 1.5rem;
+}
+
+.solution-body > :first-child {
+  margin-top: 0;
+}
+
+.solution-body > :last-child {
+  margin-bottom: 0;
+}
+
 /* Formula / theorem detail pages */
 .breadcrumb ol {
   display: flex;

@@ -1,0 +1,19 @@
+---
+/**
+ * A collapsed solution in a lesson body: `<Solution>` under an example (看解答),
+ * `<Solution answer>` under a practice problem (看答案). Leave blank lines around
+ * the content so MDX parses it as Markdown with math.
+ */
+interface Props {
+  answer?: boolean;
+}
+
+const { answer = false } = Astro.props;
+---
+
+<details class="example-solution">
+  <summary>{answer ? '看答案' : '看解答'}</summary>
+  <div class="solution-body">
+    <slot />
+  </div>
+</details>

@@ -33,3 +33,6 @@ features/
 screenshots/
 test-results/
 playwright-report/
+
+# SymPy virtualenv for scripts/verify/
+scripts/verify/.venv/
