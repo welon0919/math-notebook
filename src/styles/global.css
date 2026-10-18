@@ -908,12 +908,12 @@ html:not(.js) .proof-step-label {
   font-weight: 700;
 }
 
-/* Stepper.astro */
-.division-scroll .step-pending {
+/* Stepper.astro: steps not reached yet keep their space, so the layout doesn't jump. */
+.stepper .step-pending {
   visibility: hidden;
 }
 
-.division-scroll .step-current {
+.stepper .step-current {
   background: color-mix(in srgb, var(--focus) 18%, transparent);
   color: var(--focus);
 }
@@ -941,9 +941,65 @@ html:not(.js) .proof-step-label {
   text-align: center;
 }
 
+/* Derivation.astro: left sides right-aligned against the relation, reasons beside them. */
+.derivation-scroll {
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 0.75rem var(--space);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.derivation {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  row-gap: 0.25rem;
+}
+
+/* Cells stretch to the row's height, so a highlighted row is one even band. */
+.derivation > div {
+  display: flex;
+  align-items: center;
+  padding-block: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.derivation-lhs {
+  justify-content: flex-end;
+  padding-left: 0.5rem;
+}
+
+/* KaTeX would otherwise break a line after "=" when space is tight. */
+.derivation-lhs,
+.derivation-rhs {
+  white-space: nowrap;
+}
+
+.derivation-rhs {
+  padding-right: 1rem;
+}
+
+.derivation-reason {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
 @media (max-width: 600px) {
   .division-scroll {
     padding-inline: 0.25rem;
+  }
+
+  /* No room beside the equation: each reason goes on its own line under it,
+     wrapping within the box (max-content columns would stretch to fit it on one line). */
+  .derivation {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .derivation-reason {
+    grid-column: 1 / -1;
+    padding-top: 0;
+    padding-left: 0.5rem;
   }
 
   .division-scroll td {
@@ -953,6 +1009,7 @@ html:not(.js) .proof-step-label {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .derivation > div,
   .division-scroll td {
     transition: none;
   }

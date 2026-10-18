@@ -1,0 +1,44 @@
+---
+/**
+ * An aligned derivation shown one line at a time, with the reason for each line.
+ * Each row is [left side, the rest starting with the relation, reason]; the first two
+ * are LaTeX, the reason is text with `$...$` math. Use String.raw so backslashes survive:
+ *
+ *   <Derivation rows={[
+ *     [String.raw`x^2+6x+2`, '=0', '原方程式'],
+ *     [String.raw`x^2+6x`, '=-2', '常數項移到右邊'],
+ *   ]} />
+ */
+import Stepper from './Stepper.astro';
+import { renderLatex, renderMathText } from '../lib/math';
+
+interface Props {
+  rows: [string, string, string][];
+}
+
+const { rows } = Astro.props;
+const steps = rows.map(([, , reason], i) => `第 ${i + 1} 行：${reason}`);
+---
+
+<Stepper steps={steps}>
+  <div class="derivation-scroll">
+    <div class="derivation">
+      {
+        rows.map(([lhs, rhs, reason], i) => (
+          <>
+            {/* Inner spans keep text and math flowing inline inside the flex cells. */}
+            <div class="derivation-lhs" data-step={i}>
+              <span set:html={renderLatex(`\\displaystyle ${lhs}`)} />
+            </div>
+            <div class="derivation-rhs" data-step={i}>
+              <span set:html={renderLatex(`\\displaystyle {}${rhs}`)} />
+            </div>
+            <div class="derivation-reason" data-step={i}>
+              <span set:html={renderMathText(`（${reason}）`)} />
+            </div>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</Stepper>

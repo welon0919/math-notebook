@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Derivation from '../../components/Derivation.astro';
 import Example from '../../components/Example.astro';
 import Graph from '../../components/Graph.astro';
 import LongDivision from '../../components/LongDivision.astro';
@@ -59,7 +60,7 @@ const subjectName = (id: string) => subjects.find((s) => s.id === id)!.name;
   }
 
   <article class="prose">
-    <Content components={{ Graph, LongDivision, ProofStep, Solution, SyntheticDivision }} />
+    <Content components={{ Derivation, Graph, LongDivision, ProofStep, Solution, SyntheticDivision }} />
   </article>
 
   {lesson.data.example && lesson.data.solution && <Example example={lesson.data.example} solution={lesson.data.solution} />}

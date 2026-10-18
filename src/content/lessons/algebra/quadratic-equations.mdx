@@ -38,36 +38,34 @@ $$
 (x+m)^2=x^2+2mx+m^2
 $$
 
-也就是說，$x^2+bx$ 只差一個 $\left(\dfrac{b}{2}\right)^2$ 就是完全平方：$x$ 的係數除以 $2$ 再平方。以 $x^2+6x+2=0$ 為例：
+也就是說，$x^2+bx$ 只差一個 $\left(\dfrac{b}{2}\right)^2$ 就是完全平方：$x$ 的係數除以 $2$ 再平方。以 $x^2+6x+2=0$ 為例，按「下一步」一行一行看：
 
-$$
-\begin{aligned}
-x^2+6x&=-2 && \text{（常數項移到右邊）}\\
-x^2+6x+9&=-2+9 && \text{（兩邊同加 }\left(\tfrac{6}{2}\right)^2=9\text{）}\\
-(x+3)^2&=7 && \text{（左邊是完全平方）}\\
-x+3&=\pm\sqrt7 && \text{（平方等於 }7\text{ 的數有 }\sqrt7\text{ 和 }-\sqrt7\text{）}\\
-x&=-3\pm\sqrt7 && \text{（兩邊同減 }3\text{）}
-\end{aligned}
-$$
+<Derivation rows={[
+  [String.raw`x^2+6x+2`, '=0', '原方程式'],
+  [String.raw`x^2+6x`, '=-2', '常數項移到右邊'],
+  [String.raw`x^2+6x+9`, '=-2+9', String.raw`兩邊同加 $\left(\frac{6}{2}\right)^2=9$`],
+  [String.raw`(x+3)^2`, '=7', '左邊是完全平方'],
+  [String.raw`x+3`, String.raw`=\pm\sqrt7`, String.raw`平方等於 $7$ 的數有 $\sqrt7$ 和 $-\sqrt7$`],
+  [String.raw`x`, String.raw`=-3\pm\sqrt7`, '兩邊同減 $3$'],
+]} />
 
 如果 $x^2$ 的係數不是 $1$，先把整個方程式除以它，再照同樣的步驟做。
 
 ### 公式解
 
-對一般的 $ax^2+bx+c=0$（$a\neq 0$）照配方法的步驟做一次，就得到不必再配方的**公式解**：
+對一般的 $ax^2+bx+c=0$（$a\neq 0$）照配方法的步驟做一次，就得到不必再配方的**公式解**。按「下一步」一行一行看：
 
-$$
-\begin{aligned}
-x^2+\frac{b}{a}x+\frac{c}{a}&=0 && \text{（兩邊同除以 }a\text{，讓 }x^2\text{ 的係數變成 }1\text{）}\\
-x^2+\frac{b}{a}x&=-\frac{c}{a} && \text{（常數項移到右邊）}\\
-x^2+\frac{b}{a}x+\frac{b^2}{4a^2}&=\frac{b^2}{4a^2}-\frac{c}{a} && \text{（兩邊同加 }\left(\tfrac{b}{2a}\right)^2\text{）}\\
-\left(x+\frac{b}{2a}\right)^2&=\frac{b^2-4ac}{4a^2} && \text{（左邊配成平方；右邊通分，}\tfrac{c}{a}=\tfrac{4ac}{4a^2}\text{）}\\
-x+\frac{b}{2a}&=\pm\frac{\sqrt{b^2-4ac}}{2a} && \text{（開平方，需要 }b^2-4ac\ge 0\text{）}\\
-x&=\frac{-b\pm\sqrt{b^2-4ac}}{2a} && \text{（兩邊同減 }\tfrac{b}{2a}\text{）}
-\end{aligned}
-$$
+<Derivation rows={[
+  [String.raw`ax^2+bx+c`, '=0', '原方程式'],
+  [String.raw`x^2+\frac{b}{a}x+\frac{c}{a}`, '=0', String.raw`兩邊同除以 $a$，讓 $x^2$ 的係數變成 $1$`],
+  [String.raw`x^2+\frac{b}{a}x`, String.raw`=-\frac{c}{a}`, '常數項移到右邊'],
+  [String.raw`x^2+\frac{b}{a}x+\frac{b^2}{4a^2}`, String.raw`=\frac{b^2}{4a^2}-\frac{c}{a}`, String.raw`兩邊同加 $\left(\frac{b}{2a}\right)^2$，也就是 $x$ 的係數 $\frac{b}{a}$ 的一半再平方`],
+  [String.raw`\left(x+\frac{b}{2a}\right)^2`, String.raw`=\frac{b^2-4ac}{4a^2}`, String.raw`左邊配成平方；右邊通分，$\frac{c}{a}=\frac{4ac}{4a^2}$`],
+  [String.raw`x+\frac{b}{2a}`, String.raw`=\pm\frac{\sqrt{b^2-4ac}}{2a}`, String.raw`開平方，需要 $b^2-4ac\ge 0$`],
+  [String.raw`x`, String.raw`=\frac{-b\pm\sqrt{b^2-4ac}}{2a}`, String.raw`兩邊同減 $\frac{b}{2a}$`],
+]} />
 
-第五步開平方時，分母 $\sqrt{4a^2}=|2a|$；但前面已經有 $\pm$，$a$ 是負數時只是把兩個根的順序對調，所以寫成 $2a$ 也一樣。
+第 6 行開平方時，分母 $\sqrt{4a^2}=|2a|$；但前面已經有 $\pm$，$a$ 是負數時只是把兩個根的順序對調，所以寫成 $2a$ 也一樣。
 
 ### 判別式
 
