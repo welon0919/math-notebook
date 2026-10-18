@@ -14,25 +14,32 @@ const text = z
 
 const subject = z.enum(subjectIds);
 
-const lessons = defineCollection({
-  // deferRender: the glob loader only logs eager render errors, so a KaTeX error
-  // would leave the lesson blank; rendering at page build time fails the build instead.
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lessons', deferRender: true }),
-  schema: z.object({
-    subject,
-    order: z.number().int().positive(),
-    title: text,
-    example: text,
-    solution: text,
-  }),
-});
-
-// Slugs come from file names and are referenced by `related`, so keep them URL-friendly.
+// Slugs come from file names and are referenced by `related` and `prerequisites`, so keep them URL-friendly.
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Use lowercase English words joined by hyphens.');
 
 // Any formula or theorem slug, in any subject. Existence is checked in src/lib/items.ts
 // because a single entry's schema can't see the other entries.
 const related = z.array(slug).default([]);
+
+const lessons = defineCollection({
+  // deferRender: the glob loader only logs eager render errors, so a KaTeX error
+  // would leave the lesson blank; rendering at page build time fails the build instead.
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lessons', deferRender: true }),
+  // `unit`, `prerequisites`, `formulas` and `theorems` are checked against other entries in src/lib/lessons.ts.
+  schema: z.object({
+    subject,
+    unit: slug,
+    order: z.number().int().positive(),
+    title: text,
+    summary: text,
+    prerequisites: z.array(slug).default([]),
+    formulas: z.array(slug).default([]),
+    theorems: z.array(slug).default([]),
+    // Older lessons keep their one example here; newer ones write examples in the body.
+    example: text.optional(),
+    solution: text.optional(),
+  }),
+});
 
 // Same reason as lessons for deferRender: KaTeX errors in the body must fail the build.
 const itemLoader = (kind: string) =>

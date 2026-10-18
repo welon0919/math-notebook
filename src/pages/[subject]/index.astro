@@ -1,12 +1,12 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SubjectTabs from '../../components/SubjectTabs.astro';
 import FormulaList from '../../components/FormulaList.astro';
 import TheoremList from '../../components/TheoremList.astro';
 import { subjects, type Subject } from '../../data/subjects';
-import { loadItems } from '../../lib/items';
+import { renderMathText } from '../../lib/math';
+import { lessonHref, loadLessons, unitGroups } from '../../lib/lessons';
 
 export const getStaticPaths = (() =>
   subjects.map((subject) => ({ params: { subject: subject.id }, props: { subject } }))) satisfies GetStaticPaths;
@@ -16,12 +16,10 @@ interface Props {
 }
 
 const { subject } = Astro.props;
-const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) => a.data.order - b.data.order;
-const lessons = (await getCollection('lessons', (e) => e.data.subject === subject.id)).sort(byOrder);
-const items = await loadItems();
+const { lessons, items } = await loadLessons();
+const groups = unitGroups(subject.id, lessons);
 const formulas = items.formulas.filter((e) => e.data.subject === subject.id);
 const theorems = items.theorems.filter((e) => e.data.subject === subject.id);
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const tabs = [
   { id: 'lessons', label: '課程' },
@@ -37,15 +35,26 @@ const tabs = [
   <SubjectTabs tabs={tabs} label={`${subject.name}內容`}>
     <section id="lessons" class="tab-panel">
       <h2 class="visually-hidden">課程</h2>
-      <ol class="lesson-list">
-        {
-          lessons.map((lesson) => (
-            <li>
-              <a href={`${base}/${lesson.id}/`}>{lesson.data.title}</a>
-            </li>
-          ))
-        }
-      </ol>
+      {
+        groups.map((group) => (
+          <details class="unit" open>
+            <summary>
+              <h3>
+                <span class="unit-number">第 {group.number} 單元</span>
+                {group.unit.name}
+              </h3>
+            </summary>
+            <ol class="lesson-list">
+              {group.lessons.map((lesson) => (
+                <li>
+                  <a href={lessonHref(lesson)}>{lesson.data.title}</a>
+                  <p class="lesson-summary" set:html={renderMathText(lesson.data.summary)} />
+                </li>
+              ))}
+            </ol>
+          </details>
+        ))
+      }
     </section>
 
     <section id="formulas" class="tab-panel">

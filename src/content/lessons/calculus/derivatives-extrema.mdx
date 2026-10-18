@@ -1,7 +1,11 @@
 ---
 subject: calculus
-order: 2
+unit: derivatives
+order: 6
 title: 導數與極值
+summary: 導數是瞬間變化率與切線斜率，用它判斷函數的增減並找出極值。
+prerequisites: [limits]
+formulas: [derivative-definition, power-rule, product-quotient-rules, chain-rule]
 example: 求 $f(x)=x^3-3x$ 的極大值與極小值。
 solution: $f'(x)=3x^2-3=3(x-1)(x+1)$，臨界點 $x=\pm 1$。$f''(x)=6x$：$f''(-1)=-6<0$，所以 $x=-1$ 為極大，極大值 $f(-1)=2$；$f''(1)=6>0$，所以 $x=1$ 為極小，極小值 $f(1)=-2$。
 ---

@@ -261,12 +261,88 @@ main > *,
   display: block;
 }
 
+.unit {
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.unit summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.75rem var(--space);
+  cursor: pointer;
+  list-style: none;
+}
+
+.unit summary::-webkit-details-marker {
+  display: none;
+}
+
+.unit summary::before {
+  content: '▸' / '';
+  color: var(--ink-muted);
+}
+
+.unit[open] summary::before {
+  content: '▾' / '';
+}
+
+.unit h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.unit-number {
+  margin-right: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
 .lesson-list {
-  padding-left: 1.5rem;
+  margin: 0;
+  padding: 0 var(--space) 0.5rem 2.75rem;
 }
 
 .lesson-list li {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.lesson-summary {
+  margin: 0.125rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.prerequisites {
+  margin: 1rem 0 1.5rem;
+  padding: 0.75rem var(--space);
+  border-left: 4px solid var(--link);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.prerequisites h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.prerequisites ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.lesson-position {
+  margin: 2.5rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.lesson-position + .prev-next {
+  margin-top: 0.5rem;
 }
 
 /* Searchable lists */

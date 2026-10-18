@@ -14,7 +14,7 @@ function files(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(join(dir, e.name)) : [join(dir, e.name)]));
 }
 
-/** src/content/lessons/algebra/01-quadratic.mdx → /algebra/01-quadratic/; formulas and theorems get their kind in the path. */
+/** src/content/lessons/algebra/quadratic-equations.mdx → /algebra/quadratic-equations/; formulas and theorems get their kind in the path. */
 function urlOf(file: string): string {
   const [kind, subject, name] = relative(contentDir, file).replace(/\.mdx$/, '').split('/');
   return kind === 'lessons' ? `/${subject}/${name}/` : `/${subject}/${kind}/${name}/`;

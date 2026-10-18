@@ -10,6 +10,22 @@ import rehypeKatexStrict from './src/lib/rehype-katex-strict.mjs';
 export default defineConfig({
   // MDX inherits `markdown.processor` below, so .mdx files get the same KaTeX checks.
   integrations: [mdx()],
+  // Lesson URLs used to start with a number; sorting now comes from `order` alone.
+  redirects: {
+    '/algebra/01-quadratic': '/algebra/quadratic-equations',
+    '/algebra/02-exponents-logarithms': '/algebra/exponents-logarithms',
+    '/algebra/03-sequences-series': '/algebra/sequences-series',
+    '/trig/01-right-triangle': '/trig/right-triangle-trig',
+    '/trig/02-unit-circle-radians': '/trig/unit-circle-radians',
+    '/trig/03-solving-triangles': '/trig/solving-triangles',
+    '/calculus/01-limits': '/calculus/limits',
+    '/calculus/02-derivatives-extrema': '/calculus/derivatives-extrema',
+    '/calculus/03-integrals': '/calculus/definite-integrals',
+    '/linear/01-vectors-dot-product': '/linear/vectors-dot-product',
+    '/linear/02-matrix-operations': '/linear/matrix-operations',
+    '/linear/03-linear-systems': '/linear/linear-systems',
+    '/linear/04-eigenvalues': '/linear/eigenvalues-eigenvectors',
+  },
   vite: {
     // Graphs load these with dynamic import(), which the dev server only discovers
     // on first use; it then re-bundles them and the in-flight request fails with 504.

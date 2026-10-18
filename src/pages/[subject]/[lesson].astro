@@ -1,39 +1,106 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Example from '../../components/Example.astro';
 import Graph from '../../components/Graph.astro';
 import ProofStep from '../../components/ProofStep.astro';
 import { subjects } from '../../data/subjects';
+import { units } from '../../data/units';
+import { itemHref, kindLabel } from '../../lib/items';
+import { lessonHref, lessonNav, lessonSlug, loadLessons, type Lesson } from '../../lib/lessons';
 
 export const getStaticPaths = (async () => {
-  const lessons = await getCollection('lessons');
-  return lessons.map((lesson) => {
-    const [folder, slug] = lesson.id.split('/');
-    if (folder !== lesson.data.subject || !slug) {
-      throw new Error(`Lesson "${lesson.id}" must live in src/content/lessons/${lesson.data.subject}/.`);
-    }
-    return { params: { subject: folder, lesson: slug }, props: { lesson } };
-  });
+  const { lessons } = await loadLessons();
+  return lessons.map((lesson) => ({
+    params: { subject: lesson.data.subject, lesson: lessonSlug(lesson) },
+    props: { lesson },
+  }));
 }) satisfies GetStaticPaths;
 
 interface Props {
-  lesson: CollectionEntry<'lessons'>;
+  lesson: Lesson;
 }
 
 const { lesson } = Astro.props;
+const { lessons, bySlug, items } = await loadLessons();
 const subject = subjects.find((s) => s.id === lesson.data.subject)!;
+const unit = units[subject.id].find((u) => u.id === lesson.data.unit)!;
 const { Content } = await render(lesson);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const prerequisites = lesson.data.prerequisites.map((slug) => bySlug.get(slug)!);
+const related = [...lesson.data.formulas, ...lesson.data.theorems].map((slug) => items.bySlug.get(slug)!);
+const { position, prev, next } = lessonNav(lesson, lessons);
+const subjectName = (id: string) => subjects.find((s) => s.id === id)!.name;
 ---
 
-<Base title={lesson.data.title} description={`${subject.name}課程「${lesson.data.title}」：重點說明，附例題與解答。`}>
+<Base title={lesson.data.title} description={`${subject.name}課程「${lesson.data.title}」：${lesson.data.summary}`}>
   <p class="back-link"><a href={`${base}/${subject.id}/`}>← {subject.name}</a></p>
   <h1>{lesson.data.title}</h1>
+
+  {
+    prerequisites.length > 0 && (
+      <aside class="prerequisites" aria-labelledby="prerequisites-heading">
+        <h2 id="prerequisites-heading">學這課之前，建議先會：</h2>
+        <ul>
+          {prerequisites.map((p) => (
+            <li>
+              <a href={lessonHref(p)}>{p.data.title}</a>
+              {p.data.subject !== subject.id && <span class="item-tag">{subjectName(p.data.subject)}</span>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )
+  }
+
   <article class="prose">
     <Content components={{ Graph, ProofStep }} />
   </article>
 
-  <Example example={lesson.data.example} solution={lesson.data.solution} />
+  {lesson.data.example && lesson.data.solution && <Example example={lesson.data.example} solution={lesson.data.solution} />}
+
+  {
+    related.length > 0 && (
+      <section class="related" aria-labelledby="related-heading">
+        <h2 id="related-heading">相關公式與定理</h2>
+        <ul>
+          {related.map((r) => (
+            <li>
+              <a href={itemHref(r)}>{r.data.name}</a>
+              <span class="item-tag">
+                {r.data.subject === subject.id ? '' : `${subjectName(r.data.subject)} · `}
+                {kindLabel[r.collection]}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <p class="lesson-position">
+    第 {position.unitNumber} 單元 · 第 {position.lessonNumber} 課<span class="item-tag">{unit.name}</span>
+  </p>
+  <nav class="prev-next" aria-label={`${subject.name}的上一課與下一課`}>
+    {
+      prev ? (
+        <a class="prev" href={lessonHref(prev)} rel="prev">
+          <span class="prev-next-label">← 上一課</span>
+          <span>{prev.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next && (
+        <a class="next" href={lessonHref(next)} rel="next">
+          <span class="prev-next-label">下一課 →</span>
+          <span>{next.data.title}</span>
+        </a>
+      )
+    }
+  </nav>
 </Base>
