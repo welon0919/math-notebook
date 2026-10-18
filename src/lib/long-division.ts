@@ -1,6 +1,6 @@
 /**
- * Polynomial long division worked out step by step, for the written layout on
- * /algebra/long-division/. Polynomials are coefficient arrays from the highest power
+ * Polynomial long and synthetic division worked out step by step, for the written layouts
+ * in <LongDivision> and <SyntheticDivision>. Polynomials are coefficient arrays from the highest power
  * down, e.g. x^3 - 2x^2 + 4 is [1, -2, 0, 4]. Every quotient coefficient must be an
  * integer so the layout never shows fractions; a preset that breaks this fails the build.
  */
@@ -126,4 +126,55 @@ export function longDivision(dividend: number[], divisor: number[]): LongDivisio
     quotientTex: qTex,
     remainderTex: rTex,
   };
+}
+
+export interface SyntheticDivision {
+  /** The value written on the left: the divisor x - root is 0 at x = root. */
+  root: number;
+  divisorTex: string;
+  /** Coefficient rows by column, highest power first: dividend, products, sums. */
+  top: Cell[];
+  middle: Cell[];
+  bottom: Cell[];
+  steps: string[];
+  quotientTex: string;
+  remainder: number;
+}
+
+/** A negative number in parentheses, for products and sums written out in the steps. */
+const paren = (v: number) => (v < 0 ? `(${v})` : `${v}`);
+
+/** Synthetic division of `dividend` (highest power first) by x - root. Integers only. */
+export function syntheticDivision(dividend: number[], root: number): SyntheticDivision {
+  if (![...dividend, root].every(Number.isInteger)) throw new Error('synthetic division: use integers only.');
+  const n = dividend.length - 1;
+  const divisorTex = root === 0 ? 'x' : root > 0 ? `x-${root}` : `x+${-root}`;
+  // Cells use `power` for the column index here: 0 is the leading coefficient.
+  const top: Cell[] = dividend.map((c, i) => ({ power: i, tex: `${c}`, step: 0 }));
+  const middle: Cell[] = [];
+  const bottom: Cell[] = [];
+  const steps = [
+    `除式 $${divisorTex}$ 在 $x=${root}$ 時等於 $0$，把 $${root}$ 寫在左邊。被除式的係數依降冪寫成一列，缺少的次方補 $0$。`,
+  ];
+
+  const b = [dividend[0]];
+  steps.push(`把首項係數 $${dividend[0]}$ 直接拉下來。`);
+  bottom.push({ power: 0, tex: `${b[0]}`, step: steps.length - 1 });
+  for (let i = 1; i <= n; i++) {
+    const product = b[i - 1] * root;
+    steps.push(`乘：$${paren(b[i - 1])}\\times ${paren(root)}=${product}$，寫在下一個係數 $${dividend[i]}$ 的下面。`);
+    middle.push({ power: i, tex: `${product}`, step: steps.length - 1 });
+    b.push(dividend[i] + product);
+    steps.push(`加：$${dividend[i]}+${paren(product)}=${b[i]}$，寫在最下面一列。`);
+    bottom.push({ power: i, tex: `${b[i]}`, step: steps.length - 1 });
+  }
+
+  const remainder = b[n];
+  // Check against the remainder theorem: the remainder must equal f(root).
+  if (dividend.reduce((acc, c) => acc * root + c, 0) !== remainder) throw new Error('synthetic division: remainder ≠ f(root).');
+  const quotientTex = n === 0 ? '0' : tex(b.slice(0, n).reverse());
+  steps.push(
+    `最後一個數 $${remainder}$ 是餘式，前面的 $${b.slice(0, n).join(',\\,')}$ 是商式的係數（次數比被除式少 $1$）：商式 $${quotientTex}$，餘式 $${remainder}$。`,
+  );
+  return { root, divisorTex, top, middle, bottom, steps, quotientTex, remainder };
 }

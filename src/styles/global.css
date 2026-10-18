@@ -814,7 +814,7 @@ html:not(.js) .proof-step-label {
   cursor: auto;
 }
 
-/* Long division walkthrough (src/pages/algebra/long-division.astro) */
+/* Long division page (src/pages/algebra/long-division.astro) */
 .ld-picker {
   display: flex;
   flex-wrap: wrap;
@@ -846,8 +846,8 @@ html:not(.js) .proof-step-label {
   color: var(--ink-muted);
 }
 
-/* The layout can be wider than a phone; scroll it instead of the page. */
-.ld-scroll {
+/* Division layouts (LongDivision.astro, SyntheticDivision.astro). Wider than a phone? Scroll, not the page. */
+.division-scroll {
   overflow-x: auto;
   margin: 1rem 0;
   padding: 0.75rem var(--space);
@@ -856,15 +856,19 @@ html:not(.js) .proof-step-label {
   background: var(--surface);
 }
 
-.ld-table {
+.division-scroll table {
+  /* .prose table makes lesson tables scrollable blocks; these scroll in .division-scroll instead. */
+  display: table;
   margin: 0 auto;
   /* Separate borders, so a hidden (not yet shown) cell hides its rule too. */
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.ld-table td {
+/* After .prose td, so lesson tables' row rules don't apply here. */
+.division-scroll td {
   padding: 0.25rem 0.5rem;
+  border: 0;
   text-align: right;
   white-space: nowrap;
   transition: background-color 0.2s;
@@ -888,16 +892,33 @@ html:not(.js) .proof-step-label {
   border-bottom: 1.5px solid var(--ink-muted);
 }
 
-.ld-table .ld-pending {
+/* Synthetic division: the root left of a vertical rule, a rule above the sums, the remainder set apart. */
+.sd-table .sd-root {
+  padding-right: 0.75rem;
+  border-right: 2px solid var(--ink);
+  vertical-align: top;
+}
+
+.sd-bottom td:not(:first-child) {
+  border-top: 2px solid var(--ink);
+}
+
+.sd-table .sd-remainder {
+  border-left: 1.5px solid var(--ink-muted);
+  font-weight: 700;
+}
+
+/* Stepper.astro */
+.division-scroll .step-pending {
   visibility: hidden;
 }
 
-.ld-table .ld-current {
+.division-scroll .step-current {
   background: color-mix(in srgb, var(--focus) 18%, transparent);
   color: var(--focus);
 }
 
-.ld-step-text {
+.stepper-text {
   min-height: 3.5em;
   margin: 0.5rem 0;
   padding: 0.5rem var(--space);
@@ -905,14 +926,15 @@ html:not(.js) .proof-step-label {
   background: var(--surface);
 }
 
-.ld-controls {
+.stepper-controls {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.ld-counter {
+.stepper-counter {
   min-width: 6.5em;
   color: var(--ink-muted);
   font-size: 0.9rem;
@@ -920,18 +942,18 @@ html:not(.js) .proof-step-label {
 }
 
 @media (max-width: 600px) {
-  .ld-scroll {
+  .division-scroll {
     padding-inline: 0.25rem;
   }
 
-  .ld-table td {
+  .division-scroll td {
     padding: 0.2rem 0.25rem;
     font-size: 0.85rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ld-table td {
+  .division-scroll td {
     transition: none;
   }
 }

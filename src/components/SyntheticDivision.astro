@@ -1,0 +1,41 @@
+---
+/**
+ * The table of a synthetic division by x - root, worked out at build time.
+ * Coefficients go from the highest power down: `<SyntheticDivision dividend={[1, 0, 0, -4]} root={2} />`
+ * divides x^3 - 4 by x - 2. With `steps` it becomes a step-by-step guide.
+ */
+import Stepper from './Stepper.astro';
+import { syntheticDivision } from '../lib/long-division';
+import { renderLatex } from '../lib/math';
+
+interface Props {
+  dividend: number[];
+  root: number;
+  steps?: boolean;
+}
+
+const { dividend, root, steps = false } = Astro.props;
+const d = syntheticDivision(dividend, root);
+const last = dividend.length - 1;
+---
+
+<Stepper steps={d.steps} enabled={steps}>
+  <div class="division-scroll">
+    <table class="sd-table" aria-label={`綜合除法：除以 ${d.divisorTex}`}>
+      <tbody>
+        <tr>
+          <td class="sd-root" rowspan="2" data-step="0" set:html={renderLatex(`${root}`)} />
+          {d.top.map((c) => <td data-step={c.step} set:html={renderLatex(c.tex)} />)}
+        </tr>
+        <tr>
+          <td />
+          {d.middle.map((c) => <td data-step={c.step} set:html={renderLatex(c.tex)} />)}
+        </tr>
+        <tr class="sd-bottom">
+          <td />
+          {d.bottom.map((c) => <td class={c.power === last ? 'sd-remainder' : undefined} data-step={c.step} set:html={renderLatex(c.tex)} />)}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</Stepper>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import LongDivision from '../../components/LongDivision.astro';
 import { longDivision } from '../../lib/long-division';
 import { renderLatex, renderMathText } from '../../lib/math';
 
@@ -36,84 +37,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   {
     presets.map((p) => (
-      <section class="ld-example" id={p.id} data-ld={p.steps.length}>
+      <section class="ld-example" id={p.id} data-ld-example>
         <h2 set:html={renderMathText(`$(${p.dividendTex})\\div(${p.divisorTex})$`)} />
         <p class="ld-note" set:html={renderMathText(p.note)} />
 
-        <div class="ld-scroll">
-          <table class="ld-table">
-            <tbody>
-              {p.rows.map((row) => (
-                <tr class={`ld-${row.kind}`}>
-                  <td class="ld-left" data-step={row.kind === 'quotient' ? undefined : row.step}>
-                    {row.kind === 'dividend' && <span set:html={renderLatex(p.divisorTex)} />}
-                    {row.kind === 'product' && <span set:html={renderLatex('-')} />}
-                  </td>
-                  {p.powers.map((power) => {
-                    const cell = row.cells.find((c) => c.power === power);
-                    return cell ? <td data-step={cell.step} set:html={renderLatex(cell.tex)} /> : <td />;
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <p class="ld-step-text" data-ld-text aria-live="polite" hidden />
-        <div class="ld-controls" data-ld-controls hidden>
-          <button type="button" class="graph-button" data-ld-prev>← 上一步</button>
-          <span class="ld-counter" data-ld-counter />
-          <button type="button" class="graph-button" data-ld-next>下一步 →</button>
-          <button type="button" class="graph-button" data-ld-restart>重來</button>
-        </div>
-
-        {/* Without JavaScript the whole layout shows at once, with every step listed here. */}
-        <ol class="ld-steps" data-ld-steps>
-          {p.steps.map((s) => (
-            <li set:html={renderMathText(s)} />
-          ))}
-        </ol>
+        <LongDivision dividend={p.dividend} divisor={p.divisor} steps />
       </section>
     ))
   }
 </Base>
 
 <script>
-  for (const section of document.querySelectorAll<HTMLElement>('[data-ld]')) {
-    const total = Number(section.dataset.ld);
-    const steps = [...section.querySelectorAll<HTMLLIElement>('[data-ld-steps] li')].map((li) => li.innerHTML);
-    const cells = [...section.querySelectorAll<HTMLElement>('[data-step]')];
-    const text = section.querySelector<HTMLElement>('[data-ld-text]')!;
-    const counter = section.querySelector<HTMLElement>('[data-ld-counter]')!;
-    const prev = section.querySelector<HTMLButtonElement>('[data-ld-prev]')!;
-    const next = section.querySelector<HTMLButtonElement>('[data-ld-next]')!;
-    let current = 0;
-
-    const show = (i: number) => {
-      current = i;
-      for (const cell of cells) {
-        const step = Number(cell.dataset.step);
-        cell.classList.toggle('ld-pending', step > i);
-        cell.classList.toggle('ld-current', step === i);
-      }
-      text.innerHTML = steps[i];
-      counter.textContent = `步驟 ${i + 1} / ${total}`;
-      prev.disabled = i === 0;
-      next.disabled = i === total - 1;
-    };
-
-    prev.addEventListener('click', () => show(current - 1));
-    next.addEventListener('click', () => show(current + 1));
-    section.querySelector('[data-ld-restart]')!.addEventListener('click', () => show(0));
-    section.querySelector<HTMLElement>('[data-ld-steps]')!.hidden = true;
-    text.hidden = false;
-    section.querySelector<HTMLElement>('[data-ld-controls]')!.hidden = false;
-    show(0);
-  }
-
   // Show one example at a time once the picker works; the URL hash keeps the choice.
   const picker = document.querySelector<HTMLFieldSetElement>('[data-ld-picker]')!;
-  const sections = [...document.querySelectorAll<HTMLElement>('[data-ld]')];
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-ld-example]')];
   const select = (id: string) => {
     for (const s of sections) s.hidden = s.id !== id;
     picker.querySelector<HTMLInputElement>(`input[value="${id}"]`)!.checked = true;

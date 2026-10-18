@@ -1,0 +1,79 @@
+---
+/**
+ * Steps through a worked layout (slot) one step at a time: every element inside with
+ * `data-step="i"` is hidden until step i and highlighted at step i. `steps` holds the
+ * text for each step, with `$...$` math. Without JavaScript the whole layout shows,
+ * followed by the list of steps. With `enabled={false}` it renders only the layout,
+ * finished; `data-step` attributes outside a stepper have no effect.
+ */
+import { renderMathText } from '../lib/math';
+
+interface Props {
+  steps: string[];
+  enabled?: boolean;
+}
+
+const { steps, enabled = true } = Astro.props;
+---
+
+{
+  enabled ? (
+    <div class="stepper" data-stepper>
+      <slot />
+      <p class="stepper-text" data-stepper-text aria-live="polite" hidden />
+      <div class="stepper-controls" data-stepper-controls hidden>
+        <button type="button" class="graph-button" data-stepper-prev>
+          ← 上一步
+        </button>
+        <span class="stepper-counter" data-stepper-counter />
+        <button type="button" class="graph-button" data-stepper-next>
+          下一步 →
+        </button>
+        <button type="button" class="graph-button" data-stepper-restart>
+          重來
+        </button>
+      </div>
+      <ol class="stepper-list" data-stepper-list>
+        {steps.map((s) => (
+          <li set:html={renderMathText(s)} />
+        ))}
+      </ol>
+    </div>
+  ) : (
+    <slot />
+  )
+}
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-stepper]')) {
+    const list = root.querySelector<HTMLElement>('[data-stepper-list]')!;
+    const steps = [...list.querySelectorAll('li')].map((li) => li.innerHTML);
+    const cells = [...root.querySelectorAll<HTMLElement>('[data-step]')];
+    const text = root.querySelector<HTMLElement>('[data-stepper-text]')!;
+    const counter = root.querySelector<HTMLElement>('[data-stepper-counter]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-stepper-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-stepper-next]')!;
+    let current = 0;
+
+    const show = (i: number) => {
+      current = i;
+      for (const cell of cells) {
+        const step = Number(cell.dataset.step);
+        cell.classList.toggle('step-pending', step > i);
+        cell.classList.toggle('step-current', step === i);
+      }
+      text.innerHTML = steps[i];
+      counter.textContent = `步驟 ${i + 1} / ${steps.length}`;
+      prev.disabled = i === 0;
+      next.disabled = i === steps.length - 1;
+    };
+
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    root.querySelector('[data-stepper-restart]')!.addEventListener('click', () => show(0));
+    list.hidden = true;
+    text.hidden = false;
+    root.querySelector<HTMLElement>('[data-stepper-controls]')!.hidden = false;
+    show(0);
+  }
+</script>

@@ -4,8 +4,10 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Example from '../../components/Example.astro';
 import Graph from '../../components/Graph.astro';
+import LongDivision from '../../components/LongDivision.astro';
 import ProofStep from '../../components/ProofStep.astro';
 import Solution from '../../components/Solution.astro';
+import SyntheticDivision from '../../components/SyntheticDivision.astro';
 import { subjects } from '../../data/subjects';
 import { units } from '../../data/units';
 import { itemHref, kindLabel } from '../../lib/items';
@@ -57,7 +59,7 @@ const subjectName = (id: string) => subjects.find((s) => s.id === id)!.name;
   }
 
   <article class="prose">
-    <Content components={{ Graph, ProofStep, Solution }} />
+    <Content components={{ Graph, LongDivision, ProofStep, Solution, SyntheticDivision }} />
   </article>
 
   {lesson.data.example && lesson.data.solution && <Example example={lesson.data.example} solution={lesson.data.solution} />}

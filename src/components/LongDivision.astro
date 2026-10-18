@@ -1,0 +1,42 @@
+---
+/**
+ * The written layout of a polynomial long division, worked out at build time.
+ * Coefficients go from the highest power down: `<LongDivision dividend={[1, -2, 0, 4]} divisor={[1, 1, -1]} />`.
+ * With `steps` it becomes a step-by-step guide; without, it shows the finished layout.
+ */
+import Stepper from './Stepper.astro';
+import { longDivision } from '../lib/long-division';
+import { renderLatex } from '../lib/math';
+
+interface Props {
+  dividend: number[];
+  divisor: number[];
+  steps?: boolean;
+}
+
+const { dividend, divisor, steps = false } = Astro.props;
+const d = longDivision(dividend, divisor);
+---
+
+<Stepper steps={d.steps} enabled={steps}>
+  <div class="division-scroll">
+    <table class="ld-table">
+      <tbody>
+        {
+          d.rows.map((row) => (
+            <tr class={`ld-${row.kind}`}>
+              <td class="ld-left" data-step={row.kind === 'quotient' ? undefined : row.step}>
+                {row.kind === 'dividend' && <span set:html={renderLatex(d.divisorTex)} />}
+                {row.kind === 'product' && <span set:html={renderLatex('-')} />}
+              </td>
+              {d.powers.map((power) => {
+                const cell = row.cells.find((c) => c.power === power);
+                return cell ? <td data-step={cell.step} set:html={renderLatex(cell.tex)} /> : <td />;
+              })}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</Stepper>
