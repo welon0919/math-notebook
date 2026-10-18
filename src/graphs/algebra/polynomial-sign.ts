@@ -1,17 +1,18 @@
 import { keepInside, shadeUnder } from '../helpers';
 import type { GraphDef } from '../types';
 
-// Roots snap to 0.5 so two roots can land on the same spot (a double root).
-const step = 0.5;
+// Roots move in steps of 0.1; within `magnet` of another root they jump onto it, so a double root is easy to make.
+const step = 0.1;
+const magnet = 0.2;
 const scale = 0.1;
 const eps = 1e-9;
-/** Roots are multiples of 0.5: print 1, -2.5 rather than 1.00, -2.50. */
+/** Roots are multiples of 0.1: print 1, -2.5 rather than 1.00, -2.50. */
 const num = (v: number) => String(+v.toFixed(3));
 
 export default {
   title: '多項式的正負與根',
   description:
-    '三個可以沿 x 軸拖動的根 r₁、r₂、r₃ 決定 y = 0.1(x − r₁)(x − r₂)(x − r₃)。乘以正數 0.1 只是讓圖形放得進畫面，不改變正負。圖形在 x 軸上方的部分塗成一種顏色、下方塗成另一種顏色，下方列出 (x − r₁)(x − r₂)(x − r₃) > 0 與 < 0 的解。把兩個根拖到同一點，就成了重根：圖形在那裡碰到 x 軸但不穿過，正負不變。',
+    '三個可以沿 x 軸拖動的根 r₁、r₂、r₃ 決定 y = 0.1(x − r₁)(x − r₂)(x − r₃)。乘以正數 0.1 只是讓圖形放得進畫面，不改變正負。圖形在 x 軸上方的部分塗成一種顏色、下方塗成另一種顏色，下方列出 (x − r₁)(x − r₂)(x − r₃) > 0 與 < 0 的解。把兩個根拖到同一點（靠近時會自動吸附），就成了重根：圖形在那裡碰到 x 軸但不穿過，正負不變。',
   boundingBox: [-6, 4.5, 6, -4.5],
   build(board, ctx) {
     const { color } = ctx;
@@ -19,20 +20,22 @@ export default {
     const root = (x: number, name: string) => {
       const p = board.create('point', [x, 0], {
         name: ctx.tex(name),
-        snapToGrid: true,
-        snapSizeX: step,
-        snapSizeY: step,
         strokeColor: color.ink,
         fillColor: color.ink,
         // Above the axis, clear of the tick numbers below it.
         label: { offset: [4, 14], strokeColor: color.ink },
       });
-      // Roots stay on the x-axis.
-      p.on('drag', () => p.moveTo([p.X(), 0]));
       keepInside(p, [-5, 0, 5, 0]);
       return p;
     };
     const roots = [root(-2, 'r_1'), root(1, 'r_2'), root(3, 'r_3')];
+    // Roots stay on the x-axis, at a multiple of 0.1 or on top of a nearby root.
+    for (const p of roots) {
+      p.on('drag', () => {
+        const near = roots.find((q) => q !== p && Math.abs(q.X() - p.X()) < magnet);
+        p.moveTo([near ? near.X() : Math.round(p.X() / step) * step, 0]);
+      });
+    }
     const f = (x: number) => roots.reduce((y, r) => y * (x - r.X()), scale);
 
     shadeUnder(board, (x) => Math.max(f(x), 0), () => -6, () => 6, { fillColor: color.accent, fillOpacity: 0.25 });

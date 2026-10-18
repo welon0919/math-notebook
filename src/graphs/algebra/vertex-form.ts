@@ -1,10 +1,10 @@
 import type { GraphDef } from '../types';
 
-// Slider values snap to 0.5 so the vertex and the expanded coefficients stay readable.
-const step = 0.5;
+// Slider values snap to 0.1: smooth to drag, and the vertex still reads as a short decimal.
+const step = 0.1;
 const snap = (v: number) => Math.round(v / step) * step;
 const eps = 1e-9;
-/** Values are multiples of 0.5 (or 1/8 once expanded): print 2, -0.5, 1.125 rather than 2.00. */
+/** Values are multiples of 0.1 (0.001 once expanded): print 2, -0.5, 1.125 rather than 2.00. */
 const num = (v: number) => String(+v.toFixed(3));
 
 /** A leading coefficient: "" for 1, "-" for -1, else the number. */

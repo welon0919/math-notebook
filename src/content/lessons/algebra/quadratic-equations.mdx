@@ -13,7 +13,6 @@ theorems: [vieta]
 
 - 學完這課，你能依方程式的形式，選擇因式分解、配方法或公式解來解一元二次方程式。
 - 學完這課，你能用判別式判斷方程式有兩相異實根、重根或沒有實根。
-- 學完這課，你能用根與係數關係，不解方程式就求出兩根的和、積與對稱式。
 
 ## 概念說明
 
@@ -21,45 +20,54 @@ theorems: [vieta]
 
 ### 因式分解
 
-如果能把左邊寫成兩個一次式相乘，就利用「兩數相乘為 $0$，至少一個為 $0$」來求解：
+如果能把左邊分解成兩個一次式的乘積，就利用「兩數相乘為 $0$，至少一個為 $0$」來求解。一般的情形，兩個一次因式的 $x$ 係數不一定是 $1$，所以寫成
 
 $$
-(x-p)(x-q)=0 \;\Longrightarrow\; x=p \text{ 或 } x=q
+(px-q)(rx-s)=0 \;\Longrightarrow\; px-q=0 \text{ 或 } rx-s=0 \;\Longrightarrow\; x=\frac{q}{p} \text{ 或 } x=\frac{s}{r}
 $$
 
-為什麼？若 $AB=0$ 而 $A\neq 0$，兩邊同乘 $\dfrac{1}{A}$ 就得到 $B=0$。所以 $A$、$B$ 至少一個是 $0$。注意這只對「乘積等於 $0$」成立。
+其中 $p,r\neq 0$。例如 $2x^2-x-3=(2x-3)(x+1)=0$，所以 $x=\dfrac32$ 或 $x=-1$。$p=r=1$ 時就是常見的 $(x-q)(x-s)=0$。
+
+為什麼可以這樣拆？若 $AB=0$ 而 $A\neq 0$，兩邊同乘 $\dfrac{1}{A}$ 就得到 $B=0$。所以 $A$、$B$ 至少一個是 $0$。注意這只對「乘積等於 $0$」成立。
 
 ### 配方法
 
-把 $x^2+bx$ 補成完全平方 $\left(x+\frac{b}{2}\right)^2$。例如
+不容易分解時，可以把含 $x$ 的部分配成完全平方 $(x+m)^2$，再開平方。依據是乘法公式
 
 $$
-x^2+6x+2=0 \;\Longrightarrow\; (x+3)^2=7 \;\Longrightarrow\; x=-3\pm\sqrt{7}
+(x+m)^2=x^2+2mx+m^2
 $$
 
-第一步是兩邊同加 $7$：$x^2+6x+9=7$，左邊正好是 $(x+3)^2$。第二步是兩邊開平方：平方等於 $7$ 的數有 $\sqrt7$ 和 $-\sqrt7$ 兩個。
+也就是說，$x^2+bx$ 只差一個 $\left(\dfrac{b}{2}\right)^2$ 就是完全平方：$x$ 的係數除以 $2$ 再平方。以 $x^2+6x+2=0$ 為例：
+
+$$
+\begin{aligned}
+x^2+6x&=-2 && \text{（常數項移到右邊）}\\
+x^2+6x+9&=-2+9 && \text{（兩邊同加 }\left(\tfrac{6}{2}\right)^2=9\text{）}\\
+(x+3)^2&=7 && \text{（左邊是完全平方）}\\
+x+3&=\pm\sqrt7 && \text{（平方等於 }7\text{ 的數有 }\sqrt7\text{ 和 }-\sqrt7\text{）}\\
+x&=-3\pm\sqrt7 && \text{（兩邊同減 }3\text{）}
+\end{aligned}
+$$
+
+如果 $x^2$ 的係數不是 $1$，先把整個方程式除以它，再照同樣的步驟做。
 
 ### 公式解
 
-對一般的 $ax^2+bx+c=0$ 做配方，就得到二次公式：
+對一般的 $ax^2+bx+c=0$（$a\neq 0$）照配方法的步驟做一次，就得到不必再配方的**公式解**：
 
 $$
-x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\begin{aligned}
+x^2+\frac{b}{a}x+\frac{c}{a}&=0 && \text{（兩邊同除以 }a\text{，讓 }x^2\text{ 的係數變成 }1\text{）}\\
+x^2+\frac{b}{a}x&=-\frac{c}{a} && \text{（常數項移到右邊）}\\
+x^2+\frac{b}{a}x+\frac{b^2}{4a^2}&=\frac{b^2}{4a^2}-\frac{c}{a} && \text{（兩邊同加 }\left(\tfrac{b}{2a}\right)^2\text{）}\\
+\left(x+\frac{b}{2a}\right)^2&=\frac{b^2-4ac}{4a^2} && \text{（左邊配成平方；右邊通分，}\tfrac{c}{a}=\tfrac{4ac}{4a^2}\text{）}\\
+x+\frac{b}{2a}&=\pm\frac{\sqrt{b^2-4ac}}{2a} && \text{（開平方，需要 }b^2-4ac\ge 0\text{）}\\
+x&=\frac{-b\pm\sqrt{b^2-4ac}}{2a} && \text{（兩邊同減 }\tfrac{b}{2a}\text{）}
+\end{aligned}
 $$
 
-推導如下。兩邊同除以 $a$（$a\neq 0$），再把常數項移到右邊：
-
-$$
-x^2+\frac{b}{a}x=-\frac{c}{a}
-$$
-
-$x$ 的係數是 $\frac{b}{a}$，它的一半是 $\frac{b}{2a}$，兩邊同加 $\left(\frac{b}{2a}\right)^2$ 配成完全平方：
-
-$$
-\left(x+\frac{b}{2a}\right)^2=\frac{b^2}{4a^2}-\frac{c}{a}=\frac{b^2-4ac}{4a^2}
-$$
-
-當 $b^2-4ac\ge 0$ 時，兩邊開平方得 $x+\dfrac{b}{2a}=\pm\dfrac{\sqrt{b^2-4ac}}{2a}$（分母 $\sqrt{4a^2}=|2a|$，但前面已經有 $\pm$，所以寫成 $2a$ 也一樣），移項就是公式解。
+第五步開平方時，分母 $\sqrt{4a^2}=|2a|$；但前面已經有 $\pm$，$a$ 是負數時只是把兩個根的順序對調，所以寫成 $2a$ 也一樣。
 
 ### 判別式
 
@@ -74,23 +82,6 @@ $$
 判別式其實就是在問：拋物線 $y=ax^2+bx+c$ 和 $x$ 軸有幾個交點？拖動下面的滑桿試試看。
 
 <Graph name="algebra/parabola" />
-
-### 根與係數關係
-
-設兩根為 $\alpha=\dfrac{-b+\sqrt D}{2a}$、$\beta=\dfrac{-b-\sqrt D}{2a}$。相加時根號抵消，相乘時用平方差：
-
-$$
-\alpha+\beta=\frac{-2b}{2a}=-\frac{b}{a},\qquad
-\alpha\beta=\frac{(-b)^2-(\sqrt D)^2}{4a^2}=\frac{b^2-(b^2-4ac)}{4a^2}=\frac{c}{a}
-$$
-
-這就是**根與係數關係**：不必解出根，也知道兩根的和與積。像 $\alpha^2+\beta^2$ 這種把 $\alpha$、$\beta$ 對調後不變的式子（**對稱式**），都可以用和與積表示，例如
-
-$$
-\alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta
-$$
-
-因為 $(\alpha+\beta)^2=\alpha^2+2\alpha\beta+\beta^2$，減掉 $2\alpha\beta$ 就剩 $\alpha^2+\beta^2$。
 
 ## 例題
 
@@ -143,8 +134,6 @@ $$
 找兩數相乘為 $40$、相加為 $-13$：$-5$ 和 $-8$。所以 $(x-5)(x-8)=0$，$x=5$ 或 $x=8$。
 
 $x=5$ 時長為 $8$；$x=8$ 時長為 $5$。兩種情形是同一個長方形，所以長 $8$ 公尺、寬 $5$ 公尺。
-
-另一種看法：長和寬是 $t^2-13t+40=0$ 的兩根，因為由根與係數關係，它們的和是 $13$、積是 $40$。
 
 </Solution>
 
@@ -201,16 +190,5 @@ $x^2+8x=-11$，兩邊同加 $16$：$(x+4)^2=5$，所以 $x=-4\pm\sqrt5$。
 - (a) $D=9-40=-31<0$，沒有實根。
 - (b) $D=144-144=0$，重根（其實是 $(2x-3)^2=0$，$x=\dfrac32$）。
 - (c) $D=1+12=13>0$，兩相異實根。
-
-</Solution>
-
-**5.** 設 $\alpha$、$\beta$ 是 $x^2-3x-5=0$ 的兩根，求 $\alpha^2+\beta^2$ 與 $\dfrac1\alpha+\dfrac1\beta$。
-
-<Solution answer>
-
-由根與係數關係，$\alpha+\beta=3$、$\alpha\beta=-5$。
-
-- $\alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta=9-2(-5)=19$。
-- $\dfrac1\alpha+\dfrac1\beta=\dfrac{\alpha+\beta}{\alpha\beta}=\dfrac{3}{-5}=-\dfrac35$。
 
 </Solution>
