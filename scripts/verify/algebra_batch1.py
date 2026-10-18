@@ -26,7 +26,8 @@ def solve_real(expr):
 print('== real-numbers-absolute-value')
 check('概念 0.(36)', nsimplify('0.' + '36' * 20, rational=True).limit_denominator(1000), Rational(4, 11))
 check('概念 |2x-3|<5', solve_real(Abs(2 * x - 3) < 5), Interval.open(-1, 4))
-check('例題1 0.(12)', Rational(12, 99), Rational(4, 33))
+check('例題1 奇數平方是奇數', expand((2 * k + 1)**2 - 2 * (2 * k**2 + 2 * k)), 1)
+check('例題1 p=2m 代入 p^2=2q^2 得 q^2=2m^2', solve(Eq((2 * a)**2, 2 * y), y), [2 * a**2])
 check('例題2 |2x-1|=7', solve_real(Eq(Abs(2 * x - 1), 7)), {-3, 4})
 check('例題3 |d-20|<=0.05', solveset(Abs(d - 20) <= Rational(5, 100), d, S.Reals), Interval(Rational(1995, 100), Rational(2005, 100)))
 check('例題3 合格的螺絲', [v for v in ['19.93', '20.04', '20.06'] if abs(Rational(v) - 20) <= Rational(5, 100)], ['20.04'])
@@ -97,6 +98,22 @@ check('練習4 a', a4, [-3])
 check('練習4 f(2)', f4.subs(a, -3).subs(x, 2), 0)
 f5 = 2 * x**3 - x**2 + k * x + 3
 check('練習5 k', solve(Eq(f5.subs(x, Rational(-1, 2)), 4), k), [-3])
+
+print('== theorem: triangle-inequality')
+xs = [Rational(n, 4) for n in range(-12, 13)]
+check('定理 |a+b|<=|a|+|b|，等號 ⇔ ab>=0', all((abs(p + q) <= abs(p) + abs(q)) and ((abs(p + q) == abs(p) + abs(q)) == (p * q >= 0)) for p in xs for q in xs), True)
+check('例題1 |x|<=2,|y|<=3 時 |x+y| 最大值', max(abs(p + q) for p in xs if abs(p) <= 2 for q in xs if abs(q) <= 3), 5)
+grid = [Rational(n, 10) for n in range(-50, 101)]
+values = {v: abs(v - 1) + abs(v - 5) for v in grid}
+check('例題2 最小值', min(values.values()), 4)
+check('例題2 最小值發生在 [1,5]', [v for v in grid if values[v] == 4] == [v for v in grid if 1 <= v <= 5], True)
+
+print('== theorem: division-algorithm')
+check('例題1', div(x**3 + 2 * x**2 - x + 3, x**2 + 1, x), (x + 2, -2 * x + 1))
+ab = solve([Eq(a + k, 3), Eq(-a + k, -1)], [a, k])
+check('例題2 餘式 ax+b', ab[a] * x + ab[k], 2 * x + 1)
+sample = x**3 + x + 1  # one f with f(1)=3 and f(-1)=-1; its remainder must be 2x+1
+check('例題2 驗證：x^3+x+1 的 f(1), f(-1), 餘式', (sample.subs(x, 1), sample.subs(x, -1), div(sample, x**2 - 1, x)[1]), (3, -1, 2 * x + 1))
 
 print()
 print('all passed' if failures == 0 else f'{failures} FAILED')
