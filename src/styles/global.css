@@ -743,6 +743,23 @@ html.js .graph-steps {
   cursor: pointer;
 }
 
+/* Rows of choices from ctx.button({ row }): a label, then the buttons; the chosen one is filled. */
+.graph-choice-row {
+  align-items: center;
+}
+
+.graph-choice-label {
+  min-width: 2.5em;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.graph-button[aria-pressed='true'] {
+  background: var(--link);
+  color: var(--surface);
+}
+
 .graph-button:disabled {
   border-color: var(--border);
   color: var(--ink-muted);

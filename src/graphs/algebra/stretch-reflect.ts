@@ -23,27 +23,29 @@ const moves = [
 export default {
   title: '函數圖形的伸縮與鏡射',
   description:
-    '用上排按鈕選擇原來的函數（√x、(x − 1)²、x³ ÷ 4），它畫成虛線。下排按鈕播放動畫，把圖形從 y = f(x) 慢慢變成 y = 2f(x)、y = ½f(x)、y = f(2x)、y = f(½x)、y = −f(x) 或 y = f(−x)。原圖上的點 P 和它變換後的位置 P′ 一起標出，下方說明這個變換對每個點做了什麼。',
+    '「函數」一列選擇原來的函數（√x、(x − 1)²、x³ ÷ 4），它畫成虛線；「變換」一列選擇 y = 2f(x)、y = ½f(x)、y = f(2x)、y = f(½x)、y = −f(x) 或 y = f(−x)。按「播放」，圖形從 y = f(x) 慢慢變成選好的變換；按「倒轉」再慢慢變回來。原圖上的點 P 和它變換後的位置 P′ 一起標出，下方說明這個變換對每個點做了什麼。',
   boundingBox: [-6, 6, 6, -3],
   build(board, ctx) {
     const { color } = ctx;
     let base = 0;
-    let move = -1;
+    let move = 0;
+    // How far the chosen transformation has played: 0 is y = f(x), 1 is the transformation.
+    let t = 0;
     // y = a·f(bx) is animated through a and c = 1/b, the horizontal scale factor: c runs straight
     // from 1 to its target, so f(−x) folds through the y-axis (c = 0) like -f(x) folds through the
     // x-axis, instead of b passing 0 and the curve stretching off to infinity.
-    let a = 1;
-    let c = 1;
-    const flat = () => Math.abs(c) < eps;
+    const a = () => 1 + (moves[move].a - 1) * t;
+    const c = () => 1 + (1 / moves[move].b - 1) * t;
+    const flat = () => Math.abs(c()) < eps;
     const f = (x: number) => bases[base].f(x);
-    const g = (x: number) => (flat() ? NaN : a * f(x / c));
+    const g = (x: number) => (flat() ? NaN : a() * f(x / c()));
 
     board.create('functiongraph', [f], { strokeColor: color.muted, strokeWidth: 2, dash: 2, fixed: true, highlight: false });
     board.create('functiongraph', [g], { strokeColor: color.accent, strokeWidth: 3, fixed: true, highlight: false });
 
     // P = (p, f(p)) moves to (c·p, a f(p)).
     const px = () => bases[base].px;
-    const image = (): [number, number] => [c * px(), a * f(px())];
+    const image = (): [number, number] => [c() * px(), a() * f(px())];
     board.create('point', [() => px(), () => f(px())], { fixed: true, name: 'P', size: 4, strokeColor: color.muted, fillColor: color.muted, label: { offset: [6, 10], strokeColor: color.muted } });
     board.create('point', [() => image()[0], () => image()[1]], {
       fixed: true,
@@ -58,31 +60,45 @@ export default {
       { label: '變換後的圖形', color: color.accent, width: 3 },
     ]);
 
-    const play = (i: number) => {
-      move = i;
-      const { a: a1, b: b1 } = moves[i];
-      ctx.animate(1600, (p) => {
-        a = 1 + (a1 - 1) * p;
-        c = 1 + (1 / b1 - 1) * p;
+    // Play from wherever the animation is now, so pressing in the middle continues smoothly.
+    const playTo = (target: 0 | 1) => {
+      const from = t;
+      ctx.animate(1600 * Math.abs(target - from), (p) => {
+        t = from + (target - from) * p;
       });
     };
     bases.forEach((s, i) =>
-      ctx.button(s.button, () => {
-        base = i;
-        if (move >= 0) play(move);
-        else board.update();
-      }),
+      ctx.button(
+        s.button,
+        () => {
+          base = i;
+          board.update();
+        },
+        { row: '函數', pressed: () => base === i },
+      ),
     );
-    moves.forEach((m, i) => ctx.button(`▶ ${m.button}`, () => play(i)));
+    moves.forEach((m, i) =>
+      ctx.button(
+        m.button,
+        () => {
+          move = i;
+          t = 0;
+          board.update();
+        },
+        { row: '變換', pressed: () => move === i },
+      ),
+    );
+    ctx.button('▶ 播放', () => playTo(1));
+    ctx.button('◀ 倒轉', () => playTo(0));
 
     ctx.readout(() => {
       if (flat()) return `$f(x)=${bases[base].latex}$，圖形正壓在 $y$ 軸上`;
-      const b = 1 / c;
-      const coefA = Math.abs(a - 1) < eps ? '' : Math.abs(a + 1) < eps ? '-' : num(a);
+      const b = 1 / c();
+      const coefA = Math.abs(a() - 1) < eps ? '' : Math.abs(a() + 1) < eps ? '-' : num(a());
       const coefB = Math.abs(b - 1) < eps ? '' : Math.abs(b + 1) < eps ? '-' : num(b);
-      return `$f(x)=${bases[base].latex}$，目前 $y=${coefA}f(${coefB}x)$（$a=${num(a)}$，$b=${num(b)}$）`;
+      return `$f(x)=${bases[base].latex}$，目前 $y=${coefA}f(${coefB}x)$（$a=${num(a())}$，$b=${num(b)}$）`;
     });
-    ctx.readout(() => (move < 0 ? '按下排的按鈕播放變換。' : `$${moves[move].button.replace('½', '\\tfrac12').replace('−', '-')}$：${moves[move].effect}`));
+    ctx.readout(() => `$${moves[move].button.replace('½', '\\tfrac12').replace('−', '-')}$：${moves[move].effect}`);
     ctx.readout(() => {
       const [x, y] = image();
       return `點 $P(${num(px())},\\ ${num(f(px()))})$ 移到 $P'(${num(x)},\\ ${num(y)})$。`;

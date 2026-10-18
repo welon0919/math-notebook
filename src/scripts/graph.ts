@@ -134,8 +134,10 @@ class GraphMount {
   private readonly status: HTMLElement;
   private readonly readoutEl: HTMLElement;
   private readonly buttons: HTMLButtonElement[];
-  /** Buttons added by the graph with `ctx.button`, removed before each rebuild. */
+  /** Buttons and rows added by the graph with `ctx.button`, removed before each rebuild. */
   private graphButtons: HTMLButtonElement[] = [];
+  private buttonRows = new Map<string, HTMLElement>();
+  private pressed: { button: HTMLButtonElement; pressed: () => boolean }[] = [];
   private legendEl: HTMLElement | undefined;
 
   // Proof mode
@@ -205,6 +207,9 @@ class GraphMount {
     this.readoutEl.replaceChildren();
     for (const b of this.graphButtons) b.remove();
     this.graphButtons = [];
+    for (const row of this.buttonRows.values()) row.remove();
+    this.buttonRows = new Map();
+    this.pressed = [];
     this.legendEl?.remove();
     this.legendEl = undefined;
     this.named = new Map();
@@ -247,14 +252,36 @@ class GraphMount {
         this.readoutEl.before(list);
         this.legendEl = list;
       },
-      button: (label, onClick) => {
+      button: (label, onClick, { row, pressed } = {}) => {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'graph-button';
         button.textContent = label;
-        button.addEventListener('click', onClick);
-        const controls = this.root.querySelector('.graph-controls')!;
-        controls.insertBefore(button, controls.querySelector('[data-graph-reset]'));
+        button.addEventListener('click', () => {
+          onClick();
+          this.updatePressed();
+        });
+        // The main row (with 重設); choice rows also use .graph-controls for spacing.
+        const controls = this.root.querySelector<HTMLElement>('.graph-controls:not(.graph-choice-row)')!;
+        if (row) {
+          let rowEl = this.buttonRows.get(row);
+          if (!rowEl) {
+            rowEl = document.createElement('div');
+            rowEl.className = 'graph-controls graph-choice-row';
+            rowEl.setAttribute('role', 'group');
+            rowEl.setAttribute('aria-label', row);
+            const name = document.createElement('span');
+            name.className = 'graph-choice-label';
+            name.textContent = row;
+            rowEl.append(name);
+            controls.before(rowEl);
+            this.buttonRows.set(row, rowEl);
+          }
+          rowEl.append(button);
+        } else {
+          controls.insertBefore(button, controls.querySelector('[data-graph-reset]'));
+        }
+        if (pressed) this.pressed.push({ button, pressed });
         this.graphButtons.push(button);
       },
       animate: (ms, frame) => {
@@ -318,7 +345,12 @@ class GraphMount {
     });
   }
 
+  private updatePressed() {
+    for (const { button, pressed } of this.pressed) button.setAttribute('aria-pressed', String(pressed()));
+  }
+
   private renderReadouts() {
+    this.updatePressed();
     for (const r of this.readouts) {
       const text = r.render();
       if (text === r.last) continue;

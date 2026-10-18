@@ -37,8 +37,12 @@ export interface GraphContext {
    * e.g. `{ label: '$y=\\sin x$', color: ctx.color.accent, dash: true }`.
    */
   legend(items: LegendItem[]): void;
-  /** Adds a button under the graph, before 重設. Buttons are rebuilt whenever the graph is. */
-  button(label: string, onClick: () => void): void;
+  /**
+   * Adds a button under the graph, before 重設. Buttons are rebuilt whenever the graph is.
+   * With `row`, it goes into a separate row of choices labelled `row` (e.g. '函數'), above the
+   * main controls; `pressed` marks the selected choice and is re-read whenever the graph updates.
+   */
+  button(label: string, onClick: () => void, options?: ButtonOptions): void;
   /**
    * Plays an animation: calls `frame(p)` with p easing from 0 to 1 over `ms` milliseconds,
    * redrawing the board after each call. With reduced motion it calls `frame(1)` once.
@@ -57,6 +61,13 @@ export interface GraphContext {
    * Compute moving coordinates from it, e.g. `() => x0 + ctx.progress(3) * dx`.
    */
   progress(n: number): number;
+}
+
+export interface ButtonOptions {
+  /** Label of the row of choices this button belongs to. */
+  row?: string;
+  /** Whether this button is the selected choice; shown with aria-pressed. */
+  pressed?: () => boolean;
 }
 
 export interface LegendItem {
