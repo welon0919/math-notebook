@@ -120,6 +120,22 @@ check('練習3 遞推', expand((k + 1)**3 + 2 * (k + 1) - (k**3 + 2 * k) - 3 * (
 check('練習3 對 1..50 檢查', all((j**3 + 2 * j) % 3 == 0 for j in range(1, 51)), True)
 check('練習4 遞推', expand(2**ki - 1 + 2**ki - (2**(ki + 1) - 1)), 0)
 
+print('== formula: sum-of-powers')
+check('Σk', Sum(ki, (ki, 1, ni)).doit().factor(), ni * (ni + 1) / 2)
+check('Σk^2', Sum(ki**2, (ki, 1, ni)).doit().factor(), ni * (ni + 1) * (2 * ni + 1) / 6)
+check('Σk^3', Sum(ki**3, (ki, 1, ni)).doit().factor(), (ni * (ni + 1) / 2)**2)
+check('符號說明 n=3', (1 + 2 + 3, 1 + 4 + 9, 1 + 8 + 27), (6, 14, 36))
+check('例題1', sum(j * (j + 1) for j in range(1, 11)), 440)
+check('例題2', sum(j * j for j in range(1, 20, 2)), 1330)
+check('例題2 驗算', (sum(j * j for j in range(1, 21)), 4 * sum(j * j for j in range(1, 11))), (2870, 1540))
+check('推導 平方和的整理', expand((ni + 1)**3 - (ni + 1) - 3 * ni * (ni + 1) / 2 - ni * (ni + 1) * (2 * ni + 1) / 2), 0)
+check('推導 立方和遞推', expand((m * (m + 1) / 2)**2 + (m + 1)**3 - ((m + 1) * (m + 2) / 2)**2), 0)
+
+print('== theorem: mathematical-induction')
+check('例題1 遞推', expand(11 * (5 * m + 6) - 6 - 5 * (11 * m + 12)), 0)
+check('例題1 對 1..40 檢查', all((11**j - 6) % 5 == 0 for j in range(1, 41)), True)
+check('例題2 對 1..40 檢查', all(3**j >= 1 + 2 * j for j in range(1, 41)), True)
+
 print()
 print('all passed' if failures == 0 else f'{failures} FAILED')
 raise SystemExit(1 if failures else 0)
