@@ -746,6 +746,7 @@ html.js .graph-steps {
 /* Rows of choices from ctx.button({ row }): a label, then the buttons; the chosen one is filled. */
 .graph-choice-row {
   align-items: center;
+  margin: 0 0 0.5rem;
 }
 
 .graph-choice-label {

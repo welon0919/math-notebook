@@ -274,7 +274,10 @@ class GraphMount {
             name.className = 'graph-choice-label';
             name.textContent = row;
             rowEl.append(name);
-            controls.before(rowEl);
+            // Choices go above the graph, in the order their rows were first used.
+            const last = [...this.buttonRows.values()].at(-1);
+            if (last) last.after(rowEl);
+            else this.root.querySelector('.graph-box')!.before(rowEl);
             this.buttonRows.set(row, rowEl);
           }
           rowEl.append(button);

@@ -40,7 +40,7 @@ export interface GraphContext {
   /**
    * Adds a button under the graph, before 重設. Buttons are rebuilt whenever the graph is.
    * With `row`, it goes into a separate row of choices labelled `row` (e.g. '函數'), above the
-   * main controls; `pressed` marks the selected choice and is re-read whenever the graph updates.
+   * graph; `pressed` marks the selected choice and is re-read whenever the graph updates.
    */
   button(label: string, onClick: () => void, options?: ButtonOptions): void;
   /**
