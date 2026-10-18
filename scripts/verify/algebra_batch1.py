@@ -115,6 +115,12 @@ check('例題2 餘式 ax+b', ab[a] * x + ab[k], 2 * x + 1)
 sample = x**3 + x + 1  # one f with f(1)=3 and f(-1)=-1; its remainder must be 2x+1
 check('例題2 驗證：x^3+x+1 的 f(1), f(-1), 餘式', (sample.subs(x, 1), sample.subs(x, -1), div(sample, x**2 - 1, x)[1]), (3, -1, 2 * x + 1))
 
+print('== page: /algebra/long-division/ presets')
+check('整除', div(x**2 + 5 * x + 6, x + 2, x), (x + 3, 0))
+check('缺項、有餘式', div(x**3 - 2 * x**2 + 4, x**2 + x - 1, x), (x - 3, 4 * x + 1))
+check('首項係數不是 1', div(6 * x**3 + x**2 - 4 * x + 5, 2 * x - 1, x), (3 * x**2 + 2 * x - 1, 4))
+check('兩邊都缺項', div(x**4 - 1, x**2 + 1, x), (x**2 - 1, 0))
+
 print()
 print('all passed' if failures == 0 else f'{failures} FAILED')
 raise SystemExit(1 if failures else 0)

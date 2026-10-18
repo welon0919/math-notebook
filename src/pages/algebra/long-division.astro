@@ -1,0 +1,130 @@
+---
+import Base from '../../layouts/Base.astro';
+import { longDivision } from '../../lib/long-division';
+import { renderLatex, renderMathText } from '../../lib/math';
+
+// Coefficients from the highest power down; each one shows a different situation.
+const presets = [
+  { id: 'exact', dividend: [1, 5, 6], divisor: [1, 2], note: '最基本的情形：除式是一次式，最後剛好整除。' },
+  { id: 'missing-term', dividend: [1, -2, 0, 4], divisor: [1, 1, -1], note: '被除式缺 $x$ 項，要補 $0x$ 佔位；最後有餘式。這是〈多項式的運算與除法〉的例題 1。' },
+  { id: 'leading-coefficient', dividend: [6, 1, -4, 5], divisor: [2, -1], note: '除式的首項係數不是 $1$：每一步用首項 $2x$ 去除。' },
+  { id: 'both-missing', dividend: [1, 0, 0, 0, -1], divisor: [1, 0, 1], note: '被除式和除式都有缺項，乘回去的那一行也要寫出 $0$ 的項，對齊才不會錯。' },
+].map((p) => ({ ...p, ...longDivision(p.dividend, p.divisor) }));
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="長除法逐步示範" description="多項式長除法逐步示範：一步一步看首項相除、乘回去、相減，直到餘式的次數比除式低。">
+  <p class="back-link"><a href={`${base}/algebra/polynomial-division/`}>← 多項式的運算與除法</a></p>
+  <h1>長除法逐步示範</h1>
+  <p>
+    多項式的長除法每一輪都做三件事：<strong>首項相除</strong>得到商的一項、把這一項<strong>乘回</strong>除式、再<strong>相減</strong>。
+    重複到剩下的式子次數比除式低為止，剩下的就是餘式。選一個例子，按「下一步」跟著做。
+  </p>
+
+  <fieldset class="ld-picker" data-ld-picker hidden>
+    <legend>選擇例子</legend>
+    {
+      presets.map((p, i) => (
+        <label>
+          <input type="radio" name="ld-preset" value={p.id} checked={i === 0} />
+          <span set:html={renderLatex(`(${p.dividendTex})\\div(${p.divisorTex})`)} />
+        </label>
+      ))
+    }
+  </fieldset>
+
+  {
+    presets.map((p) => (
+      <section class="ld-example" id={p.id} data-ld={p.steps.length}>
+        <h2 set:html={renderMathText(`$(${p.dividendTex})\\div(${p.divisorTex})$`)} />
+        <p class="ld-note" set:html={renderMathText(p.note)} />
+
+        <div class="ld-scroll">
+          <table class="ld-table">
+            <tbody>
+              {p.rows.map((row) => (
+                <tr class={`ld-${row.kind}`}>
+                  <td class="ld-left" data-step={row.kind === 'quotient' ? undefined : row.step}>
+                    {row.kind === 'dividend' && <span set:html={renderLatex(p.divisorTex)} />}
+                    {row.kind === 'product' && <span set:html={renderLatex('-')} />}
+                  </td>
+                  {p.powers.map((power) => {
+                    const cell = row.cells.find((c) => c.power === power);
+                    return cell ? <td data-step={cell.step} set:html={renderLatex(cell.tex)} /> : <td />;
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="ld-step-text" data-ld-text aria-live="polite" hidden />
+        <div class="ld-controls" data-ld-controls hidden>
+          <button type="button" class="graph-button" data-ld-prev>← 上一步</button>
+          <span class="ld-counter" data-ld-counter />
+          <button type="button" class="graph-button" data-ld-next>下一步 →</button>
+          <button type="button" class="graph-button" data-ld-restart>重來</button>
+        </div>
+
+        {/* Without JavaScript the whole layout shows at once, with every step listed here. */}
+        <ol class="ld-steps" data-ld-steps>
+          {p.steps.map((s) => (
+            <li set:html={renderMathText(s)} />
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</Base>
+
+<script>
+  for (const section of document.querySelectorAll<HTMLElement>('[data-ld]')) {
+    const total = Number(section.dataset.ld);
+    const steps = [...section.querySelectorAll<HTMLLIElement>('[data-ld-steps] li')].map((li) => li.innerHTML);
+    const cells = [...section.querySelectorAll<HTMLElement>('[data-step]')];
+    const text = section.querySelector<HTMLElement>('[data-ld-text]')!;
+    const counter = section.querySelector<HTMLElement>('[data-ld-counter]')!;
+    const prev = section.querySelector<HTMLButtonElement>('[data-ld-prev]')!;
+    const next = section.querySelector<HTMLButtonElement>('[data-ld-next]')!;
+    let current = 0;
+
+    const show = (i: number) => {
+      current = i;
+      for (const cell of cells) {
+        const step = Number(cell.dataset.step);
+        cell.classList.toggle('ld-pending', step > i);
+        cell.classList.toggle('ld-current', step === i);
+      }
+      text.innerHTML = steps[i];
+      counter.textContent = `步驟 ${i + 1} / ${total}`;
+      prev.disabled = i === 0;
+      next.disabled = i === total - 1;
+    };
+
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    section.querySelector('[data-ld-restart]')!.addEventListener('click', () => show(0));
+    section.querySelector<HTMLElement>('[data-ld-steps]')!.hidden = true;
+    text.hidden = false;
+    section.querySelector<HTMLElement>('[data-ld-controls]')!.hidden = false;
+    show(0);
+  }
+
+  // Show one example at a time once the picker works; the URL hash keeps the choice.
+  const picker = document.querySelector<HTMLFieldSetElement>('[data-ld-picker]')!;
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-ld]')];
+  const select = (id: string) => {
+    for (const s of sections) s.hidden = s.id !== id;
+    picker.querySelector<HTMLInputElement>(`input[value="${id}"]`)!.checked = true;
+  };
+  picker.addEventListener('change', (event) => {
+    const id = (event.target as HTMLInputElement).value;
+    select(id);
+    history.replaceState(null, '', `#${id}`);
+  });
+  const fromHash = () => select(sections.some((s) => `#${s.id}` === location.hash) ? location.hash.slice(1) : sections[0].id);
+  window.addEventListener('hashchange', fromHash);
+  picker.hidden = false;
+  fromHash();
+</script>

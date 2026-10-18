@@ -813,3 +813,125 @@ html:not(.js) .proof-step-label {
   padding: 0;
   cursor: auto;
 }
+
+/* Long division walkthrough (src/pages/algebra/long-division.astro) */
+.ld-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 1.5rem 0;
+  padding: 0.75rem var(--space);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.ld-picker legend {
+  padding: 0 0.25rem;
+  font-weight: 700;
+}
+
+.ld-picker label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  cursor: pointer;
+}
+
+.ld-example {
+  margin: 1.5rem 0 2.5rem;
+}
+
+.ld-note {
+  color: var(--ink-muted);
+}
+
+/* The layout can be wider than a phone; scroll it instead of the page. */
+.ld-scroll {
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 0.75rem var(--space);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.ld-table {
+  margin: 0 auto;
+  /* Separate borders, so a hidden (not yet shown) cell hides its rule too. */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ld-table td {
+  padding: 0.25rem 0.5rem;
+  text-align: right;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.ld-table .ld-left {
+  padding-right: 0.75rem;
+}
+
+/* Division bracket: a rule over the dividend and a curve on its left. */
+.ld-dividend td:not(.ld-left) {
+  border-top: 2px solid var(--ink);
+}
+
+.ld-dividend .ld-left + td {
+  border-left: 2px solid var(--ink);
+  border-top-left-radius: 0.75rem;
+}
+
+.ld-product td:not(.ld-left):not(:empty) {
+  border-bottom: 1.5px solid var(--ink-muted);
+}
+
+.ld-table .ld-pending {
+  visibility: hidden;
+}
+
+.ld-table .ld-current {
+  background: color-mix(in srgb, var(--focus) 18%, transparent);
+  color: var(--focus);
+}
+
+.ld-step-text {
+  min-height: 3.5em;
+  margin: 0.5rem 0;
+  padding: 0.5rem var(--space);
+  border-left: 4px solid var(--focus);
+  background: var(--surface);
+}
+
+.ld-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ld-counter {
+  min-width: 6.5em;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .ld-scroll {
+    padding-inline: 0.25rem;
+  }
+
+  .ld-table td {
+    padding: 0.2rem 0.25rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-table td {
+    transition: none;
+  }
+}
