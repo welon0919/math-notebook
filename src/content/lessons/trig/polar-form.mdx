@@ -1,0 +1,198 @@
+---
+subject: trig
+unit: trig-applications
+order: 16
+title: 極座標與複數的極式
+summary: 在極座標和直角座標之間互換，把複數寫成極式，用棣美弗定理算乘方和方根。
+prerequisites: [angle-sum-difference, complex-numbers]
+formulas: [angle-sum, special-angles]
+theorems: [de-moivre]
+---
+
+## 學習目標
+
+- 學完這課，你能在極座標 $(r,\theta)$ 與直角座標 $(x,y)$ 之間互換。
+- 學完這課，你能把複數寫成 $r(\cos\theta+i\sin\theta)$，並說明乘法是「長度相乘、角度相加」。
+- 學完這課，你能用棣美弗定理求 $z^n$ 和 $n$ 次方根。
+
+## 概念說明
+
+### 極座標
+
+描述平面上一點的位置，除了「往右 $x$、往上 $y$」，也可以說「離原點多遠、在哪個方向」。點 $P$ 的**極座標** $(r,\theta)$ 中，$r$ 是 $P$ 到原點的距離，$\theta$ 是從正 $x$ 軸轉到 $OP$ 的角。
+
+由〈廣義角與象限〉的定義 $\cos\theta=\frac xr$、$\sin\theta=\frac yr$，兩種座標的換算是
+
+$$
+x=r\cos\theta,\quad y=r\sin\theta;\qquad r=\sqrt{x^2+y^2}
+$$
+
+由 $(x,y)$ 求 $\theta$ 時，先看點在第幾象限，再用參考角；只看 $\tan\theta=\frac yx$ 會分不出 $(1,1)$ 和 $(-1,-1)$。同一個點的 $\theta$ 可以加減 $2\pi$ 的整數倍，通常取 $0\le\theta<2\pi$。
+
+### 複數的極式
+
+〈複數與複數平面〉把 $z=a+bi$ 畫成點 $(a,b)$，$|z|=\sqrt{a^2+b^2}$ 是它到原點的距離。用極座標寫這個點：$a=r\cos\theta$，$b=r\sin\theta$，所以
+
+$$
+z=r(\cos\theta+i\sin\theta),\qquad r=|z|
+$$
+
+這叫做 $z$ 的**極式**，$\theta$ 稱為 $z$ 的**幅角**。例如 $1+i$ 在第一象限，$r=\sqrt2$，$\theta=\frac{\pi}{4}$，所以 $1+i=\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right)$。
+
+### 乘法：長度相乘、角度相加
+
+設 $z_1=r_1(\cos\theta_1+i\sin\theta_1)$，$z_2=r_2(\cos\theta_2+i\sin\theta_2)$。展開乘積，$i^2=-1$：
+
+$$
+\begin{aligned}
+z_1z_2&=r_1r_2\big[(\cos\theta_1\cos\theta_2-\sin\theta_1\sin\theta_2)\\
+&\qquad\quad+i(\sin\theta_1\cos\theta_2+\cos\theta_1\sin\theta_2)\big]\\
+&=r_1r_2\big[\cos(\theta_1+\theta_2)+i\sin(\theta_1+\theta_2)\big]
+\end{aligned}
+$$
+
+最後一步是〈和角與差角公式〉：兩個括號正好是 $\cos(\theta_1+\theta_2)$ 和 $\sin(\theta_1+\theta_2)$。所以**乘積的長度是長度相乘，幅角是幅角相加**。在複數平面上，乘以 $z_2$ 就是「伸縮 $r_2$ 倍、再旋轉 $\theta_2$」。例如乘以 $i=\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}$ 就是逆時針轉 $90^\circ$。
+
+同理，除法是長度相除、幅角相減：$\dfrac{z_1}{z_2}=\dfrac{r_1}{r_2}\big[\cos(\theta_1-\theta_2)+i\sin(\theta_1-\theta_2)\big]$。拖動 $z$ 和 $w$，看乘積怎麼變：
+
+<Graph name="trig/complex-multiply" />
+
+### 棣美弗定理
+
+把同一個 $z=r(\cos\theta+i\sin\theta)$ 連乘 $n$ 次，長度乘 $n$ 次、角度加 $n$ 次：
+
+$$
+\big[r(\cos\theta+i\sin\theta)\big]^n=r^n(\cos n\theta+i\sin n\theta)
+$$
+
+這就是**棣美弗定理**（$n$ 是正整數；用數學歸納法的證明在〈棣美弗定理〉定理頁）。展開 $(a+bi)^{10}$ 要乘很多次，用極式只要算 $r^{10}$ 和 $10\theta$。
+
+反過來，解 $z^n=w$（求 $w$ 的 **$n$ 次方根**）：設 $w=R(\cos\phi+i\sin\phi)$，$z=r(\cos\theta+i\sin\theta)$，由棣美弗定理需要 $r^n=R$，而 $n\theta$ 和 $\phi$ 只要差 $2\pi$ 的整數倍：
+
+$$
+\begin{gathered}
+r=\sqrt[n]{R},\qquad \theta=\frac{\phi+2k\pi}{n}\\
+k=0,1,\dots,n-1
+\end{gathered}
+$$
+
+$k$ 取 $0$ 到 $n-1$ 得到 $n$ 個不同的根；$k=n$ 時角度多了 $2\pi$，又回到 $k=0$ 的根。這 $n$ 個根都在半徑 $\sqrt[n]{R}$ 的圓上，相鄰兩根差 $\frac{2\pi}{n}$，圍成正 $n$ 邊形。
+
+## 例題
+
+### 例題 1
+
+1. 把直角座標 $(-1,\sqrt3)$ 化成極座標（$0\le\theta<2\pi$）。
+2. 把極座標 $\left(4,\dfrac{7\pi}{6}\right)$ 化成直角座標。
+
+<Solution>
+
+1. $r=\sqrt{1+3}=2$。點在第二象限，$\cos\theta=-\frac12$、$\sin\theta=\frac{\sqrt3}{2}$，參考角 $\frac{\pi}{3}$，$\theta=\pi-\frac{\pi}{3}=\dfrac{2\pi}{3}$。極座標是 $\left(2,\dfrac{2\pi}{3}\right)$。
+2. $x=4\cos\dfrac{7\pi}{6}=4\cdot\left(-\dfrac{\sqrt3}{2}\right)=-2\sqrt3$，$y=4\sin\dfrac{7\pi}{6}=4\cdot\left(-\dfrac12\right)=-2$。直角座標是 $(-2\sqrt3,-2)$。
+
+</Solution>
+
+### 例題 2
+
+$z=1+\sqrt3i$，$w=\sqrt3+i$。用極式求 $zw$ 和 $\dfrac zw$，並用直接相乘驗算 $zw$。
+
+<Solution>
+
+$z$：$r=2$，第一象限，$\cos\theta=\frac12$，$\theta=\frac{\pi}{3}$。$w$：$r=2$，$\cos\theta=\frac{\sqrt3}{2}$，$\theta=\frac{\pi}{6}$。
+
+$$
+\begin{aligned}
+zw&=2\cdot2\left(\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}\right)=4i\\
+\frac zw&=\frac22\left(\cos\frac{\pi}{6}+i\sin\frac{\pi}{6}\right)=\frac{\sqrt3}{2}+\frac12i
+\end{aligned}
+$$
+
+驗算：$(1+\sqrt3i)(\sqrt3+i)=\sqrt3+i+3i+\sqrt3i^2=\sqrt3-\sqrt3+4i=4i$。
+
+</Solution>
+
+### 例題 3
+
+1. 求 $(1+i)^8$。
+2. 解 $z^3=8i$。
+
+<Solution>
+
+1. $1+i=\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right)$。由棣美弗定理：
+
+   $$
+   (1+i)^8=(\sqrt2)^8(\cos2\pi+i\sin2\pi)=16
+   $$
+
+   驗算：$(1+i)^2=2i$，$(2i)^4=16i^4=16$。
+2. $8i=8\left(\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}\right)$。三個根的長度都是 $\sqrt[3]8=2$，角度是 $\dfrac{\frac{\pi}{2}+2k\pi}{3}$，$k=0,1,2$，即 $\dfrac{\pi}{6},\dfrac{5\pi}{6},\dfrac{3\pi}{2}$：
+
+   $$
+   z=\sqrt3+i,\quad -\sqrt3+i,\quad -2i
+   $$
+
+   驗算 $-2i$：$(-2i)^3=-8i^3=-8(-i)=8i$。三個根在半徑 $2$ 的圓上，彼此相差 $\frac{2\pi}{3}$，圍成正三角形。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：只用 $\tan\theta=\dfrac ba$ 決定幅角。**
+
+- 錯誤寫法：$z=-1-i$，$\tan\theta=\dfrac{-1}{-1}=1$，所以 $\theta=\dfrac{\pi}{4}$。
+- 為什麼錯：$-1-i$ 在第三象限，$\frac{\pi}{4}$ 是第一象限的角。檢查：$\sqrt2\left(\cos\frac{\pi}{4}+i\sin\frac{\pi}{4}\right)=1+i$，不是 $-1-i$。
+- 正確寫法：第三象限，參考角 $\frac{\pi}{4}$，$\theta=\dfrac{5\pi}{4}$，$-1-i=\sqrt2\left(\cos\dfrac{5\pi}{4}+i\sin\dfrac{5\pi}{4}\right)$。
+
+**錯誤 2：乘法時把角度相乘。**
+
+- 錯誤寫法：$z=2\left(\cos\frac{\pi}{3}+i\sin\frac{\pi}{3}\right)$，$w=2\left(\cos\frac{\pi}{6}+i\sin\frac{\pi}{6}\right)$，$zw=4\left(\cos\dfrac{\pi^2}{18}+i\sin\dfrac{\pi^2}{18}\right)$。
+- 為什麼錯：幅角相加來自和角公式，不是相乘。例題 2 直接相乘得到 $4i$，幅角是 $\frac{\pi}{2}=\frac{\pi}{3}+\frac{\pi}{6}$。
+- 正確寫法：$zw=4\left(\cos\dfrac{\pi}{2}+i\sin\dfrac{\pi}{2}\right)=4i$。
+
+**錯誤 3：$n$ 次方根只寫一個。**
+
+- 錯誤寫法：$z^3=8i$ 的解是 $z=2\left(\cos\dfrac{\pi}{6}+i\sin\dfrac{\pi}{6}\right)=\sqrt3+i$。
+- 為什麼錯：三次方程式有三個複數根。$\frac{\pi}{6}$ 乘以 $3$ 是 $\frac{\pi}{2}$，但 $\frac{5\pi}{6}$、$\frac{3\pi}{2}$ 乘以 $3$ 也和 $\frac{\pi}{2}$ 只差 $2\pi$ 的整數倍。
+- 正確寫法：$k=0,1,2$ 各一個根：$\sqrt3+i$、$-\sqrt3+i$、$-2i$。
+
+## 練習題
+
+**1.** 把極座標 $\left(2,\dfrac{3\pi}{4}\right)$ 化成直角座標，把直角座標 $(0,-3)$ 化成極座標。
+
+<Solution answer>
+
+$\left(2\cos\dfrac{3\pi}{4},\ 2\sin\dfrac{3\pi}{4}\right)=(-\sqrt2,\sqrt2)$。$(0,-3)$ 在負 $y$ 軸上，$r=3$，$\theta=\dfrac{3\pi}{2}$，極座標 $\left(3,\dfrac{3\pi}{2}\right)$。
+
+</Solution>
+
+**2.** 把 $z=-2+2i$ 寫成極式。
+
+<Solution answer>
+
+$r=\sqrt{4+4}=2\sqrt2$。第二象限，參考角 $\dfrac{\pi}{4}$，$\theta=\dfrac{3\pi}{4}$。$z=2\sqrt2\left(\cos\dfrac{3\pi}{4}+i\sin\dfrac{3\pi}{4}\right)$。
+
+</Solution>
+
+**3.** $z=2(\cos50^\circ+i\sin50^\circ)$，$w=3(\cos70^\circ+i\sin70^\circ)$。求 $zw$，寫成 $a+bi$。
+
+<Solution answer>
+
+$zw=6(\cos120^\circ+i\sin120^\circ)=6\left(-\dfrac12+\dfrac{\sqrt3}{2}i\right)=-3+3\sqrt3i$。
+
+</Solution>
+
+**4.** 求 $(\sqrt3+i)^6$。（需要代數〈複數與複數平面〉的 $|z|$）
+
+<Solution answer>
+
+$|\sqrt3+i|=2$，第一象限，$\cos\theta=\dfrac{\sqrt3}{2}$，$\theta=\dfrac{\pi}{6}$。$(\sqrt3+i)^6=2^6(\cos\pi+i\sin\pi)=-64$。
+
+</Solution>
+
+**5.** 解 $z^4=-16$。
+
+<Solution answer>
+
+$-16=16(\cos\pi+i\sin\pi)$。長度 $\sqrt[4]{16}=2$，角度 $\dfrac{\pi+2k\pi}{4}$，$k=0,1,2,3$：$\dfrac{\pi}{4},\dfrac{3\pi}{4},\dfrac{5\pi}{4},\dfrac{7\pi}{4}$。四個根是 $\sqrt2+\sqrt2i$、$-\sqrt2+\sqrt2i$、$-\sqrt2-\sqrt2i$、$\sqrt2-\sqrt2i$，在半徑 $2$ 的圓上圍成正方形。驗算：$(\sqrt2+\sqrt2i)^2=2+4i-2=4i$，$(4i)^2=-16$。
+
+</Solution>

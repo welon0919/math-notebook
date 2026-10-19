@@ -1,0 +1,170 @@
+---
+subject: trig
+unit: trig-applications
+order: 15
+title: 三角方程式
+summary: 在指定範圍內解三角方程式，並寫出一般解。
+prerequisites: [sine-cosine-graphs, double-half-angle, combining-sine-cosine]
+formulas: [special-angles, double-angle]
+theorems: [auxiliary-angle]
+---
+
+## 學習目標
+
+- 學完這課，你能解 $\sin x=a$ 這類基本方程式，寫出範圍內的所有解和一般解。
+- 學完這課，你能用恆等式或因式分解，把方程式化成基本型。
+- 學完這課，你能用疊合或倍角公式解較複雜的方程式。
+
+## 概念說明
+
+### 基本型：$\sin x=a$、$\cos x=a$、$\tan x=a$
+
+解 $\sin x=\frac12$ 就是找正弦曲線和水平線 $y=\frac12$ 的交點。在一個週期 $[0,2\pi)$ 中有兩個交點，再加上週期 $2\pi$ 的整數倍，就是所有的解。三種基本型的規則：
+
+- **$\sin x=a$**（$-1\le a\le1$）：令 $\alpha=\sin^{-1}a$。在 $[0,2\pi)$ 中有 $\alpha$ 和 $\pi-\alpha$ 兩個解（因為 $\sin(\pi-\alpha)=\sin\alpha$），化到 $[0,2\pi)$ 裡。一般解是 $x=\alpha+2k\pi$ 或 $x=\pi-\alpha+2k\pi$。
+- **$\cos x=a$**（$-1\le a\le1$）：令 $\beta=\cos^{-1}a$。因為 $\cos(-\beta)=\cos\beta$，一般解是 $x=\pm\beta+2k\pi$。
+- **$\tan x=a$**：令 $\gamma=\tan^{-1}a$。正切的週期是 $\pi$，一般解是 $x=\gamma+k\pi$。
+
+$|a|>1$ 時 $\sin x=a$ 和 $\cos x=a$ 無解，因為正弦、餘弦的值域是 $[-1,1]$。$a=\pm1$ 時兩個解重合成一個（水平線和曲線相切）。
+
+切換函數，拖動 $a$，看交點怎麼變：
+
+<Graph name="trig/trig-equation" />
+
+### 化成基本型
+
+複雜的方程式要先化成基本型。常用的方法：
+
+1. **因式分解**：把 $\sin x$ 當成未知數，例如 $2\sin^2x-\sin x-1=0$ 是 $t=\sin x$ 的二次方程式。
+2. **用恆等式統一**：例如用 $\cos2x=2\cos^2x-1$ 把方程式全部換成 $\cos x$；用 $\sin^2x=1-\cos^2x$ 換掉平方項。
+3. **疊合**：$a\sin x+b\cos x=c$ 寫成 $r\sin(x+\varphi)=c$。
+
+兩件要注意的事：
+
+- **不要隨便約掉含 $x$ 的因式**。$\sin x\cos x=\sin x$ 兩邊除以 $\sin x$ 會漏掉 $\sin x=0$ 的解；應該移項提公因式，寫成 $\sin x(\cos x-1)=0$。
+- **換變數時，範圍也要跟著換**。解 $\sin2x=\frac12$，$0\le x<2\pi$ 時 $0\le2x<4\pi$，要在兩個週期中找 $2x$。
+
+## 例題
+
+### 例題 1
+
+解 $2\sin x=\sqrt3$：寫出 $[0,2\pi)$ 中的所有解和一般解。
+
+<Solution>
+
+$\sin x=\dfrac{\sqrt3}{2}$。$\alpha=\sin^{-1}\dfrac{\sqrt3}{2}=\dfrac{\pi}{3}$，另一個解是 $\pi-\dfrac{\pi}{3}=\dfrac{2\pi}{3}$。
+
+- $[0,2\pi)$ 中：$x=\dfrac{\pi}{3},\ \dfrac{2\pi}{3}$。
+- 一般解：$x=\dfrac{\pi}{3}+2k\pi$ 或 $x=\dfrac{2\pi}{3}+2k\pi$，$k$ 是整數。
+
+驗算：$2\sin\dfrac{2\pi}{3}=2\cdot\dfrac{\sqrt3}{2}=\sqrt3$。
+
+</Solution>
+
+### 例題 2
+
+在 $[0,2\pi)$ 中解 $\cos2x=\cos x$。
+
+<Solution>
+
+用倍角公式把 $\cos2x$ 換成 $2\cos^2x-1$，全部變成 $\cos x$ 的式子：
+
+$$
+\begin{gathered}
+2\cos^2x-1=\cos x\\
+2\cos^2x-\cos x-1=0
+\end{gathered}
+$$
+
+把 $\cos x$ 當成未知數，十字交乘：$(2\cos x+1)(\cos x-1)=0$。
+
+- $\cos x=1$：$x=0$。
+- $\cos x=-\dfrac12$：參考角 $\dfrac{\pi}{3}$，餘弦為負在第二、三象限，$x=\dfrac{2\pi}{3},\ \dfrac{4\pi}{3}$。
+
+所以 $x=0,\ \dfrac{2\pi}{3},\ \dfrac{4\pi}{3}$。驗算 $x=\dfrac{2\pi}{3}$：$\cos\dfrac{4\pi}{3}=-\dfrac12=\cos\dfrac{2\pi}{3}$。
+
+</Solution>
+
+### 例題 3
+
+在 $[0,2\pi)$ 中解 $\sin x+\sqrt3\cos x=1$。
+
+<Solution>
+
+疊合（〈疊合〉練習題 1）：$\sin x+\sqrt3\cos x=2\sin\left(x+\dfrac{\pi}{3}\right)$。方程式變成
+
+$$
+\sin\left(x+\frac{\pi}{3}\right)=\frac12
+$$
+
+令 $u=x+\dfrac{\pi}{3}$。$0\le x<2\pi$，所以 $\dfrac{\pi}{3}\le u<\dfrac{7\pi}{3}$。$\sin u=\dfrac12$ 的解是 $\dfrac{\pi}{6}+2k\pi$ 或 $\dfrac{5\pi}{6}+2k\pi$，落在這個範圍的只有 $u=\dfrac{5\pi}{6}$ 和 $u=\dfrac{13\pi}{6}$（$\frac{\pi}{6}$ 太小，$\frac{13\pi}{6}=\frac{\pi}{6}+2\pi$ 在範圍內）。所以
+
+$$
+x=\frac{5\pi}{6}-\frac{\pi}{3}=\frac{\pi}{2},\qquad x=\frac{13\pi}{6}-\frac{\pi}{3}=\frac{11\pi}{6}
+$$
+
+驗算：$x=\dfrac{\pi}{2}$ 時 $1+0=1$；$x=\dfrac{11\pi}{6}$ 時 $-\dfrac12+\sqrt3\cdot\dfrac{\sqrt3}{2}=-\dfrac12+\dfrac32=1$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：只寫出 $\sin^{-1}a$ 那一個解。**
+
+- 錯誤寫法：$\sin x=\dfrac12$，$0\le x<2\pi$，所以 $x=\dfrac{\pi}{6}$。
+- 為什麼錯：$\sin^{-1}$ 只給出 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中的那一個角。水平線 $y=\frac12$ 和正弦曲線在一個週期中交兩次，$\sin\frac{5\pi}{6}=\frac12$ 也成立。
+- 正確寫法：$x=\dfrac{\pi}{6}$ 或 $\dfrac{5\pi}{6}$。
+
+**錯誤 2：兩邊除以含 $x$ 的式子。**
+
+- 錯誤寫法：$\sin x\cos x=\sin x$，兩邊除以 $\sin x$ 得 $\cos x=1$，$x=0$。
+- 為什麼錯：$\sin x=0$ 時不能除。檢查：$x=\pi$ 時左邊 $0\cdot(-1)=0$，右邊 $\sin\pi=0$，也是解，卻被漏掉了。
+- 正確寫法：$\sin x\cos x-\sin x=0$，$\sin x(\cos x-1)=0$。$\sin x=0$ 得 $x=0,\pi$；$\cos x=1$ 得 $x=0$。所以 $x=0,\pi$。
+
+**錯誤 3：換變數後沒有換範圍。**
+
+- 錯誤寫法：$\sin2x=\dfrac12$，$0\le x<2\pi$，所以 $2x=\dfrac{\pi}{6}$ 或 $\dfrac{5\pi}{6}$，$x=\dfrac{\pi}{12},\ \dfrac{5\pi}{12}$。
+- 為什麼錯：$0\le x<2\pi$ 時 $0\le2x<4\pi$，$2x$ 走了兩個週期。檢查：$x=\frac{13\pi}{12}$ 時 $\sin\frac{13\pi}{6}=\sin\frac{\pi}{6}=\frac12$，也是解。
+- 正確寫法：$2x=\dfrac{\pi}{6},\ \dfrac{5\pi}{6},\ \dfrac{13\pi}{6},\ \dfrac{17\pi}{6}$，$x=\dfrac{\pi}{12},\ \dfrac{5\pi}{12},\ \dfrac{13\pi}{12},\ \dfrac{17\pi}{12}$。
+
+## 練習題
+
+**1.** 在 $[0,2\pi)$ 中解 $\cos x=-\dfrac{\sqrt2}{2}$。
+
+<Solution answer>
+
+參考角 $\dfrac{\pi}{4}$，餘弦為負在第二、三象限：$x=\dfrac{3\pi}{4},\ \dfrac{5\pi}{4}$。
+
+</Solution>
+
+**2.** 寫出 $\tan x=-\sqrt3$ 的一般解。
+
+<Solution answer>
+
+$\tan^{-1}(-\sqrt3)=-\dfrac{\pi}{3}$，週期 $\pi$：$x=-\dfrac{\pi}{3}+k\pi$（也可以寫成 $\dfrac{2\pi}{3}+k\pi$），$k$ 是整數。
+
+</Solution>
+
+**3.** 在 $[0,2\pi)$ 中解 $2\sin^2x+\sin x-1=0$。
+
+<Solution answer>
+
+$(2\sin x-1)(\sin x+1)=0$。$\sin x=\dfrac12$：$x=\dfrac{\pi}{6},\ \dfrac{5\pi}{6}$；$\sin x=-1$：$x=\dfrac{3\pi}{2}$。
+
+</Solution>
+
+**4.** 在 $[0,2\pi)$ 中解 $\sin2x=\cos x$。（需要〈倍角與半角公式〉）
+
+<Solution answer>
+
+$2\sin x\cos x-\cos x=0$，$\cos x(2\sin x-1)=0$（不要除以 $\cos x$）。$\cos x=0$：$x=\dfrac{\pi}{2},\ \dfrac{3\pi}{2}$；$\sin x=\dfrac12$：$x=\dfrac{\pi}{6},\ \dfrac{5\pi}{6}$。共四個解。
+
+</Solution>
+
+**5.** 在 $[0,2\pi)$ 中解 $\sin x-\cos x=1$。（需要〈疊合〉）
+
+<Solution answer>
+
+$\sin x-\cos x=\sqrt2\sin\left(x-\dfrac{\pi}{4}\right)$，所以 $\sin\left(x-\dfrac{\pi}{4}\right)=\dfrac{\sqrt2}{2}$。令 $u=x-\dfrac{\pi}{4}$，範圍是 $-\dfrac{\pi}{4}\le u<\dfrac{7\pi}{4}$，其中 $\sin u=\dfrac{\sqrt2}{2}$ 的是 $u=\dfrac{\pi}{4},\ \dfrac{3\pi}{4}$。所以 $x=\dfrac{\pi}{2},\ \pi$。驗算：$1-0=1$，$0-(-1)=1$。
+
+</Solution>

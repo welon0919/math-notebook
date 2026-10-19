@@ -3,40 +3,196 @@ subject: trig
 unit: trig-applications
 order: 13
 title: 解三角形
-summary: 用正弦定理、餘弦定理和面積公式，由已知的邊角求出三角形的其餘部分。
-prerequisites: [right-triangle-trig, unit-circle-radians]
-formulas: [triangle-area]
+summary: 用正弦定理和餘弦定理，由已知的邊角求出三角形的其餘部分。
+prerequisites: [right-triangle-trig, general-angles]
+formulas: [special-angles, angle-sum]
 theorems: [law-of-sines, law-of-cosines]
-example: $\triangle ABC$ 中，$b=3$，$c=5$，$\angle A=60^\circ$，求 $a$ 與三角形面積。
-solution: 由餘弦定理 $a^2=b^2+c^2-2bc\cos A=9+25-2\cdot 3\cdot 5\cdot\dfrac{1}{2}=19$，所以 $a=\sqrt{19}$。面積 $=\dfrac{1}{2}bc\sin A=\dfrac{1}{2}\cdot 3\cdot 5\cdot\dfrac{\sqrt{3}}{2}=\dfrac{15\sqrt{3}}{4}$。
 ---
 
-「解三角形」是指由已知的邊和角，求出其餘的邊和角。習慣上用 $a,b,c$ 表示 $\angle A,\angle B,\angle C$ 的對邊。拖動頂點看看邊和角怎麼一起變化：
+## 學習目標
+
+- 學完這課，你能依已知條件選擇正弦定理或餘弦定理。
+- 學完這課，你能在已知兩邊及其中一邊的對角時，判斷有一解、兩解或無解。
+- 學完這課，你能用餘弦定理由三邊求角，並判斷三角形是銳角、直角或鈍角三角形。
+
+## 概念說明
+
+### 什麼是解三角形
+
+三角形有三個邊、三個角。「解三角形」是指由已知的幾個邊和角，求出其餘的邊和角。習慣上用 $a,b,c$ 表示 $\angle A,\angle B,\angle C$ 的對邊。
+
+在國中學過的全等條件告訴我們，知道哪些量就能決定三角形：兩角一邊（ASA、AAS）、兩邊夾一角（SAS）、三邊（SSS）。只知道三個角不行，因為大小可以任意縮放。拖動頂點，看邊和角怎麼一起變化：
 
 <Graph name="trig/triangle-solver" />
 
-## 正弦定理
+〈直角三角形與三角比〉只能處理直角三角形。這一課的兩個定理適用於任何三角形。
+
+### 正弦定理
 
 $$
-\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}=2R
+\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}
 $$
 
-適用於已知**兩角一邊**，或**兩邊及其中一邊的對角**（此時可能有兩解，要小心）。
+**理由**：從 $A$ 作 $BC$ 邊（或它的延長線）的高 $h$。在含 $\angle B$ 的直角三角形中 $h=c\sin B$，在含 $\angle C$ 的直角三角形中 $h=b\sin C$（$\angle C$ 是鈍角時，直角三角形中的角是 $180^\circ-C$，而 $\sin(180^\circ-C)=\sin C$，結果一樣）。所以 $c\sin B=b\sin C$，兩邊除以 $\sin B\sin C$ 得 $\dfrac{b}{\sin B}=\dfrac{c}{\sin C}$。從另一個頂點作高，同理得到另一個等號。這個共同的比值等於外接圓直徑 $2R$，完整證明在〈正弦定理〉定理頁。
 
-## 餘弦定理
+**什麼時候用**：已知兩角一邊（第三個角用 $180^\circ$ 減），或已知兩邊及其中一邊的對角。
 
-$$
-c^2=a^2+b^2-2ab\cos C
-\qquad\Longleftrightarrow\qquad
-\cos C=\frac{a^2+b^2-c^2}{2ab}
-$$
-
-適用於已知**兩邊夾一角**（求第三邊），或已知**三邊**（求角）。
-
-## 面積
+### 餘弦定理
 
 $$
-\Delta=\frac{1}{2}ab\sin C
+\begin{gathered}
+c^2=a^2+b^2-2ab\cos C\\
+\Longleftrightarrow\quad \cos C=\frac{a^2+b^2-c^2}{2ab}
+\end{gathered}
 $$
 
-只知道三邊時，可以用海龍公式 $\Delta=\sqrt{s(s-a)(s-b)(s-c)}$，其中 $s=\dfrac{a+b+c}{2}$。
+它是畢氏定理的推廣：$C=90^\circ$ 時 $\cos C=0$，就是 $c^2=a^2+b^2$。證明（把 $C$ 放在原點，用距離公式）在〈餘弦定理〉定理頁。
+
+**什麼時候用**：已知兩邊夾一角，求第三邊；已知三邊，求角。
+
+由右邊的式子還可以判斷角的種類：$a^2+b^2-c^2$ 的正負就是 $\cos C$ 的正負。$a^2+b^2>c^2$ 時 $C$ 是銳角，$=$ 時是直角，$<$ 時是鈍角。最大的角在最長邊的對面，所以看最長邊就能判斷整個三角形是哪一種。
+
+### 已知兩邊及一邊的對角：可能兩解
+
+已知 $a$、$b$ 和 $\angle A$（SSA）不是全等條件，三角形可能不只一個。用正弦定理算 $\sin B=\dfrac{b\sin A}{a}$：
+
+- 若 $\sin B>1$：沒有這樣的角，**無解**。
+- 若 $\sin B=1$：$B=90^\circ$，**一解**。
+- 若 $\sin B<1$：$B$ 可能是銳角 $B_1$，也可能是 $180^\circ-B_1$（兩者正弦相同）。鈍角那一個要和 $A$ 加起來小於 $180^\circ$ 才成立。
+
+用圖來看最清楚：以 $C$ 為圓心、$a$ 為半徑畫圓，它和 $\angle A$ 另一邊的交點就是 $B$。交點的個數就是解的個數。拖動滑桿試試：
+
+<Graph name="trig/ssa-ambiguous" />
+
+## 例題
+
+### 例題 1
+
+$\triangle ABC$ 中，$\angle A=45^\circ$，$\angle B=60^\circ$，$a=10$。求 $\angle C$、$b$、$c$。
+
+<Solution>
+
+$\angle C=180^\circ-45^\circ-60^\circ=75^\circ$。已知兩角一邊，用正弦定理：
+
+$$
+b=\frac{a\sin B}{\sin A}=\frac{10\cdot\frac{\sqrt3}{2}}{\frac{\sqrt2}{2}}=\frac{10\sqrt3}{\sqrt2}=5\sqrt6
+$$
+
+$\sin75^\circ=\dfrac{\sqrt6+\sqrt2}{4}$（〈和角與差角公式〉）：
+
+$$
+\begin{aligned}
+c&=\frac{a\sin C}{\sin A}=\frac{10\cdot\frac{\sqrt6+\sqrt2}{4}}{\frac{\sqrt2}{2}}\\
+&=\frac{5(\sqrt6+\sqrt2)}{\sqrt2}=5(\sqrt3+1)
+\end{aligned}
+$$
+
+合理性檢查：角越大對邊越長，$45^\circ<60^\circ<75^\circ$，而 $a=10<b\approx12.2<c\approx13.7$，順序一致。
+
+</Solution>
+
+### 例題 2
+
+$\triangle ABC$ 中，$b=3$，$c=5$，$\angle A=60^\circ$。求 $a$，並判斷這是銳角、直角還是鈍角三角形。
+
+<Solution>
+
+已知兩邊夾一角，用餘弦定理：
+
+$$
+\begin{aligned}
+a^2&=b^2+c^2-2bc\cos A\\
+&=9+25-2\cdot3\cdot5\cdot\frac12=19
+\end{aligned}
+$$
+
+所以 $a=\sqrt{19}$。三邊是 $3$、$5$、$\sqrt{19}\approx4.36$，最長邊是 $c=5$。看它的對角 $C$：$a^2+b^2-c^2=19+9-25=3>0$，所以 $\cos C>0$，$C$ 是銳角。最大角都是銳角，所以是**銳角三角形**。
+
+</Solution>
+
+### 例題 3
+
+$\triangle ABC$ 中，$\angle A=45^\circ$，$a=2$，$b=\sqrt6$。求 $\angle B$、$\angle C$ 和 $c$。
+
+<Solution>
+
+已知兩邊及一邊的對角，用正弦定理求 $\sin B$：
+
+$$
+\sin B=\frac{b\sin A}{a}=\frac{\sqrt6\cdot\frac{\sqrt2}{2}}{2}=\frac{\sqrt{12}}{4}=\frac{\sqrt3}{2}
+$$
+
+$\sin B<1$，$B$ 可能是 $60^\circ$ 或 $120^\circ$。兩者加上 $A=45^\circ$ 都小於 $180^\circ$，所以**兩解**都成立（也可以這樣看：$a=2<b\approx2.45$，對應圖形中「兩解」的情形）。
+
+- $B=60^\circ$：$C=75^\circ$，$c=\dfrac{a\sin C}{\sin A}=\dfrac{2\cdot\frac{\sqrt6+\sqrt2}{4}}{\frac{\sqrt2}{2}}=\sqrt3+1$。
+- $B=120^\circ$：$C=15^\circ$，$c=\dfrac{2\cdot\frac{\sqrt6-\sqrt2}{4}}{\frac{\sqrt2}{2}}=\sqrt3-1$。
+
+驗算第二解：用餘弦定理 $a^2=b^2+c^2-2bc\cos A=6+(4-2\sqrt3)-2\sqrt6(\sqrt3-1)\cdot\frac{\sqrt2}{2}=10-2\sqrt3-(6-2\sqrt3)=4$，$a=2$，正確。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：已知兩邊及一邊的對角時，只寫一個解。**
+
+- 錯誤寫法：例題 3 中 $\sin B=\dfrac{\sqrt3}{2}$，所以 $B=60^\circ$。
+- 為什麼錯：$\sin B=\frac{\sqrt3}{2}$ 的角在 $0^\circ$ 到 $180^\circ$ 之間有 $60^\circ$ 和 $120^\circ$ 兩個。$120^\circ+45^\circ<180^\circ$，所以第二個也構成三角形。
+- 正確寫法：$B=60^\circ$ 或 $120^\circ$，兩解都要檢查並寫出。
+
+**錯誤 2：鈍角的餘弦忘了是負的。**
+
+- 錯誤寫法：$a=3$，$b=5$，$C=120^\circ$，$c^2=9+25-2\cdot3\cdot5\cdot\frac12=19$。
+- 為什麼錯：$\cos120^\circ=-\frac12$，減掉一個負數等於加。檢查：$C$ 是鈍角，對邊應該是最長的，但 $\sqrt{19}\approx4.36<5$。
+- 正確寫法：$c^2=9+25-2\cdot3\cdot5\cdot\left(-\frac12\right)=49$，$c=7$。
+
+**錯誤 3：用正弦定理求最大的角，只取銳角。**
+
+- 錯誤寫法：三邊 $a=3$、$b=5$、$c=7$。先由餘弦定理得 $\sin A=\dfrac{3\sqrt3}{14}$，再由正弦定理 $\sin C=\dfrac{c\sin A}{a}=\dfrac{\sqrt3}{2}$，所以 $C=60^\circ$。
+- 為什麼錯：$\sin C=\frac{\sqrt3}{2}$ 也可能是 $120^\circ$，正弦分辨不出銳角和鈍角。檢查：$\cos A=\frac{13}{14}$、$\cos B=\frac{11}{14}$，$A\approx21.8^\circ$、$B\approx38.2^\circ$，加上 $60^\circ$ 只有 $120^\circ$，不是 $180^\circ$。
+- 正確寫法：求可能是鈍角的角（最大角）時用餘弦定理：$\cos C=\dfrac{9+25-49}{30}=-\dfrac12$，$C=120^\circ$。
+
+## 練習題
+
+**1.** $\triangle ABC$ 中，$\angle A=30^\circ$，$\angle B=45^\circ$，$a=4$。求 $\angle C$ 和 $b$。
+
+<Solution answer>
+
+$\angle C=105^\circ$。$b=\dfrac{a\sin B}{\sin A}=\dfrac{4\cdot\frac{\sqrt2}{2}}{\frac12}=4\sqrt2$。
+
+</Solution>
+
+**2.** $\triangle ABC$ 中，$a=5$，$b=8$，$\angle C=60^\circ$。求 $c$。
+
+<Solution answer>
+
+$c^2=25+64-2\cdot5\cdot8\cdot\dfrac12=49$，$c=7$。
+
+</Solution>
+
+**3.** 三邊長為 $5$、$7$、$8$ 的三角形，求邊長 $7$ 所對的角。
+
+<Solution answer>
+
+$\cos\theta=\dfrac{5^2+8^2-7^2}{2\cdot5\cdot8}=\dfrac{40}{80}=\dfrac12$，$\theta=60^\circ$。
+
+</Solution>
+
+**4.** 已知 $\angle A=30^\circ$，判斷下列各情形的三角形有幾個解：(a) $a=1$，$b=2$　(b) $a=1$，$b=3$　(c) $a=3$，$b=2$。（需要〈廣義角與象限〉中 $\sin(180^\circ-B)=\sin B$ 的參考角）
+
+<Solution answer>
+
+$\sin B=\dfrac{b\sin30^\circ}{a}=\dfrac{b}{2a}$。
+
+- (a) $\sin B=1$，$B=90^\circ$，一解。
+- (b) $\sin B=\frac32>1$，無解。
+- (c) $\sin B=\frac13$，銳角 $B_1$ 和 $180^\circ-B_1$ 正弦都是 $\frac13$。但 $b<a$，所以 $B<A=30^\circ$（小邊對小角），$180^\circ-B_1$ 太大，只有一解。
+
+</Solution>
+
+**5.** $\triangle ABC$ 中 $a=6$，$\angle A=30^\circ$，求外接圓半徑 $R$。
+
+<Solution answer>
+
+由正弦定理 $\dfrac{a}{\sin A}=2R$：$2R=\dfrac{6}{1/2}=12$，$R=6$。
+
+</Solution>

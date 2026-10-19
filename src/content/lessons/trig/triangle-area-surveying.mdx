@@ -1,0 +1,179 @@
+---
+subject: trig
+unit: trig-applications
+order: 14
+title: 三角形面積與測量應用
+summary: 用 $\frac12 ab\sin C$ 和海龍公式求面積，並用仰角、俯角、方位角解決測量問題。
+prerequisites: [solving-triangles]
+formulas: [triangle-area]
+theorems: [heron-formula, law-of-sines, law-of-cosines]
+---
+
+## 學習目標
+
+- 學完這課，你能由兩邊夾一角或三邊求出三角形面積。
+- 學完這課，你能把測量問題畫成圖，標出仰角、俯角或方位角。
+- 學完這課，你能結合正弦、餘弦定理，求出無法直接量的距離或高度。
+
+## 概念說明
+
+### 兩邊夾一角的面積
+
+三角形面積是 $\frac12\times\text{底}\times\text{高}$。以 $a$ 為底，從 $A$ 作高 $h$：在含 $\angle C$ 的直角三角形中，$h=b\sin C$（$C$ 是鈍角時高在延長線上，直角三角形中的角是 $180^\circ-C$，而 $\sin(180^\circ-C)=\sin C$，結果相同）。所以
+
+$$
+\Delta=\frac12ab\sin C
+$$
+
+三個寫法都可以：$\frac12ab\sin C=\frac12bc\sin A=\frac12ca\sin B$，都是「兩邊乘以夾角的正弦，再除以 $2$」。
+
+### 海龍公式
+
+只知道三邊時，可以先用餘弦定理求一個角，再用上面的公式。把這兩步一次做完，得到**海龍公式**：
+
+$$
+\begin{gathered}
+\Delta=\sqrt{s(s-a)(s-b)(s-c)}\\[4pt]
+s=\frac{a+b+c}{2}
+\end{gathered}
+$$
+
+$s$ 是周長的一半，稱為**半周長**。推導的想法：$\Delta^2=\frac14a^2b^2\sin^2C=\frac14a^2b^2(1-\cos^2C)$，把 $\cos C=\frac{a^2+b^2-c^2}{2ab}$ 代進去，再用平方差公式因式分解，完整過程在〈海龍公式〉定理頁。
+
+### 仰角、俯角與方位角
+
+測量高度和距離時，常用三種角：
+
+- **仰角**：往上看時，視線和**水平線**的夾角。
+- **俯角**：往下看時，視線和**水平線**的夾角。從高處 $P$ 看低處 $Q$ 的俯角，等於從 $Q$ 看 $P$ 的仰角（兩條水平線平行，內錯角相等）。
+- **方位角**：從**正北**方向起算的角。「北偏東 $30^\circ$」表示從正北往東轉 $30^\circ$；「南偏西 $40^\circ$」表示從正南往西轉 $40^\circ$。
+
+解題的步驟：**先畫圖**，把已知的邊和角標上去；找出含有未知量的三角形；再依已知條件選用三角比、正弦定理或餘弦定理。
+
+## 例題
+
+### 例題 1
+
+1. $\triangle ABC$ 中，$b=3$，$c=5$，$\angle A=60^\circ$，求面積。
+2. 三邊長為 $5$、$6$、$7$ 的三角形，求面積。
+
+<Solution>
+
+1. 已知兩邊夾一角：$\Delta=\dfrac12bc\sin A=\dfrac12\cdot3\cdot5\cdot\dfrac{\sqrt3}{2}=\dfrac{15\sqrt3}{4}$。
+2. 只知三邊，用海龍公式。$s=\dfrac{5+6+7}{2}=9$，$s-a=4$，$s-b=3$，$s-c=2$：
+
+   $$
+   \Delta=\sqrt{9\cdot4\cdot3\cdot2}=\sqrt{216}=6\sqrt6
+   $$
+
+   用另一種方法驗算：最長邊 $7$ 的對角 $C$，$\cos C=\dfrac{25+36-49}{60}=\dfrac15$，$\sin C=\sqrt{1-\frac1{25}}=\dfrac{2\sqrt6}{5}$，$\Delta=\dfrac12\cdot5\cdot6\cdot\dfrac{2\sqrt6}{5}=6\sqrt6$，一致。
+
+</Solution>
+
+### 例題 2
+
+在水平地面上的 $A$ 點，測得塔頂 $T$ 的仰角是 $30^\circ$；朝塔的方向前進 $20$ 公尺到 $B$ 點，測得仰角是 $60^\circ$。求塔高 $h$。
+
+<Graph name="trig/surveying-height" />
+
+<Solution>
+
+**方法一：正弦定理。** 在 $\triangle ABT$ 中，$\angle A=30^\circ$；$\angle ABT=180^\circ-60^\circ=120^\circ$（和 $60^\circ$ 的仰角互補）；所以 $\angle ATB=180^\circ-30^\circ-120^\circ=30^\circ$。$\angle A=\angle ATB$，所以 $\triangle ABT$ 是等腰三角形，$BT=AB=20$。在直角三角形 $BFT$ 中：
+
+$$
+h=BT\sin60^\circ=20\cdot\frac{\sqrt3}{2}=10\sqrt3\approx17.32\ \text{公尺}
+$$
+
+**方法二：兩個直角三角形。** 設 $BF=x$。$\tan60^\circ=\dfrac hx$，$\tan30^\circ=\dfrac{h}{x+20}$，所以 $x=\dfrac{h}{\sqrt3}$，$x+20=\sqrt3h$。相減得 $20=\sqrt3h-\dfrac{h}{\sqrt3}=\dfrac{2h}{\sqrt3}$，$h=10\sqrt3$，兩種方法一致。
+
+</Solution>
+
+### 例題 3
+
+甲、乙兩船同時從港口 $O$ 出發。甲船沿北偏東 $20^\circ$ 航行 $6$ 公里到 $A$；乙船沿北偏東 $80^\circ$ 航行 $10$ 公里到 $B$。
+
+1. 求兩船之間的距離 $AB$。
+2. 求 $\triangle OAB$ 的面積。
+
+<Graph name="trig/surveying-bearing" />
+
+<Solution>
+
+1. 兩個方位角都從正北量起，所以兩條航線的夾角是 $\angle AOB=80^\circ-20^\circ=60^\circ$。已知兩邊夾一角，用餘弦定理：
+
+   $$
+   \begin{aligned}
+   AB^2&=6^2+10^2-2\cdot6\cdot10\cos60^\circ\\
+   &=36+100-60=76\\
+   AB&=2\sqrt{19}\approx8.72
+   \end{aligned}
+   $$
+
+   公里。
+2. $\Delta=\dfrac12\cdot6\cdot10\cdot\sin60^\circ=15\sqrt3\approx25.98$ 平方公里。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：海龍公式用了周長而不是半周長。**
+
+- 錯誤寫法：三邊 $5,6,7$，$s=18$，$\Delta=\sqrt{18\cdot13\cdot12\cdot11}$。
+- 為什麼錯：$s$ 是**半**周長 $\frac{a+b+c}{2}$。檢查：錯誤的答案 $\sqrt{30888}\approx176$，可是邊長 $7$ 以內的三角形面積不可能超過 $\frac12\cdot7\cdot7=24.5$。
+- 正確寫法：$s=9$，$\Delta=\sqrt{9\cdot4\cdot3\cdot2}=6\sqrt6\approx14.7$。
+
+**錯誤 2：把俯角量成和鉛直線的夾角。**
+
+- 錯誤寫法：從 $50$ 公尺高的懸崖頂，看海上小船的俯角是 $30^\circ$，所以船離崖底 $50\tan30^\circ=\dfrac{50\sqrt3}{3}$ 公尺。
+- 為什麼錯：俯角是視線和**水平線**的夾角，在崖底的直角三角形中，它等於小船那一端的仰角 $30^\circ$。$30^\circ$ 的對邊是崖高 $50$，鄰邊才是距離。檢查：俯角越小，船應該越遠；$30^\circ$ 不大，距離應該比崖高還大，而 $\frac{50\sqrt3}{3}\approx28.9<50$。
+- 正確寫法：$\tan30^\circ=\dfrac{50}{d}$，$d=50\sqrt3\approx86.6$ 公尺。
+
+**錯誤 3：方位角從正東量起。**
+
+- 錯誤寫法：「北偏東 $20^\circ$」畫成從正東往北轉 $20^\circ$。
+- 為什麼錯：「北偏東 $20^\circ$」的意思是「從北方偏向東方 $20^\circ$」，起點是正北。從正東往北轉 $20^\circ$ 是「東偏北 $20^\circ$」，等於北偏東 $70^\circ$。
+- 正確寫法：從正北開始，往東轉 $20^\circ$。
+
+## 練習題
+
+**1.** $\triangle ABC$ 中，$a=4$，$b=6$，$\angle C=150^\circ$，求面積。
+
+<Solution answer>
+
+$\Delta=\dfrac12\cdot4\cdot6\cdot\sin150^\circ=12\cdot\dfrac12=6$。
+
+</Solution>
+
+**2.** 三邊長為 $7$、$8$、$9$ 的三角形，求面積。
+
+<Solution answer>
+
+$s=12$，$\Delta=\sqrt{12\cdot5\cdot4\cdot3}=\sqrt{720}=12\sqrt5$。
+
+</Solution>
+
+**3.** 燈塔頂端離海面 $30$ 公尺。從塔頂看海上同一方向的兩艘船，俯角分別是 $45^\circ$ 和 $60^\circ$。兩船相距多遠？
+
+<Solution answer>
+
+俯角等於船那一端的仰角。俯角 $45^\circ$ 的船離塔 $\dfrac{30}{\tan45^\circ}=30$ 公尺，俯角 $60^\circ$ 的船離塔 $\dfrac{30}{\tan60^\circ}=10\sqrt3$ 公尺（俯角大的比較近）。兩船在同一方向，相距 $30-10\sqrt3\approx12.68$ 公尺。
+
+</Solution>
+
+**4.** 三邊長為 $3$、$5$、$7$ 的三角形，求最大角和面積，並用海龍公式驗算面積。（需要〈解三角形〉的餘弦定理）
+
+<Solution answer>
+
+最大角在最長邊 $7$ 的對面：$\cos C=\dfrac{9+25-49}{30}=-\dfrac12$，$C=120^\circ$。$\Delta=\dfrac12\cdot3\cdot5\cdot\sin120^\circ=\dfrac{15\sqrt3}{4}$。
+
+驗算：$s=\dfrac{15}{2}$，$\Delta=\sqrt{\dfrac{15}{2}\cdot\dfrac92\cdot\dfrac52\cdot\dfrac12}=\sqrt{\dfrac{675}{16}}=\dfrac{15\sqrt3}{4}$，一致。
+
+</Solution>
+
+**5.** 三邊長為 $13$、$14$、$15$ 的三角形，求它的內切圓半徑 $r$。（提示：把三角形從內心切成三個小三角形，它們的高都是 $r$。）
+
+<Solution answer>
+
+海龍公式：$s=21$，$\Delta=\sqrt{21\cdot8\cdot7\cdot6}=84$。內心到三邊的距離都是 $r$，三個小三角形的面積和是 $\dfrac12r(13+14+15)=rs$。所以 $rs=\Delta$，$r=\dfrac{84}{21}=4$。
+
+</Solution>
