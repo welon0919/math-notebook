@@ -1,0 +1,240 @@
+---
+subject: trig
+unit: trig-ratios
+order: 2
+title: 廣義角與象限
+summary: 把角推廣到任意大小和負角，用終邊上的點定義六個三角函數，並由象限和參考角求任意角的值。
+prerequisites: [right-triangle-trig]
+formulas: [special-angles, quotient-identities]
+---
+
+## 學習目標
+
+- 學完這課，你能畫出標準位置角，並找出它的同界角。
+- 學完這課，你能由終邊上一點 $(x,y)$ 求出六個三角函數值。
+- 學完這課，你能用象限判斷正負號，再用參考角求出任意角的三角函數值。
+
+## 概念說明
+
+### 標準位置角
+
+直角三角形裡的角只能介於 $0^\circ$ 和 $90^\circ$ 之間，但「轉動」可以轉任意多：門可以開 $120^\circ$，摩天輪可以轉好幾圈，也可以倒著轉。為了描述轉動，把角放在坐標平面上：
+
+- 頂點放在原點，**始邊**放在正 $x$ 軸。
+- 從始邊轉到**終邊**。**逆時針轉為正角，順時針轉為負角**；轉超過一圈也可以，例如 $450^\circ$ 是轉一圈再多轉 $90^\circ$。
+
+這樣放的角稱為**標準位置角**。終邊落在第幾象限，就說這個角是**第幾象限角**；終邊落在坐標軸上的角（例如 $90^\circ$、$180^\circ$、$-270^\circ$）不屬於任何象限。
+
+### 同界角
+
+$30^\circ$、$390^\circ$、$-330^\circ$ 的終邊是同一條射線：$390^\circ$ 是多轉一圈，$-330^\circ$ 是反方向轉，差一圈回到同一個位置。終邊相同的角稱為**同界角**，它們彼此相差 $360^\circ$ 的整數倍：
+
+$$
+\theta\ \text{的同界角}=\theta+360^\circ\cdot k,\qquad k\ \text{是整數}
+$$
+
+要找 $0^\circ$ 到 $360^\circ$ 之間的同界角，就加或減 $360^\circ$ 的適當倍數。例如 $750^\circ-2\cdot360^\circ=30^\circ$，$-120^\circ+360^\circ=240^\circ$。
+
+### 用終邊上的點定義三角函數
+
+在角 $\theta$ 的終邊上取一點 $P(x,y)$（不是原點），令 $r=\overline{OP}=\sqrt{x^2+y^2}$，$r$ 一定是正數。定義
+
+$$
+\sin\theta=\frac{y}{r},\qquad \cos\theta=\frac{x}{r}
+$$
+
+$$
+\tan\theta=\frac{y}{x}\quad(x\neq0)
+$$
+
+這和上一課的定義一致：$\theta$ 是銳角時，$P$ 在第一象限，從 $P$ 作 $x$ 軸的垂線得到直角三角形，$y$ 是對邊、$x$ 是鄰邊、$r$ 是斜邊。
+
+**換一個點，值不會變。** 同一條終邊上的另一點可以寫成 $(tx,ty)$，其中 $t>0$；它到原點的距離是 $\sqrt{t^2x^2+t^2y^2}=tr$。三個比值的分子分母同乘 $t$，例如 $\dfrac{ty}{tr}=\dfrac yr$，所以值相同。
+
+把三個比值上下顛倒，再定義三個函數：
+
+$$
+\csc\theta=\frac{r}{y}\ (y\neq0),\qquad \sec\theta=\frac{r}{x}\ (x\neq0)
+$$
+
+$$
+\cot\theta=\frac{x}{y}\quad(y\neq0)
+$$
+
+分別讀作**餘割**、**正割**、**餘切**。由定義，它們是前三個函數的倒數：
+
+$$
+\csc\theta=\frac{1}{\sin\theta},\qquad \sec\theta=\frac{1}{\cos\theta}
+$$
+
+$$
+\cot\theta=\frac{1}{\tan\theta}
+$$
+
+配對的規則是「正弦配餘割、餘弦配正割」，每一對剛好一個有「餘」字。在直角三角形中，$\sec\theta=\dfrac{\text{斜邊}}{\text{鄰邊}}$，其他兩個同理。微積分會用到 $\sec\theta$，例如 $\tan\theta$ 的導數是 $\sec^2\theta$。
+
+### 象限與正負號
+
+$r$ 永遠是正的，所以：
+
+- $\sin\theta=\dfrac yr$ 的正負跟 $y$ 一樣：第一、二象限為正。
+- $\cos\theta=\dfrac xr$ 的正負跟 $x$ 一樣：第一、四象限為正。
+- $\tan\theta=\dfrac yx$ 在 $x,y$ 同號時為正：第一、三象限為正。
+
+倒數不改變正負號，所以 $\csc,\sec,\cot$ 分別和 $\sin,\cos,\tan$ 同號。整理成「哪些為正」的表放在下一小節。
+
+### 參考角
+
+終邊和 $x$ 軸之間所夾的銳角，稱為**參考角**。設 $0^\circ<\theta<360^\circ$ 而且 $\theta$ 不在坐標軸上，參考角和正負號整理如下：
+
+| $\theta$ 所在象限 | 參考角 | 為正的函數 |
+|---|---|---|
+| 一 | $\theta$ | 全部 |
+| 二 | $180^\circ-\theta$ | $\sin$、$\csc$ |
+| 三 | $\theta-180^\circ$ | $\tan$、$\cot$ |
+| 四 | $360^\circ-\theta$ | $\cos$、$\sec$ |
+
+**為什麼參考角有用：** 設終邊上的點是 $P(x,y)$，把 $P$ 對坐標軸鏡射到第一象限得到 $Q(|x|,|y|)$。$Q$ 和 $P$ 到原點的距離都是 $r$，而 $OQ$ 和正 $x$ 軸的夾角就是參考角 $\alpha$，所以
+
+$$
+\begin{gathered}
+|\sin\theta|=\frac{|y|}{r}=\sin\alpha\\[4pt]
+|\cos\theta|=\frac{|x|}{r}=\cos\alpha\\[4pt]
+|\tan\theta|=\frac{|y|}{|x|}=\tan\alpha
+\end{gathered}
+$$
+
+也就是說，**任意角的三角函數值，和它參考角的值只差一個正負號**，正負號由象限決定。求值的步驟：
+
+1. 用同界角把角化到 $0^\circ$ 到 $360^\circ$ 之間。
+2. 看終邊在第幾象限，決定正負號。
+3. 求參考角，用特殊角的值。
+
+例如 $\cos240^\circ$：$240^\circ$ 在第三象限，$\cos$ 為負；參考角 $240^\circ-180^\circ=60^\circ$。所以 $\cos240^\circ=-\cos60^\circ=-\dfrac12$。
+
+拖動 $P$ 到不同象限，看參考角和正負號怎麼變化：
+
+<Graph name="trig/general-angle" />
+
+終邊在坐標軸上時沒有參考角，直接在終邊上取點。例如 $90^\circ$ 取 $(0,1)$，$r=1$，得 $\sin90^\circ=1$，$\cos90^\circ=0$，而 $\tan90^\circ=\dfrac10$ 無定義。
+
+## 例題
+
+### 例題 1
+
+找出下列各角在 $0^\circ$ 到 $360^\circ$ 之間的同界角，並判斷它是第幾象限角。
+
+1. $1000^\circ$
+2. $-480^\circ$
+
+<Solution>
+
+1. $1000^\circ$ 比兩圈 $720^\circ$ 多，比三圈 $1080^\circ$ 少，所以減兩圈：$1000^\circ-720^\circ=280^\circ$。$270^\circ<280^\circ<360^\circ$，是第四象限角。
+2. 負角要加圈數。加一圈得 $-120^\circ$，還是負的；加兩圈：$-480^\circ+720^\circ=240^\circ$。$180^\circ<240^\circ<270^\circ$，是第三象限角。
+
+</Solution>
+
+### 例題 2
+
+角 $\theta$ 的終邊經過 $P(-3,4)$，求 $\theta$ 的六個三角函數值。
+
+<Solution>
+
+$x=-3$，$y=4$，$r=\sqrt{(-3)^2+4^2}=\sqrt{25}=5$。由定義：
+
+$$
+\sin\theta=\frac45,\quad \cos\theta=-\frac35
+$$
+
+$$
+\tan\theta=\frac{4}{-3}=-\frac43
+$$
+
+$$
+\csc\theta=\frac54,\quad \sec\theta=-\frac53,\quad \cot\theta=-\frac34
+$$
+
+檢查正負號：$P$ 在第二象限，應該只有 $\sin$ 和 $\csc$ 為正，結果符合。
+
+</Solution>
+
+### 例題 3
+
+求 $\sin780^\circ+\cos(-210^\circ)+\sec1200^\circ$ 的值。
+
+<Solution>
+
+一項一項照「同界角 → 象限 → 參考角」的步驟算：
+
+- $\sin780^\circ$：$780^\circ-720^\circ=60^\circ$，所以 $\sin780^\circ=\sin60^\circ=\dfrac{\sqrt3}{2}$。
+- $\cos(-210^\circ)$：$-210^\circ+360^\circ=150^\circ$，在第二象限，$\cos$ 為負；參考角 $180^\circ-150^\circ=30^\circ$。所以 $\cos(-210^\circ)=-\cos30^\circ=-\dfrac{\sqrt3}{2}$。
+- $\sec1200^\circ$：$1200^\circ-3\cdot360^\circ=120^\circ$，在第二象限，$\cos$ 為負；參考角 $60^\circ$，$\cos120^\circ=-\dfrac12$。所以 $\sec1200^\circ=\dfrac{1}{\cos120^\circ}=-2$。
+
+相加：$\dfrac{\sqrt3}{2}-\dfrac{\sqrt3}{2}+(-2)=-2$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：參考角算錯。**
+
+- 錯誤寫法：$240^\circ$ 的參考角是 $240^\circ-90^\circ=150^\circ$，或 $180^\circ-240^\circ=-60^\circ$。
+- 為什麼錯：參考角是終邊和 **$x$ 軸**之間的銳角，一定介於 $0^\circ$ 和 $90^\circ$ 之間。$150^\circ$ 不是銳角，$-60^\circ$ 是負的，都不可能。$240^\circ$ 是轉過 $180^\circ$（負 $x$ 軸）之後再轉 $60^\circ$。
+- 正確寫法：$240^\circ$ 在第三象限，參考角是 $240^\circ-180^\circ=60^\circ$。
+
+**錯誤 2：用了參考角，卻忘了正負號。**
+
+- 錯誤寫法：$\cos120^\circ=\cos60^\circ=\dfrac12$。
+- 為什麼錯：參考角只給出「絕對值」。$120^\circ$ 的終邊在第二象限，終邊上的點 $x<0$，所以 $\cos120^\circ=\dfrac xr$ 是負的。
+- 正確寫法：$\cos120^\circ=-\cos60^\circ=-\dfrac12$。
+
+**錯誤 3：把 $\sec$ 配成 $\sin$ 的倒數，或寫成 $\cos^{-1}$。**
+
+- 錯誤寫法：$\sec30^\circ=\dfrac{1}{\sin30^\circ}=2$；或把 $\sec\theta$ 寫成 $\cos^{-1}\theta$。
+- 為什麼錯：$\sec\theta=\dfrac rx$ 是 $\cos\theta=\dfrac xr$ 的倒數，$\sin$ 的倒數是 $\csc$。另外 $\cos^{-1}$ 這個記號保留給反餘弦函數（〈反三角函數〉會介紹），不是倒數；倒數要寫成 $(\cos\theta)^{-1}$ 或 $\dfrac{1}{\cos\theta}$。
+- 正確寫法：$\sec30^\circ=\dfrac{1}{\cos30^\circ}=\dfrac{2}{\sqrt3}=\dfrac{2\sqrt3}{3}$。
+
+## 練習題
+
+**1.** 找出 $845^\circ$ 和 $-1000^\circ$ 在 $0^\circ$ 到 $360^\circ$ 之間的同界角，並判斷是第幾象限角。
+
+<Solution answer>
+
+$845^\circ-720^\circ=125^\circ$，第二象限。$-1000^\circ+3\cdot360^\circ=80^\circ$，第一象限。
+
+</Solution>
+
+**2.** 角 $\theta$ 的終邊經過 $P(5,-12)$，求六個三角函數值。
+
+<Solution answer>
+
+$r=\sqrt{25+144}=13$。$\sin\theta=-\dfrac{12}{13}$，$\cos\theta=\dfrac{5}{13}$，$\tan\theta=-\dfrac{12}{5}$，$\csc\theta=-\dfrac{13}{12}$，$\sec\theta=\dfrac{13}{5}$，$\cot\theta=-\dfrac{5}{12}$。第四象限只有 $\cos$、$\sec$ 為正，符合。
+
+</Solution>
+
+**3.** 求 $\sin300^\circ$、$\cos135^\circ$、$\tan210^\circ$、$\csc270^\circ$。（需要〈直角三角形與三角比〉的特殊角）
+
+<Solution answer>
+
+- $300^\circ$ 在第四象限，參考角 $60^\circ$，$\sin$ 為負：$\sin300^\circ=-\dfrac{\sqrt3}{2}$。
+- $135^\circ$ 在第二象限，參考角 $45^\circ$，$\cos$ 為負：$\cos135^\circ=-\dfrac{\sqrt2}{2}$。
+- $210^\circ$ 在第三象限，參考角 $30^\circ$，$\tan$ 為正：$\tan210^\circ=\dfrac{\sqrt3}{3}$。
+- $270^\circ$ 的終邊是負 $y$ 軸，取 $(0,-1)$，$r=1$：$\sin270^\circ=-1$，$\csc270^\circ=-1$。
+
+</Solution>
+
+**4.** 已知 $\tan\theta=-\dfrac{5}{12}$，且 $\sin\theta>0$，求 $\cos\theta$ 和 $\csc\theta$。
+
+<Solution answer>
+
+$\tan\theta<0$ 表示 $x,y$ 異號；$\sin\theta>0$ 表示 $y>0$。所以 $x<0$，$\theta$ 在第二象限。由 $\tan\theta=\dfrac yx=-\dfrac{5}{12}$，取終邊上的點 $(-12,5)$，$r=13$。$\cos\theta=-\dfrac{12}{13}$，$\csc\theta=\dfrac{13}{5}$。
+
+</Solution>
+
+**5.** 角 $\theta$ 的終邊在直線 $y=2x$ 上，而且 $\theta$ 是第三象限角。求 $\sin\theta$、$\cos\theta$、$\tan\theta$。
+
+<Solution answer>
+
+在 $y=2x$ 上、第三象限取一點，例如 $x=-1$，$y=-2$，$r=\sqrt{1+4}=\sqrt5$。$\sin\theta=-\dfrac{2}{\sqrt5}=-\dfrac{2\sqrt5}{5}$，$\cos\theta=-\dfrac{\sqrt5}{5}$，$\tan\theta=\dfrac{-2}{-1}=2$。
+
+</Solution>

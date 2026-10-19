@@ -6,32 +6,219 @@ title: 直角三角形與三角比
 summary: 用直角三角形的邊長比定義正弦、餘弦、正切，並算出特殊角的值。
 formulas: [special-angles, pythagorean-identities, quotient-identities]
 theorems: [pythagorean-theorem]
-example: 直角三角形中，$\angle C=90^\circ$，斜邊 $c=10$，$\angle A=30^\circ$，求 $a$ 與 $b$。
-solution: $a$ 是 $\angle A$ 的對邊，$a=c\sin 30^\circ=10\cdot\dfrac{1}{2}=5$；$b$ 是鄰邊，$b=c\cos 30^\circ=10\cdot\dfrac{\sqrt{3}}{2}=5\sqrt{3}$。
 ---
 
-在直角三角形中，取一個銳角 $\theta$，三個邊分別叫做**對邊**（$\theta$ 對面的股）、**鄰邊**（$\theta$ 旁邊的股）和**斜邊**。
+## 學習目標
 
-## 三角比
+- 學完這課，你能由直角三角形的邊長，寫出一個銳角的正弦、餘弦、正切。
+- 學完這課，你能用兩種特殊直角三角形，算出 $30^\circ$、$45^\circ$、$60^\circ$ 的三角比。
+- 學完這課，你能由一邊和一個銳角，求出直角三角形的其他邊長。
+
+## 概念說明
+
+### 三個三角比
+
+在直角三角形中，取一個銳角 $\theta$，三個邊分別叫做**對邊**（$\theta$ 對面的股）、**鄰邊**（$\theta$ 旁邊的股）和**斜邊**（直角對面的邊，也是最長的邊）。定義
 
 $$
 \sin\theta=\frac{\text{對邊}}{\text{斜邊}},\qquad
-\cos\theta=\frac{\text{鄰邊}}{\text{斜邊}},\qquad
+\cos\theta=\frac{\text{鄰邊}}{\text{斜邊}}
+$$
+
+$$
 \tan\theta=\frac{\text{對邊}}{\text{鄰邊}}
 $$
 
-三角比只跟角度有關，跟三角形的大小無關，因為相同角度的直角三角形都相似。拖動 $B$ 試試看：沿著同一條斜線拖動時 $\theta$ 不變，三個比值也不變。
+分別讀作**正弦**、**餘弦**、**正切**。習慣上 $\triangle ABC$ 中 $\angle C=90^\circ$，並用 $a,b,c$ 表示 $\angle A,\angle B,\angle C$ 的對邊，所以
+
+$$
+\sin A=\frac{a}{c},\qquad \cos A=\frac{b}{c},\qquad \tan A=\frac{a}{b}
+$$
+
+**三角比只跟角度有關，跟三角形的大小無關。** 理由：兩個直角三角形如果有一個銳角都是 $\theta$，那麼三個角都分別相等（第三個角都是 $180^\circ-90^\circ-\theta$），由 AA 相似，兩個三角形相似，對應邊成比例，所以「對邊比斜邊」等比值也相等。拖動 $B$ 試試看：沿著同一條斜線拖動時 $\theta$ 不變，三個比值也不變。
 
 <Graph name="trig/right-triangle" />
 
-## 特殊角
+### 特殊角
 
-用正三角形切一半（$30^\circ$–$60^\circ$–$90^\circ$，邊長比 $1:\sqrt{3}:2$）和等腰直角三角形（$45^\circ$–$45^\circ$–$90^\circ$，邊長比 $1:1:\sqrt{2}$），可以算出
+有兩種直角三角形的邊長可以直接用畢氏定理算出來：
+
+- **等腰直角三角形**（$45^\circ$–$45^\circ$–$90^\circ$）：兩股都是 $1$，斜邊 $\sqrt{1^2+1^2}=\sqrt2$，邊長比 $1:1:\sqrt2$。
+- **正三角形切一半**（$30^\circ$–$60^\circ$–$90^\circ$）：邊長 $2$ 的正三角形，從頂點作高，高把底邊平分成兩段 $1$。斜邊是 $2$，短股是 $1$，高 $\sqrt{2^2-1^2}=\sqrt3$，邊長比 $1:\sqrt3:2$。$30^\circ$ 的對邊是短股 $1$，$60^\circ$ 的對邊是高 $\sqrt3$。
+
+由這兩個三角形讀出邊長比（$\frac{1}{\sqrt2}$ 分母有理化成 $\frac{\sqrt2}{2}$）：
 
 $$
-\sin 30^\circ=\frac{1}{2},\quad \sin 45^\circ=\frac{\sqrt{2}}{2},\quad \sin 60^\circ=\frac{\sqrt{3}}{2}
+\begin{array}{c|ccc}
+\theta & 30^\circ & 45^\circ & 60^\circ\\ \hline
+\sin\theta & \frac12 & \frac{\sqrt2}{2} & \frac{\sqrt3}{2}\\[4pt]
+\cos\theta & \frac{\sqrt3}{2} & \frac{\sqrt2}{2} & \frac12\\[4pt]
+\tan\theta & \frac{\sqrt3}{3} & 1 & \sqrt3
+\end{array}
 $$
 
-## 基本關係
+例如 $\tan30^\circ=\dfrac{1}{\sqrt3}=\dfrac{\sqrt3}{3}$。這張表不必死背，忘記時畫出兩個三角形就能重新讀出來。
 
-由畢氏定理可得 $\sin^2\theta+\cos^2\theta=1$；另外，互餘的兩個角滿足 $\sin(90^\circ-\theta)=\cos\theta$。
+### 由一邊和一角求其他邊
+
+把定義的分母乘過去，就得到「已知斜邊」時的兩股：
+
+$$
+\begin{gathered}
+\text{對邊}=\text{斜邊}\cdot\sin\theta\\
+\text{鄰邊}=\text{斜邊}\cdot\cos\theta
+\end{gathered}
+$$
+
+一般的做法是：**挑一個同時含有「已知的邊」和「要求的邊」的三角比**，列式再解。例如已知鄰邊 $b$ 和 $\theta$，要求對邊，就用含對邊和鄰邊的 $\tan\theta=\dfrac{\text{對邊}}{b}$，得 $\text{對邊}=b\tan\theta$；要求斜邊，就用 $\cos\theta=\dfrac{b}{\text{斜邊}}$，得 $\text{斜邊}=\dfrac{b}{\cos\theta}$。
+
+### 三角比之間的關係
+
+設 $\angle C=90^\circ$，由畢氏定理 $a^2+b^2=c^2$：
+
+$$
+\sin^2 A+\cos^2 A=\frac{a^2}{c^2}+\frac{b^2}{c^2}=\frac{a^2+b^2}{c^2}=1
+$$
+
+其中 $\sin^2A$ 是 $(\sin A)^2$ 的簡寫。另外 $\dfrac{\sin A}{\cos A}=\dfrac{a/c}{b/c}=\dfrac{a}{b}=\tan A$。
+
+$\angle B=90^\circ-A$，而 $\angle B$ 的對邊 $b$ 正好是 $\angle A$ 的鄰邊，所以
+
+$$
+\begin{gathered}
+\sin(90^\circ-A)=\sin B=\frac{b}{c}=\cos A\\
+\cos(90^\circ-A)=\cos B=\frac{a}{c}=\sin A
+\end{gathered}
+$$
+
+這說明了特殊角表中 $\sin30^\circ=\cos60^\circ$ 的原因。這些關係在〈基本恆等式與證明技巧〉會推廣到任意角。
+
+## 例題
+
+### 例題 1
+
+直角三角形中，$\angle C=90^\circ$，斜邊 $c=10$，$\angle A=30^\circ$，求 $a$ 與 $b$。
+
+<Solution>
+
+$a$ 是 $\angle A$ 的對邊，已知斜邊，用正弦：
+
+$$
+a=c\sin30^\circ=10\cdot\frac12=5
+$$
+
+$b$ 是 $\angle A$ 的鄰邊，用餘弦：
+
+$$
+b=c\cos30^\circ=10\cdot\frac{\sqrt3}{2}=5\sqrt3
+$$
+
+驗算：$a^2+b^2=25+75=100=c^2$，符合畢氏定理。
+
+</Solution>
+
+### 例題 2
+
+$\theta$ 是銳角，$\sin\theta=\dfrac35$，求 $\cos\theta$ 與 $\tan\theta$。
+
+<Solution>
+
+三角比只跟角度有關，所以可以挑任何一個含 $\theta$ 的直角三角形來算。取對邊 $3$、斜邊 $5$ 的直角三角形，這時 $\sin\theta=\frac35$。由畢氏定理，鄰邊 $=\sqrt{5^2-3^2}=\sqrt{16}=4$。所以
+
+$$
+\cos\theta=\frac{\text{鄰邊}}{\text{斜邊}}=\frac45,\qquad \tan\theta=\frac{\text{對邊}}{\text{鄰邊}}=\frac34
+$$
+
+驗算：$\sin^2\theta+\cos^2\theta=\dfrac{9}{25}+\dfrac{16}{25}=1$。
+
+</Solution>
+
+### 例題 3
+
+一架 $6$ 公尺長的梯子靠在垂直的牆上，梯子和地面的夾角是 $60^\circ$。
+
+1. 梯頂離地多高？梯腳離牆多遠？
+2. 梯腳往外滑，夾角變成 $45^\circ$。梯頂下降了多少公尺？（取 $\sqrt3\approx1.732$，$\sqrt2\approx1.414$，算到小數點後第二位）
+
+<Solution>
+
+梯子、牆、地面圍成直角三角形，梯子是斜邊 $6$，夾角 $\theta$ 在梯腳。梯頂的高度是 $\theta$ 的對邊，梯腳到牆的距離是鄰邊。
+
+1. 高度 $=6\sin60^\circ=6\cdot\dfrac{\sqrt3}{2}=3\sqrt3\approx5.20$ 公尺；離牆 $=6\cos60^\circ=6\cdot\dfrac12=3$ 公尺。
+2. 梯子長度不變，新的高度 $=6\sin45^\circ=6\cdot\dfrac{\sqrt2}{2}=3\sqrt2$ 公尺。下降了（單位：公尺）
+
+   $$
+   \begin{aligned}
+   3\sqrt3-3\sqrt2&\approx 3(1.732-1.414)\\
+   &=3(0.318)\\
+   &=0.954\approx0.95
+   \end{aligned}
+   $$
+
+   合理性檢查：夾角變小，梯子變斜，梯頂當然會下降；新高度 $3\sqrt2\approx4.24$ 仍小於梯長 $6$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：換了角，卻沒有換對邊和鄰邊。**
+
+- 錯誤寫法：$\angle C=90^\circ$，$a=3$，$b=4$，$c=5$，所以 $\sin B=\dfrac35$。
+- 為什麼錯：「對邊」是相對於所看的角而言。$\dfrac35$ 是 $\dfrac{a}{c}$，$a$ 是 $\angle A$ 的對邊，對 $\angle B$ 來說是鄰邊。
+- 正確寫法：$\angle B$ 的對邊是 $b$，$\sin B=\dfrac{b}{c}=\dfrac45$。
+
+**錯誤 2：把 $\sin\theta$ 當成「$\sin$ 乘以 $\theta$」。**
+
+- 錯誤寫法：$\dfrac{\sin60^\circ}{\sin30^\circ}=\dfrac{60^\circ}{30^\circ}=2$，或 $\sin60^\circ=2\sin30^\circ$。
+- 為什麼錯：$\sin$ 是把角度對應到一個比值的規則，不是一個可以約掉的數。查表：$\sin60^\circ=\frac{\sqrt3}{2}\approx0.866$，而 $2\sin30^\circ=1$，兩者不相等。
+- 正確寫法：$\dfrac{\sin60^\circ}{\sin30^\circ}=\dfrac{\sqrt3/2}{1/2}=\sqrt3$。
+
+**錯誤 3：已知股求斜邊時，用乘的而不是用除的。**
+
+- 錯誤寫法：鄰邊 $b=6$，$\theta=30^\circ$，所以斜邊 $=6\cos30^\circ=3\sqrt3$。
+- 為什麼錯：$6\cos30^\circ$ 是「斜邊為 $6$」時的鄰邊。這裡 $6$ 是鄰邊，由 $\cos30^\circ=\dfrac{6}{\text{斜邊}}$ 要用除的。檢查：$3\sqrt3\approx5.20$ 比股 $6$ 還短，斜邊不可能比股短。
+- 正確寫法：斜邊 $=\dfrac{6}{\cos30^\circ}=\dfrac{6}{\sqrt3/2}=\dfrac{12}{\sqrt3}=4\sqrt3\approx6.93$。
+
+## 練習題
+
+本課是三角函數的第一課，沒有先備課程。
+
+**1.** 直角三角形的兩股是 $5$ 和 $12$。求短股所對的角 $\theta$ 的 $\sin\theta$、$\cos\theta$、$\tan\theta$。
+
+<Solution answer>
+
+斜邊 $=\sqrt{5^2+12^2}=13$。$\theta$ 的對邊是 $5$、鄰邊是 $12$：$\sin\theta=\dfrac{5}{13}$，$\cos\theta=\dfrac{12}{13}$，$\tan\theta=\dfrac{5}{12}$。
+
+</Solution>
+
+**2.** 求 $\sin60^\circ\cos30^\circ+\cos60^\circ\sin30^\circ$。
+
+<Solution answer>
+
+$\dfrac{\sqrt3}{2}\cdot\dfrac{\sqrt3}{2}+\dfrac12\cdot\dfrac12=\dfrac34+\dfrac14=1$。
+
+</Solution>
+
+**3.** $\triangle ABC$ 中 $\angle C=90^\circ$，$\angle A=45^\circ$，$a=7$，求 $b$ 與 $c$。
+
+<Solution answer>
+
+$\angle B=45^\circ$，兩股相等，$b=7$。已知對邊求斜邊：$\sin45^\circ=\dfrac{7}{c}$，$c=\dfrac{7}{\sqrt2/2}=\dfrac{14}{\sqrt2}=7\sqrt2$。
+
+</Solution>
+
+**4.** $\theta$ 是銳角，$\tan\theta=2$，求 $\sin\theta$ 與 $\cos\theta$。
+
+<Solution answer>
+
+取對邊 $2$、鄰邊 $1$，斜邊 $=\sqrt{2^2+1^2}=\sqrt5$。$\sin\theta=\dfrac{2}{\sqrt5}=\dfrac{2\sqrt5}{5}$，$\cos\theta=\dfrac{1}{\sqrt5}=\dfrac{\sqrt5}{5}$。驗算：$\dfrac45+\dfrac15=1$。
+
+</Solution>
+
+**5.** 求邊長 $8$ 的正三角形的高和面積。
+
+<Solution answer>
+
+從頂點作高，得到斜邊 $8$、底角 $60^\circ$ 的直角三角形，高是 $60^\circ$ 的對邊：高 $=8\sin60^\circ=4\sqrt3$。面積 $=\dfrac12\cdot8\cdot4\sqrt3=16\sqrt3$。
+
+</Solution>

@@ -4,41 +4,222 @@ unit: trig-ratios
 order: 3
 title: 單位圓與弧度
 summary: 用弧度量角，並用單位圓把三角函數推廣到任意角。
-prerequisites: [right-triangle-trig]
+prerequisites: [general-angles]
 formulas: [degree-radian-conversion, special-angles]
-example: 求 $\sin\dfrac{5\pi}{6}$ 與 $\cos\dfrac{5\pi}{6}$。
-solution: $\dfrac{5\pi}{6}=150^\circ$ 在第二象限，參考角為 $30^\circ$。第二象限 $x<0$、$y>0$，所以 $\sin\dfrac{5\pi}{6}=\dfrac{1}{2}$，$\cos\dfrac{5\pi}{6}=-\dfrac{\sqrt{3}}{2}$。
 ---
 
-直角三角形只能處理 $0^\circ$ 到 $90^\circ$ 的角。為了定義任意角的三角函數，我們改用**單位圓**。
+## 學習目標
 
-## 弧度
+- 學完這課，你能在度與弧度之間互換。
+- 學完這課，你能用 $s=r\theta$、$A=\frac12r^2\theta$ 求弧長與扇形面積。
+- 學完這課，你能由單位圓上的點讀出 $\sin\theta$、$\cos\theta$，並說明它們的週期性。
 
-在半徑為 $r$ 的圓上，弧長為 $s$ 的圓心角大小定義為
+## 概念說明
+
+### 弧度
+
+「度」是把一圈任意分成 $360$ 份。另一種量角的方式是用**弧長**：以角的頂點為圓心畫圓，角所對的弧長 $s$ 和半徑 $r$ 的比值，定義為這個角的**弧度**：
 
 $$
 \theta=\frac{s}{r}\ \text{弧度}
 $$
 
-一整圈的弧長是 $2\pi r$，所以 $360^\circ=2\pi$，也就是 $180^\circ=\pi$。用弧度時，弧長公式就是簡單的 $s=r\theta$。
+這個比值不會因為圓畫得大或小而改變：半徑放大成 $2$ 倍時，整個扇形放大成 $2$ 倍，弧長也變成 $2$ 倍，比值不變。弧度 $1$ 就是「弧長等於半徑」時的圓心角。
 
-## 單位圓上的三角函數
-
-以原點為圓心、半徑 $1$ 畫圓。從正 $x$ 軸逆時針轉 $\theta$，落在圓上的點 $P(x,y)$ 定義
+一整圈的弧長是圓周長 $2\pi r$，所以一圈是 $\dfrac{2\pi r}{r}=2\pi$ 弧度：
 
 $$
-\cos\theta=x,\qquad \sin\theta=y,\qquad \tan\theta=\frac{y}{x}\ (x\neq 0)
+360^\circ=2\pi,\qquad 180^\circ=\pi
 $$
 
-當 $\theta$ 是銳角時，這和直角三角形的定義完全一致。拖動 $P$ 繞圓一圈，右邊同步畫出 $\sin\theta$ 與 $\cos\theta$ 的變化：
+由 $180^\circ=\pi$ 得到換算方法：
+
+$$
+\text{度} \times\frac{\pi}{180^\circ}=\text{弧度},\qquad \text{弧度}\times\frac{180^\circ}{\pi}=\text{度}
+$$
+
+例如 $60^\circ=60\cdot\dfrac{\pi}{180}=\dfrac{\pi}{3}$；$1$ 弧度 $=\dfrac{180^\circ}{\pi}\approx57.3^\circ$。常用的角：
+
+$$
+\begin{array}{c|ccccc}
+\text{度} & 0^\circ & 30^\circ & 45^\circ & 60^\circ & 90^\circ\\ \hline
+\text{弧度} & 0 & \frac{\pi}{6} & \frac{\pi}{4} & \frac{\pi}{3} & \frac{\pi}{2}
+\end{array}
+$$
+
+$$
+\begin{array}{c|ccc}
+\text{度} & 180^\circ & 270^\circ & 360^\circ\\ \hline
+\text{弧度} & \pi & \frac{3\pi}{2} & 2\pi
+\end{array}
+$$
+
+**習慣上，角度沒有寫單位時就是弧度**，例如 $\sin2$ 是 $2$ 弧度的正弦，不是 $2^\circ$。
+
+### 弧長與扇形面積
+
+由弧度的定義 $\theta=\dfrac sr$，兩邊乘以 $r$ 得**弧長公式**
+
+$$
+s=r\theta\qquad(\theta\ \text{用弧度})
+$$
+
+扇形面積和圓心角成正比。圓心角是 $\theta$ 的扇形占整個圓的 $\dfrac{\theta}{2\pi}$，所以面積是
+
+$$
+A=\frac{\theta}{2\pi}\cdot\pi r^2=\frac12r^2\theta=\frac12rs
+$$
+
+最後一個等號用了 $s=r\theta$。用弧度時這兩個公式都沒有 $\pi$ 或 $360$，比用度簡潔，這是弧度最大的好處之一。
+
+### 單位圓上的三角函數
+
+以原點為圓心、半徑 $1$ 的圓稱為**單位圓**。把角 $\theta$ 放在標準位置，終邊和單位圓交於 $P$。在上一課的定義中取這個點，$r=1$，所以
+
+$$
+\cos\theta=x,\qquad \sin\theta=y
+$$
+
+$$
+\tan\theta=\frac{y}{x}\quad(x\neq0)
+$$
+
+也就是說，**$P$ 的坐標就是 $(\cos\theta,\sin\theta)$**。另外，在單位圓上 $s=1\cdot\theta$，所以 $\theta$ 弧度就是從 $(1,0)$ 沿著圓走 $\theta$ 的長度（$\theta$ 為負時往順時針走）。
+
+拖動 $P$ 繞圓一圈，右邊同步畫出 $\sin\theta$ 與 $\cos\theta$ 的變化：
 
 <Graph name="trig/unit-circle" />
 
-## 各象限的正負
+由單位圓可以直接看出兩件事：
 
-- 第一象限：全部為正
-- 第二象限：只有 $\sin$ 為正
-- 第三象限：只有 $\tan$ 為正
-- 第四象限：只有 $\cos$ 為正
+- **值域：** $P$ 在單位圓上，坐標都介於 $-1$ 和 $1$ 之間，所以 $-1\le\sin\theta\le1$，$-1\le\cos\theta\le1$。
+- **週期性：** $\theta$ 加上 $2\pi$ 就是多走一整圈，回到同一個點 $P$，所以對任意整數 $k$，
 
-另外，轉一整圈會回到原處，所以 $\sin(\theta+2\pi)=\sin\theta$，$\cos(\theta+2\pi)=\cos\theta$，週期為 $2\pi$。
+  $$
+  \begin{gathered}
+  \sin(\theta+2k\pi)=\sin\theta\\
+  \cos(\theta+2k\pi)=\cos\theta
+  \end{gathered}
+  $$
+
+  這就是弧度版的同界角。
+
+象限與正負號的規則和上一課〈廣義角與象限〉相同，求值時一樣用參考角，只是參考角改用弧度表示，例如 $\dfrac{5\pi}{6}$ 的參考角是 $\pi-\dfrac{5\pi}{6}=\dfrac{\pi}{6}$。
+
+## 例題
+
+### 例題 1
+
+1. 把 $150^\circ$ 化成弧度。
+2. 把 $\dfrac{7\pi}{4}$ 化成度。
+3. $2$ 弧度大約是幾度？（取 $\pi\approx3.14$，算到整數）
+
+<Solution>
+
+1. $150\cdot\dfrac{\pi}{180}=\dfrac{150\pi}{180}=\dfrac{5\pi}{6}$。
+2. $\dfrac{7\pi}{4}\cdot\dfrac{180^\circ}{\pi}=\dfrac{7\cdot180^\circ}{4}=315^\circ$。
+3. $2\cdot\dfrac{180^\circ}{\pi}\approx\dfrac{360^\circ}{3.14}\approx115^\circ$。合理性檢查：$1$ 弧度約 $57.3^\circ$，兩倍約 $114.6^\circ$，四捨五入也是 $115^\circ$；而且 $2$ 比 $\dfrac{\pi}{2}\approx1.57$ 大、比 $\pi\approx3.14$ 小，所以應該介於 $90^\circ$ 和 $180^\circ$ 之間。
+
+</Solution>
+
+### 例題 2
+
+求 $\sin\dfrac{5\pi}{6}$、$\cos\dfrac{5\pi}{6}$ 與 $\cos\dfrac{13\pi}{6}$。
+
+<Solution>
+
+$\dfrac{5\pi}{6}=150^\circ$ 在第二象限，參考角為 $\pi-\dfrac{5\pi}{6}=\dfrac{\pi}{6}$。第二象限 $x<0$、$y>0$，所以
+
+$$
+\begin{gathered}
+\sin\frac{5\pi}{6}=\sin\frac{\pi}{6}=\frac12\\[4pt]
+\cos\frac{5\pi}{6}=-\cos\frac{\pi}{6}=-\frac{\sqrt3}{2}
+\end{gathered}
+$$
+
+$\dfrac{13\pi}{6}=2\pi+\dfrac{\pi}{6}$，多轉一圈，由週期性 $\cos\dfrac{13\pi}{6}=\cos\dfrac{\pi}{6}=\dfrac{\sqrt3}{2}$。
+
+</Solution>
+
+### 例題 3
+
+時鐘的分針長 $12$ 公分。從 3 點整到 3 點 20 分，分針的尖端走了多長的路？分針掃過的面積是多少？（答案用 $\pi$ 表示）
+
+<Solution>
+
+分針 $60$ 分鐘轉一圈 $2\pi$，$20$ 分鐘轉 $\dfrac{20}{60}=\dfrac13$ 圈，所以 $\theta=\dfrac{2\pi}{3}$。
+
+- 尖端走的路是半徑 $12$ 的弧：$s=r\theta=12\cdot\dfrac{2\pi}{3}=8\pi$ 公分。
+- 掃過的是扇形：$A=\dfrac12r^2\theta=\dfrac12\cdot144\cdot\dfrac{2\pi}{3}=48\pi$ 平方公分。
+
+驗算：整個圓的周長 $24\pi$、面積 $144\pi$，三分之一分別是 $8\pi$ 和 $48\pi$，一致。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：在 $s=r\theta$ 裡直接代入度數。**
+
+- 錯誤寫法：半徑 $12$，圓心角 $120^\circ$，弧長 $s=12\cdot120=1440$。
+- 為什麼錯：$s=r\theta$ 是從弧度的定義來的，$\theta$ 必須用弧度。檢查：整個圓周長才 $24\pi\approx75$，一段弧不可能有 $1440$。
+- 正確寫法：$120^\circ=\dfrac{2\pi}{3}$，$s=12\cdot\dfrac{2\pi}{3}=8\pi$。
+
+**錯誤 2：扇形面積少了 $\dfrac12$。**
+
+- 錯誤寫法：$A=r^2\theta$。
+- 為什麼錯：用整個圓檢查，$\theta=2\pi$ 時 $r^2\cdot2\pi=2\pi r^2$，是圓面積的兩倍。$\dfrac12$ 來自 $\dfrac{\theta}{2\pi}\cdot\pi r^2$ 的約分。
+- 正確寫法：$A=\dfrac12r^2\theta$，$\theta=2\pi$ 時得 $\pi r^2$。
+
+**錯誤 3：把單位圓上的點寫成 $(\sin\theta,\cos\theta)$。**
+
+- 錯誤寫法：$\theta=\dfrac{\pi}{6}$ 的點是 $\left(\dfrac12,\dfrac{\sqrt3}{2}\right)$。
+- 為什麼錯：$x$ 坐標是 $\cos\theta$，$y$ 坐標是 $\sin\theta$。檢查：$\dfrac{\pi}{6}=30^\circ$ 是很小的角，點應該靠近 $x$ 軸，高度 $y$ 比較小，而 $\left(\dfrac12,\dfrac{\sqrt3}{2}\right)$ 的高度比寬度大。
+- 正確寫法：$\left(\cos\dfrac{\pi}{6},\sin\dfrac{\pi}{6}\right)=\left(\dfrac{\sqrt3}{2},\dfrac12\right)$。
+
+## 練習題
+
+**1.** 把 $210^\circ$、$-45^\circ$ 化成弧度，把 $\dfrac{5\pi}{3}$、$\dfrac{3\pi}{4}$ 化成度。
+
+<Solution answer>
+
+$210^\circ=\dfrac{7\pi}{6}$，$-45^\circ=-\dfrac{\pi}{4}$，$\dfrac{5\pi}{3}=300^\circ$，$\dfrac{3\pi}{4}=135^\circ$。
+
+</Solution>
+
+**2.** 半徑 $6$、圓心角 $\dfrac{\pi}{4}$ 的扇形，求弧長與面積。
+
+<Solution answer>
+
+$s=6\cdot\dfrac{\pi}{4}=\dfrac{3\pi}{2}$，$A=\dfrac12\cdot36\cdot\dfrac{\pi}{4}=\dfrac{9\pi}{2}$。
+
+</Solution>
+
+**3.** 扇形的半徑是 $4$、弧長是 $10$，求圓心角（弧度）與面積。
+
+<Solution answer>
+
+$\theta=\dfrac sr=\dfrac{10}{4}=2.5$ 弧度。$A=\dfrac12rs=\dfrac12\cdot4\cdot10=20$。
+
+</Solution>
+
+**4.** 求 $\sin\dfrac{7\pi}{6}$、$\cos\left(-\dfrac{\pi}{4}\right)$、$\tan\dfrac{5\pi}{3}$。（需要〈廣義角與象限〉的參考角）
+
+<Solution answer>
+
+- $\dfrac{7\pi}{6}$ 在第三象限，參考角 $\dfrac{\pi}{6}$，$\sin$ 為負：$-\dfrac12$。
+- $-\dfrac{\pi}{4}$ 在第四象限，參考角 $\dfrac{\pi}{4}$，$\cos$ 為正：$\dfrac{\sqrt2}{2}$。
+- $\dfrac{5\pi}{3}$ 在第四象限，參考角 $\dfrac{\pi}{3}$，$\tan$ 為負：$-\sqrt3$。
+
+</Solution>
+
+**5.** 角 $\theta$ 的終邊和單位圓交於 $P\left(-\dfrac35,\dfrac45\right)$。
+
+1. 求 $\cos\theta$、$\sin\theta$、$\tan\theta$。
+2. 角 $\theta+\pi$ 和 $-\theta$ 的終邊分別和單位圓交於哪一點？
+
+<Solution answer>
+
+1. 先確認 $P$ 在單位圓上：$\dfrac{9}{25}+\dfrac{16}{25}=1$。$\cos\theta=-\dfrac35$，$\sin\theta=\dfrac45$，$\tan\theta=-\dfrac43$。
+2. 加 $\pi$ 是再轉半圈，到圓上正對面的點 $\left(\dfrac35,-\dfrac45\right)$。$-\theta$ 是反方向轉同樣的角度，和 $P$ 對 $x$ 軸對稱：$\left(-\dfrac35,-\dfrac45\right)$。
+
+</Solution>
