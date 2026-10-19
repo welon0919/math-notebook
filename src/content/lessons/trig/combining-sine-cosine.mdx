@@ -1,0 +1,203 @@
+---
+subject: trig
+unit: trig-identities
+order: 12
+title: 疊合
+summary: 把 $a\sin x+b\cos x$ 寫成 $r\sin(x+\varphi)$，用來求最大最小值和畫圖。
+prerequisites: [angle-sum-difference, amplitude-period-phase]
+formulas: [angle-sum]
+theorems: [auxiliary-angle]
+---
+
+## 學習目標
+
+- 學完這課，你能用和角公式推導疊合，求出 $r$ 和 $\varphi$。
+- 學完這課，你能求出 $a\sin x+b\cos x$ 的最大值、最小值，以及發生的位置。
+- 學完這課，你能畫出疊合後的圖形，並讀出振幅與相位。
+
+## 概念說明
+
+### 兩個波相加還是一個波
+
+$y=\sqrt3\sin x+\cos x$ 的最大值是多少？$\sqrt3\sin x$ 最大 $\sqrt3$、$\cos x$ 最大 $1$，但兩者不會在同一個 $x$ 同時達到最大（$\sin x=1$ 時 $\cos x=0$），所以答案不是 $\sqrt3+1$。
+
+關鍵是：**同週期的正弦和餘弦相加，還是一條正弦曲線**，只是振幅和相位不同。如果能寫成 $r\sin(x+\varphi)$，最大值就是 $r$。
+
+### 找出 $r$ 和 $\varphi$
+
+用和角公式展開 $r\sin(x+\varphi)$：
+
+$$
+r\sin(x+\varphi)=(r\cos\varphi)\sin x+(r\sin\varphi)\cos x
+$$
+
+要讓它對所有 $x$ 都等於 $a\sin x+b\cos x$，只要 $\sin x$、$\cos x$ 前面的係數分別相等：
+
+$$
+r\cos\varphi=a,\qquad r\sin\varphi=b
+$$
+
+這兩式說的是：**點 $(a,b)$ 到原點的距離是 $r$，而且 $\varphi$ 是終邊經過 $(a,b)$ 的角**（〈廣義角與象限〉的定義：$\cos\varphi=\frac{a}{r}$，$\sin\varphi=\frac{b}{r}$）。所以
+
+$$
+\begin{gathered}
+a\sin x+b\cos x=r\sin(x+\varphi)\\[4pt]
+r=\sqrt{a^2+b^2},\quad \cos\varphi=\frac ar,\quad \sin\varphi=\frac br
+\end{gathered}
+$$
+
+找 $\varphi$ 的方法：在坐標平面上標出點 $(a,b)$，看它在第幾象限，再用參考角。只用 $\tan\varphi=\dfrac ba$ 不夠，因為正切相同的角有兩個（常見錯誤 2）。
+
+拖動滑桿改變 $a$、$b$，看兩個波相加和 $r\sin(x+\varphi)$ 怎麼完全重疊：
+
+<Graph name="trig/auxiliary-angle" />
+
+### 最大值與最小值
+
+$-1\le\sin(x+\varphi)\le1$，所以
+
+$$
+-\sqrt{a^2+b^2}\le a\sin x+b\cos x\le\sqrt{a^2+b^2}
+$$
+
+而且兩端都取得到：$x+\varphi=\frac{\pi}{2}+2k\pi$ 時是最大值 $r$，$x+\varphi=\frac{3\pi}{2}+2k\pi$ 時是最小值 $-r$。若 $x$ 被限制在某個範圍內，要先算出 $x+\varphi$ 的範圍，再看正弦在這段範圍的最大最小值。
+
+## 例題
+
+### 例題 1
+
+把 $y=\sqrt3\sin x+\cos x$ 疊合成 $r\sin(x+\varphi)$，求最大值、最小值，以及在 $[0,2\pi)$ 中發生的位置。
+
+<Solution>
+
+$a=\sqrt3$，$b=1$，$r=\sqrt{3+1}=2$。$\cos\varphi=\dfrac{\sqrt3}{2}$，$\sin\varphi=\dfrac12$，點 $(\sqrt3,1)$ 在第一象限，所以 $\varphi=\dfrac{\pi}{6}$：
+
+$$
+y=2\sin\left(x+\frac{\pi}{6}\right)
+$$
+
+- 最大值 $2$：$x+\dfrac{\pi}{6}=\dfrac{\pi}{2}$，$x=\dfrac{\pi}{3}$。
+- 最小值 $-2$：$x+\dfrac{\pi}{6}=\dfrac{3\pi}{2}$，$x=\dfrac{4\pi}{3}$。
+
+驗算：$x=\dfrac{\pi}{3}$ 時 $\sqrt3\cdot\dfrac{\sqrt3}{2}+\dfrac12=\dfrac32+\dfrac12=2$。
+
+<Graph name="trig/combining-example-max" />
+
+</Solution>
+
+### 例題 2
+
+求 $y=\sin x-\cos x$ 在 $0\le x\le\pi$ 上的最大值和最小值。
+
+<Solution>
+
+$a=1$，$b=-1$，$r=\sqrt2$。點 $(1,-1)$ 在第四象限，參考角 $\dfrac{\pi}{4}$，取 $\varphi=-\dfrac{\pi}{4}$：
+
+$$
+y=\sqrt2\sin\left(x-\frac{\pi}{4}\right)
+$$
+
+$0\le x\le\pi$ 時，$-\dfrac{\pi}{4}\le x-\dfrac{\pi}{4}\le\dfrac{3\pi}{4}$。在這段範圍內：
+
+- 正弦的最大值是 $1$，發生在 $x-\dfrac{\pi}{4}=\dfrac{\pi}{2}$，也就是 $x=\dfrac{3\pi}{4}$，$y$ 的最大值是 $\sqrt2$。
+- 正弦從 $-\dfrac{\pi}{4}$ 升到 $\dfrac{\pi}{2}$，再降到 $\dfrac{3\pi}{4}$；最小值出現在兩端之一：$\sin\left(-\dfrac{\pi}{4}\right)=-\dfrac{\sqrt2}{2}$，$\sin\dfrac{3\pi}{4}=\dfrac{\sqrt2}{2}$，較小的是左端。所以 $y$ 的最小值是 $\sqrt2\cdot\left(-\dfrac{\sqrt2}{2}\right)=-1$，在 $x=0$。
+
+注意最小值不是 $-\sqrt2$：要讓正弦等於 $-1$，$x-\frac{\pi}{4}$ 必須是 $-\frac{\pi}{2}$，但範圍只到 $-\frac{\pi}{4}$。驗算：$x=0$ 時 $y=0-1=-1$。
+
+<Graph name="trig/combining-example-interval" />
+
+</Solution>
+
+### 例題 3
+
+兩個同頻率的交流電壓 $v_1=3\sin t$ 和 $v_2=4\cos t$ 串聯，總電壓 $v=v_1+v_2$。
+
+1. 求總電壓的最大值。
+2. 總電壓第一次達到最大值時，$\sin t$ 和 $\cos t$ 各是多少？
+
+<Solution>
+
+1. $a=3$，$b=4$，$r=\sqrt{9+16}=5$。$v=5\sin(t+\varphi)$，其中 $\cos\varphi=\dfrac35$，$\sin\varphi=\dfrac45$。最大值是 $5$，不是 $3+4=7$：兩個電壓不會同時達到各自的最大值。
+2. 最大值發生在 $t+\varphi=\dfrac{\pi}{2}$，也就是 $t=\dfrac{\pi}{2}-\varphi$（$\varphi$ 是銳角，所以這是第一個正的 $t$）。由餘角關係：
+
+   $$
+   \begin{gathered}
+   \sin t=\sin\left(\frac{\pi}{2}-\varphi\right)=\cos\varphi=\frac35\\[6pt]
+   \cos t=\cos\left(\frac{\pi}{2}-\varphi\right)=\sin\varphi=\frac45
+   \end{gathered}
+   $$
+
+   驗算：$v=3\cdot\dfrac35+4\cdot\dfrac45=\dfrac{9+16}{5}=5$。$\varphi$ 不是特殊角也沒關係，只要知道它的正弦和餘弦就能算。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把 $r$ 算成 $a+b$。**
+
+- 錯誤寫法：$\sqrt3\sin x+\cos x$ 的最大值是 $\sqrt3+1$。
+- 為什麼錯：$\sin x$ 和 $\cos x$ 不會同時是 $1$。$r$ 是點 $(a,b)$ 到原點的距離，由畢氏定理是 $\sqrt{a^2+b^2}$。檢查：$\sqrt3+1\approx2.73$，但例題 1 已經算出 $y=2\sin\left(x+\frac{\pi}{6}\right)$ 不會超過 $2$。
+- 正確寫法：$r=\sqrt{a^2+b^2}=\sqrt{3+1}=2$。
+
+**錯誤 2：只用 $\tan\varphi=\dfrac ba$ 決定 $\varphi$。**
+
+- 錯誤寫法：$-\sin x+\cos x$ 中 $\tan\varphi=\dfrac{1}{-1}=-1$，所以 $\varphi=-\dfrac{\pi}{4}$，得 $\sqrt2\sin\left(x-\dfrac{\pi}{4}\right)$。
+- 為什麼錯：$\tan\varphi=-1$ 的角有 $-\frac{\pi}{4}$ 和 $\frac{3\pi}{4}$ 兩個。點 $(a,b)=(-1,1)$ 在第二象限，應取 $\frac{3\pi}{4}$。代 $x=0$ 檢查：原式 $=1$，但 $\sqrt2\sin\left(-\frac{\pi}{4}\right)=-1$。
+- 正確寫法：$-\sin x+\cos x=\sqrt2\sin\left(x+\dfrac{3\pi}{4}\right)$，$x=0$ 時 $\sqrt2\cdot\frac{\sqrt2}{2}=1$。
+
+**錯誤 3：限制範圍時仍然說最小值是 $-r$。**
+
+- 錯誤寫法：$0\le x\le\pi$ 時，$\sin x-\cos x$ 的最小值是 $-\sqrt2$。
+- 為什麼錯：$-r$ 只有在 $x+\varphi$ 能走到 $\frac{3\pi}{2}+2k\pi$ 時才取得到。例題 2 中 $x-\frac{\pi}{4}$ 只在 $\left[-\frac{\pi}{4},\frac{3\pi}{4}\right]$ 中。
+- 正確寫法：先算出 $x+\varphi$ 的範圍，再找正弦在這段範圍的最大最小值，例題 2 的最小值是 $-1$。
+
+## 練習題
+
+**1.** 把 $\sin x+\sqrt3\cos x$ 疊合成 $r\sin(x+\varphi)$。
+
+<Solution answer>
+
+$r=\sqrt{1+3}=2$，$\cos\varphi=\dfrac12$，$\sin\varphi=\dfrac{\sqrt3}{2}$，$\varphi=\dfrac{\pi}{3}$。所以 $\sin x+\sqrt3\cos x=2\sin\left(x+\dfrac{\pi}{3}\right)$。
+
+</Solution>
+
+**2.** 求 $y=5\sin x-12\cos x+1$ 的最大值和最小值。
+
+<Solution answer>
+
+$5\sin x-12\cos x=13\sin(x+\varphi)$，$r=\sqrt{25+144}=13$。所以 $-13\le5\sin x-12\cos x\le13$，$y$ 的最大值 $14$，最小值 $-12$。
+
+</Solution>
+
+**3.** 把 $\cos x-\sin x$ 疊合成 $r\sin(x+\varphi)$，並代 $x=0$ 驗算。
+
+<Solution answer>
+
+寫成 $-\sin x+\cos x$：$a=-1$，$b=1$，$r=\sqrt2$，點 $(-1,1)$ 在第二象限，$\varphi=\dfrac{3\pi}{4}$。所以 $\cos x-\sin x=\sqrt2\sin\left(x+\dfrac{3\pi}{4}\right)$。驗算：$x=0$ 時左邊 $1$，右邊 $\sqrt2\cdot\dfrac{\sqrt2}{2}=1$。
+
+</Solution>
+
+**4.** 把 $y=\sin2x+\sqrt3\cos2x$ 疊合，求振幅與週期。（需要〈振幅、週期與相位〉）
+
+<Solution answer>
+
+把 $2x$ 當成一個角：$a=1$，$b=\sqrt3$，$r=2$，$\varphi=\dfrac{\pi}{3}$，$y=2\sin\left(2x+\dfrac{\pi}{3}\right)$。振幅 $2$，週期 $\dfrac{2\pi}{2}=\pi$。
+
+</Solution>
+
+**5.** 求 $y=\sin^2x+\sqrt3\sin x\cos x$ 的最大值和最小值。（需要〈倍角與半角公式〉）
+
+<Solution answer>
+
+用降冪和倍角公式把它化成 $\sin2x$、$\cos2x$ 的一次式：
+
+$$
+\begin{aligned}
+y&=\frac{1-\cos2x}{2}+\frac{\sqrt3}{2}\sin2x\\
+&=\frac{\sqrt3}{2}\sin2x-\frac12\cos2x+\frac12
+\end{aligned}
+$$
+
+疊合：$a=\dfrac{\sqrt3}{2}$，$b=-\dfrac12$，$r=1$，點在第四象限，$\varphi=-\dfrac{\pi}{6}$。$y=\sin\left(2x-\dfrac{\pi}{6}\right)+\dfrac12$。最大值 $\dfrac32$，最小值 $-\dfrac12$。
+
+</Solution>

@@ -1,0 +1,239 @@
+---
+subject: trig
+unit: trig-identities
+order: 9
+title: 和角與差角公式
+summary: 推導並使用 $\sin(\alpha\pm\beta)$、$\cos(\alpha\pm\beta)$、$\tan(\alpha\pm\beta)$。
+prerequisites: [basic-identities]
+formulas: [angle-sum, special-angles, angle-relations]
+---
+
+## 學習目標
+
+- 學完這課，你能用單位圓上兩點的距離推導 $\cos(\alpha-\beta)$，再推出其他和角、差角公式。
+- 學完這課，你能求出 $15^\circ$、$75^\circ$ 等非特殊角的精確值。
+- 學完這課，你能用和角公式化簡與證明。
+
+## 概念說明
+
+### 為什麼不能直接拆開
+
+$\sin(\alpha+\beta)$ 不等於 $\sin\alpha+\sin\beta$。代數字檢查：$\sin(30^\circ+60^\circ)=\sin90^\circ=1$，但 $\sin30^\circ+\sin60^\circ=\frac12+\frac{\sqrt3}{2}\approx1.37$。正弦不是「乘以一個數」，不能像 $a(x+y)=ax+ay$ 那樣分配。這一課要找出 $\sin(\alpha+\beta)$ 真正等於什麼。
+
+### 推導 $\cos(\alpha-\beta)$
+
+在單位圓上取角 $\alpha$ 的點 $A(\cos\alpha,\sin\alpha)$ 和角 $\beta$ 的點 $B(\cos\beta,\sin\beta)$，用兩種方法算弦 $AB$ 的長度。
+
+**第一種：直接用兩點距離公式。**
+
+<Derivation rows={[
+  [String.raw`|AB|^2`, String.raw`=(\cos\alpha-\cos\beta)^2+(\sin\alpha-\sin\beta)^2`, '兩點距離公式'],
+  ['', String.raw`=2-2(\cos\alpha\cos\beta+\sin\alpha\sin\beta)`, String.raw`展開兩個平方：$\cos^2\alpha+\sin^2\alpha=1$、$\cos^2\beta+\sin^2\beta=1$，剩下兩個交叉項 $-2\cos\alpha\cos\beta$、$-2\sin\alpha\sin\beta$`],
+]} />
+
+**第二種：先把整個圖形轉一下。** 把 $A$、$B$ 一起繞原點轉 $-\beta$。$B$ 轉到 $B'(1,0)$，$A$ 轉到角 $\alpha-\beta$ 的點 $A'(\cos(\alpha-\beta),\sin(\alpha-\beta))$。轉動不改變長度：$\triangle OAB$ 和 $\triangle OA'B'$ 的兩邊都是半徑 $1$，夾角都是 $\alpha$ 和 $\beta$ 相差的角，由 SAS 全等，所以 $|A'B'|=|AB|$。
+
+<Derivation rows={[
+  [String.raw`|A'B'|^2`, String.raw`=(\cos(\alpha-\beta)-1)^2+\sin^2(\alpha-\beta)`, '兩點距離公式'],
+  ['', String.raw`=2-2\cos(\alpha-\beta)`, String.raw`展開平方，再用平方關係 $\cos^2(\alpha-\beta)+\sin^2(\alpha-\beta)=1$`],
+]} />
+
+兩個結果相等，消去 $2$ 再除以 $-2$：
+
+$$
+\cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta
+$$
+
+拖動 $A$、$B$，再按播放看轉動前後的兩條弦：
+
+<Graph name="trig/cos-difference" />
+
+### 推出其他公式
+
+有了 $\cos(\alpha-\beta)$，其他公式都可以用〈基本恆等式與證明技巧〉的負角、餘角關係推出來：
+
+- **$\cos(\alpha+\beta)$**：把 $\beta$ 換成 $-\beta$，$\cos(-\beta)=\cos\beta$，$\sin(-\beta)=-\sin\beta$：
+
+  $$
+  \cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta
+  $$
+
+- **$\sin(\alpha+\beta)$**：用餘角關係把正弦換成餘弦，再用剛才的差角公式：
+
+  $$
+  \begin{aligned}
+  \sin(\alpha+\beta)&=\cos\left(\tfrac{\pi}{2}-(\alpha+\beta)\right)\\
+  &=\cos\left(\left(\tfrac{\pi}{2}-\alpha\right)-\beta\right)\\
+  &=\cos\left(\tfrac{\pi}{2}-\alpha\right)\cos\beta+\sin\left(\tfrac{\pi}{2}-\alpha\right)\sin\beta\\
+  &=\sin\alpha\cos\beta+\cos\alpha\sin\beta
+  \end{aligned}
+  $$
+
+- **$\sin(\alpha-\beta)$**：把 $\beta$ 換成 $-\beta$：$\sin(\alpha-\beta)=\sin\alpha\cos\beta-\cos\alpha\sin\beta$。
+- **$\tan(\alpha\pm\beta)$**：$\tan(\alpha+\beta)=\dfrac{\sin(\alpha+\beta)}{\cos(\alpha+\beta)}$，分子分母同除以 $\cos\alpha\cos\beta$（假設不是 $0$）：
+
+  $$
+  \begin{gathered}
+  \tan(\alpha+\beta)=\frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta}\\[6pt]
+  \tan(\alpha-\beta)=\frac{\tan\alpha-\tan\beta}{1+\tan\alpha\tan\beta}
+  \end{gathered}
+  $$
+
+記憶方法：**正弦「正餘餘正」、符號不變；餘弦「餘餘正正」、符號相反**。例如 $\cos(\alpha+\beta)$ 中間是減號。
+
+$\alpha$、$\beta$ 都是銳角時，$\sin(\alpha+\beta)$ 的公式也可以直接從兩個疊起來的直角三角形讀出來，拖動滑桿看看：
+
+<Graph name="trig/angle-sum" />
+
+## 例題
+
+### 例題 1
+
+求 $\sin15^\circ$、$\cos75^\circ$、$\tan75^\circ$ 的精確值。
+
+<Solution>
+
+$15^\circ=45^\circ-30^\circ$，兩個都是特殊角：
+
+$$
+\begin{aligned}
+\sin15^\circ&=\sin45^\circ\cos30^\circ-\cos45^\circ\sin30^\circ\\
+&=\frac{\sqrt2}{2}\cdot\frac{\sqrt3}{2}-\frac{\sqrt2}{2}\cdot\frac12=\frac{\sqrt6-\sqrt2}{4}
+\end{aligned}
+$$
+
+$75^\circ=90^\circ-15^\circ$，由餘角關係 $\cos75^\circ=\sin15^\circ=\dfrac{\sqrt6-\sqrt2}{4}$。
+
+$75^\circ=45^\circ+30^\circ$：
+
+$$
+\begin{aligned}
+\tan75^\circ&=\frac{1+\frac{\sqrt3}{3}}{1-\frac{\sqrt3}{3}}=\frac{3+\sqrt3}{3-\sqrt3}\\
+&=\frac{(3+\sqrt3)^2}{9-3}=\frac{12+6\sqrt3}{6}=2+\sqrt3
+\end{aligned}
+$$
+
+第二步分子分母同乘 $3$，第三步分子分母同乘 $3+\sqrt3$ 有理化。合理性檢查：$\sin15^\circ\approx\frac{2.449-1.414}{4}\approx0.259$，介於 $\sin0^\circ=0$ 和 $\sin30^\circ=0.5$ 之間；$\tan75^\circ\approx3.73$，比 $\tan60^\circ\approx1.73$ 大。
+
+</Solution>
+
+### 例題 2
+
+已知 $\sin\alpha=\dfrac35$，$\alpha$ 在第二象限；$\cos\beta=\dfrac{5}{13}$，$\beta$ 在第四象限。求 $\sin(\alpha+\beta)$ 和 $\cos(\alpha-\beta)$。
+
+<Solution>
+
+公式需要四個值，先補齊另外兩個（〈基本恆等式與證明技巧〉）：
+
+- $\cos^2\alpha=1-\frac{9}{25}=\frac{16}{25}$，第二象限 $\cos\alpha<0$，所以 $\cos\alpha=-\frac45$。
+- $\sin^2\beta=1-\frac{25}{169}=\frac{144}{169}$，第四象限 $\sin\beta<0$，所以 $\sin\beta=-\frac{12}{13}$。
+
+代入公式：
+
+$$
+\begin{aligned}
+\sin(\alpha+\beta)&=\sin\alpha\cos\beta+\cos\alpha\sin\beta\\
+&=\frac35\cdot\frac5{13}+\left(-\frac45\right)\left(-\frac{12}{13}\right)\\
+&=\frac{15+48}{65}=\frac{63}{65}\\[6pt]
+\cos(\alpha-\beta)&=\cos\alpha\cos\beta+\sin\alpha\sin\beta\\
+&=\left(-\frac45\right)\frac5{13}+\frac35\left(-\frac{12}{13}\right)\\
+&=\frac{-20-36}{65}=-\frac{56}{65}
+\end{aligned}
+$$
+
+</Solution>
+
+### 例題 3
+
+證明 $\tan^{-1}\dfrac12+\tan^{-1}\dfrac13=\dfrac{\pi}{4}$。
+
+<Solution>
+
+令 $\alpha=\tan^{-1}\dfrac12$，$\beta=\tan^{-1}\dfrac13$。兩個正切值都是正的，所以由〈反三角函數〉的值域，$\alpha$、$\beta$ 都在 $\left(0,\frac{\pi}{2}\right)$ 中。用和角公式：
+
+$$
+\tan(\alpha+\beta)=\frac{\frac12+\frac13}{1-\frac12\cdot\frac13}=\frac{\frac56}{\frac56}=1
+$$
+
+$\tan(\alpha+\beta)=1$ 只告訴我們 $\alpha+\beta$ 是 $\frac{\pi}{4}+k\pi$ 中的某一個，還要確定是哪一個。因為 $\tan\alpha=\frac12<1=\tan\frac{\pi}{4}$，而正切在 $\left(0,\frac{\pi}{2}\right)$ 上遞增，所以 $\alpha<\frac{\pi}{4}$；同理 $\beta<\frac{\pi}{4}$。因此 $0<\alpha+\beta<\frac{\pi}{2}$，其中正切為 $1$ 的角只有 $\frac{\pi}{4}$，得證。
+
+幾何意義：坐標平面上，$O$ 到 $(2,1)$ 的射線和 $x$ 軸夾 $\alpha$，$O$ 到 $(3,1)$ 的射線和 $x$ 軸夾 $\beta$，兩個角加起來正好是 $45^\circ$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把三角函數分配進括號。**
+
+- 錯誤寫法：$\sin(\alpha+\beta)=\sin\alpha+\sin\beta$。
+- 為什麼錯：代 $\alpha=30^\circ$、$\beta=60^\circ$：左邊 $\sin90^\circ=1$，右邊 $\frac12+\frac{\sqrt3}{2}\approx1.37$，而且正弦值根本不可能大於 $1$。
+- 正確寫法：$\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta$。
+
+**錯誤 2：餘弦的符號沒有相反。**
+
+- 錯誤寫法：$\cos(\alpha+\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta$。
+- 為什麼錯：代 $\alpha=\beta=\frac{\pi}{4}$：左邊 $\cos\frac{\pi}{2}=0$，右邊 $\frac12+\frac12=1$。$\alpha+\beta$ 越大，$\cos$ 應該越小，所以要減。
+- 正確寫法：$\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta$。
+
+**錯誤 3：正切公式分母的符號弄錯。**
+
+- 錯誤寫法：$\tan(\alpha+\beta)=\dfrac{\tan\alpha+\tan\beta}{1+\tan\alpha\tan\beta}$。
+- 為什麼錯：代 $\alpha=\beta=\frac{\pi}{4}$：$\tan\frac{\pi}{2}$ 無定義，正確公式的分母 $1-1\cdot1=0$ 正好反映這件事；錯誤公式卻得到 $\frac{2}{2}=1$。
+- 正確寫法：和角的分母是 $1-\tan\alpha\tan\beta$，差角的分母是 $1+\tan\alpha\tan\beta$。
+
+## 練習題
+
+**1.** 求 $\cos15^\circ$ 和 $\sin105^\circ$ 的精確值。
+
+<Solution answer>
+
+$\cos15^\circ=\cos(45^\circ-30^\circ)=\dfrac{\sqrt2}{2}\cdot\dfrac{\sqrt3}{2}+\dfrac{\sqrt2}{2}\cdot\dfrac12=\dfrac{\sqrt6+\sqrt2}{4}$。
+
+$\sin105^\circ=\sin(60^\circ+45^\circ)=\dfrac{\sqrt3}{2}\cdot\dfrac{\sqrt2}{2}+\dfrac12\cdot\dfrac{\sqrt2}{2}=\dfrac{\sqrt6+\sqrt2}{4}$。
+
+</Solution>
+
+**2.** 求 $\sin20^\circ\cos40^\circ+\cos20^\circ\sin40^\circ$。
+
+<Solution answer>
+
+這正是 $\sin(20^\circ+40^\circ)$ 的展開式，所以等於 $\sin60^\circ=\dfrac{\sqrt3}{2}$。
+
+</Solution>
+
+**3.** 已知 $\cos\alpha=-\dfrac35$，$\alpha$ 在第三象限；$\sin\beta=\dfrac{12}{13}$，$\beta$ 在第二象限。求 $\cos(\alpha+\beta)$。（需要〈基本恆等式與證明技巧〉由象限決定正負號）
+
+<Solution answer>
+
+第三象限 $\sin\alpha<0$：$\sin\alpha=-\dfrac45$。第二象限 $\cos\beta<0$：$\cos\beta=-\dfrac{5}{13}$。
+
+$\cos(\alpha+\beta)=\left(-\dfrac35\right)\left(-\dfrac5{13}\right)-\left(-\dfrac45\right)\dfrac{12}{13}=\dfrac{15+48}{65}=\dfrac{63}{65}$。
+
+</Solution>
+
+**4.** 證明 $\sin(\alpha+\beta)\sin(\alpha-\beta)=\sin^2\alpha-\sin^2\beta$。
+
+<Solution answer>
+
+左邊用和角、差角公式展開。令 $P=\sin\alpha\cos\beta$、$Q=\cos\alpha\sin\beta$，左邊是 $(P+Q)(P-Q)$，用平方差公式：
+
+$$
+\begin{aligned}
+&(P+Q)(P-Q)=P^2-Q^2\\
+&=\sin^2\alpha\cos^2\beta-\cos^2\alpha\sin^2\beta\\
+&=\sin^2\alpha(1-\sin^2\beta)-(1-\sin^2\alpha)\sin^2\beta\\
+&=\sin^2\alpha-\sin^2\beta
+\end{aligned}
+$$
+
+第三行用平方關係把 $\cos^2$ 換成 $1-\sin^2$，最後一行展開後 $\sin^2\alpha\sin^2\beta$ 兩項抵消。
+
+</Solution>
+
+**5.** 求 $\tan75^\circ-\tan15^\circ$。
+
+<Solution answer>
+
+例題 1 得 $\tan75^\circ=2+\sqrt3$。$\tan15^\circ=\tan(45^\circ-30^\circ)=\dfrac{1-\frac{\sqrt3}{3}}{1+\frac{\sqrt3}{3}}=\dfrac{3-\sqrt3}{3+\sqrt3}=\dfrac{(3-\sqrt3)^2}{6}=2-\sqrt3$。相減得 $2\sqrt3$。
+
+</Solution>

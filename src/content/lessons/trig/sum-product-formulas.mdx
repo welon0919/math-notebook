@@ -1,0 +1,214 @@
+---
+subject: trig
+unit: trig-identities
+order: 11
+title: 和差化積與積化和差
+summary: 把三角函數的乘積化成和，或把和化成乘積，用來化簡與解方程式。
+prerequisites: [angle-sum-difference]
+formulas: [sum-product, angle-sum]
+---
+
+## 學習目標
+
+- 學完這課，你能把和角與差角公式相加減，推出積化和差公式。
+- 學完這課，你能令 $\alpha+\beta$、$\alpha-\beta$ 為新變數，推出和差化積公式。
+- 學完這課，你能用兩組公式化簡式子或求值。
+
+## 概念說明
+
+### 積化和差
+
+把 $\sin(\alpha+\beta)$ 和 $\sin(\alpha-\beta)$ 的展開式寫在一起：
+
+$$
+\begin{aligned}
+\sin(\alpha+\beta)&=\sin\alpha\cos\beta+\cos\alpha\sin\beta\\
+\sin(\alpha-\beta)&=\sin\alpha\cos\beta-\cos\alpha\sin\beta
+\end{aligned}
+$$
+
+兩式相加，$\cos\alpha\sin\beta$ 抵消；相減，$\sin\alpha\cos\beta$ 抵消：
+
+$$
+\begin{aligned}
+\sin(\alpha+\beta)+\sin(\alpha-\beta)&=2\sin\alpha\cos\beta\\
+\sin(\alpha+\beta)-\sin(\alpha-\beta)&=2\cos\alpha\sin\beta
+\end{aligned}
+$$
+
+對 $\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta$ 和 $\cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta$ 做同樣的事，再全部除以 $2$，得到**積化和差**公式：
+
+$$
+\begin{aligned}
+\sin\alpha\cos\beta&=\tfrac12\left[\sin(\alpha+\beta)+\sin(\alpha-\beta)\right]\\
+\cos\alpha\sin\beta&=\tfrac12\left[\sin(\alpha+\beta)-\sin(\alpha-\beta)\right]\\
+\cos\alpha\cos\beta&=\tfrac12\left[\cos(\alpha+\beta)+\cos(\alpha-\beta)\right]\\
+\sin\alpha\sin\beta&=-\tfrac12\left[\cos(\alpha+\beta)-\cos(\alpha-\beta)\right]
+\end{aligned}
+$$
+
+最後一式的負號來自 $\cos(\alpha+\beta)-\cos(\alpha-\beta)=-2\sin\alpha\sin\beta$。用處：乘積不好計算或積分時，換成和，每一項都只有一個三角函數。
+
+### 和差化積
+
+反過來讀同一組式子。令 $A=\alpha+\beta$，$B=\alpha-\beta$，兩式相加除以 $2$ 得 $\alpha=\dfrac{A+B}{2}$，相減除以 $2$ 得 $\beta=\dfrac{A-B}{2}$。代入上面相加、相減的四個結果：
+
+$$
+\begin{aligned}
+\sin A+\sin B&=2\sin\frac{A+B}{2}\cos\frac{A-B}{2}\\
+\sin A-\sin B&=2\cos\frac{A+B}{2}\sin\frac{A-B}{2}\\
+\cos A+\cos B&=2\cos\frac{A+B}{2}\cos\frac{A-B}{2}\\
+\cos A-\cos B&=-2\sin\frac{A+B}{2}\sin\frac{A-B}{2}
+\end{aligned}
+$$
+
+這就是**和差化積**公式。用處：把和變成乘積之後，方程式 $\sin A+\sin B=0$ 可以拆成「某個因式等於 $0$」，和代數中因式分解解方程式的想法一樣。
+
+兩組公式不必硬背：記得它們都來自和角、差角公式的相加相減，需要時花半分鐘推一次就好。
+
+### 拍：兩個波相加變成乘積
+
+和差化積有一個看得見的意義。兩個頻率接近的聲音同時播放，例如 $\sin10x$ 和 $\sin11x$：
+
+$$
+\sin10x+\sin11x=2\sin\frac{21x}{2}\cos\frac{x}{2}
+$$
+
+右邊是快速振動的 $\sin\frac{21x}{2}$，乘上慢慢變化的 $2\cos\frac{x}{2}$。聲音因此忽大忽小，稱為**拍**。調整兩個頻率看看：
+
+<Graph name="trig/beats" />
+
+## 例題
+
+### 例題 1
+
+求 $\sin75^\circ\cos15^\circ$ 和 $\cos75^\circ\cos15^\circ$。
+
+<Solution>
+
+用積化和差，$\alpha+\beta=90^\circ$，$\alpha-\beta=60^\circ$，都是特殊角：
+
+$$
+\begin{aligned}
+\sin75^\circ\cos15^\circ&=\tfrac12\left[\sin90^\circ+\sin60^\circ\right]\\
+&=\tfrac12\left(1+\tfrac{\sqrt3}{2}\right)=\frac{2+\sqrt3}{4}\\[6pt]
+\cos75^\circ\cos15^\circ&=\tfrac12\left[\cos90^\circ+\cos60^\circ\right]\\
+&=\tfrac12\left(0+\tfrac12\right)=\frac14
+\end{aligned}
+$$
+
+用〈和角與差角公式〉的值驗算第二題：$\cos75^\circ\cos15^\circ=\dfrac{\sqrt6-\sqrt2}{4}\cdot\dfrac{\sqrt6+\sqrt2}{4}=\dfrac{6-2}{16}=\dfrac14$。
+
+</Solution>
+
+### 例題 2
+
+求 $\sin75^\circ+\sin15^\circ$ 和 $\cos75^\circ-\cos15^\circ$。
+
+<Solution>
+
+用和差化積，$\dfrac{A+B}{2}=45^\circ$，$\dfrac{A-B}{2}=30^\circ$：
+
+$$
+\begin{aligned}
+\sin75^\circ+\sin15^\circ&=2\sin45^\circ\cos30^\circ\\
+&=2\cdot\frac{\sqrt2}{2}\cdot\frac{\sqrt3}{2}=\frac{\sqrt6}{2}\\[6pt]
+\cos75^\circ-\cos15^\circ&=-2\sin45^\circ\sin30^\circ\\
+&=-2\cdot\frac{\sqrt2}{2}\cdot\frac12=-\frac{\sqrt2}{2}
+\end{aligned}
+$$
+
+合理性檢查：$\cos75^\circ<\cos15^\circ$（角越大餘弦越小），所以第二個答案應該是負的，符合。
+
+</Solution>
+
+### 例題 3
+
+兩支音叉同時發聲，空氣的振動可以寫成 $y=\sin(880\pi t)+\sin(888\pi t)$，$t$ 的單位是秒（頻率分別是 $440$ 和 $444$ 赫茲）。
+
+1. 把 $y$ 寫成乘積。
+2. 聽到的音量由 $|2\cos(\cdots)|$ 這個因式決定。音量每秒變大變小幾次？
+
+<Solution>
+
+1. 和差化積，$\dfrac{A+B}{2}=\dfrac{880\pi t+888\pi t}{2}=884\pi t$，$\dfrac{A-B}{2}=\dfrac{880\pi t-888\pi t}{2}=-4\pi t$：
+
+   $$
+   \begin{aligned}
+   y&=2\sin(884\pi t)\cos(-4\pi t)\\
+   &=2\cos(4\pi t)\sin(884\pi t)
+   \end{aligned}
+   $$
+
+   最後用了 $\cos$ 是偶函數。
+2. $\sin(884\pi t)$ 每秒振動 $442$ 次，就是我們聽到的音高。$|2\cos(4\pi t)|$ 變化得慢得多：$\cos(4\pi t)$ 的週期是 $\dfrac{2\pi}{4\pi}=\dfrac12$ 秒，而取絕對值之後負的半段翻上來，$|2\cos(4\pi t)|$ 的週期是 $\dfrac14$ 秒。所以音量每秒變大變小 $4$ 次，正好是兩個頻率的差 $444-440$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把和直接合併成一個角。**
+
+- 錯誤寫法：$\sin A+\sin B=\sin(A+B)$。
+- 為什麼錯：代 $A=30^\circ$、$B=60^\circ$：左邊 $\frac12+\frac{\sqrt3}{2}\approx1.37$，右邊 $\sin90^\circ=1$。
+- 正確寫法：$\sin A+\sin B=2\sin\dfrac{A+B}{2}\cos\dfrac{A-B}{2}$。
+
+**錯誤 2：$\cos A-\cos B$ 漏掉負號。**
+
+- 錯誤寫法：$\cos A-\cos B=2\sin\dfrac{A+B}{2}\sin\dfrac{A-B}{2}$。
+- 為什麼錯：代 $A=0$、$B=\pi$：左邊 $\cos0-\cos\pi=2$；錯誤寫法得 $2\sin\frac{\pi}{2}\sin\left(-\frac{\pi}{2}\right)=-2$，正負號相反。
+- 正確寫法：$\cos A-\cos B=-2\sin\dfrac{A+B}{2}\sin\dfrac{A-B}{2}$。
+
+**錯誤 3：積化和差漏掉 $\frac12$。**
+
+- 錯誤寫法：$\sin x\cos x=\sin2x$。
+- 為什麼錯：由積化和差 $\sin x\cos x=\frac12[\sin2x+\sin0]=\frac12\sin2x$。代 $x=\frac{\pi}{4}$：左邊 $\frac{\sqrt2}{2}\cdot\frac{\sqrt2}{2}=\frac12$，$\sin\frac{\pi}{2}=1$，差了兩倍。
+- 正確寫法：$\sin x\cos x=\dfrac12\sin2x$，也就是倍角公式 $\sin2x=2\sin x\cos x$。
+
+## 練習題
+
+**1.** 求 $\sin15^\circ\sin75^\circ$。
+
+<Solution answer>
+
+$\sin\alpha\sin\beta=-\frac12[\cos(\alpha+\beta)-\cos(\alpha-\beta)]$，取 $\alpha=75^\circ$、$\beta=15^\circ$：$-\dfrac12[\cos90^\circ-\cos60^\circ]=-\dfrac12\left(0-\dfrac12\right)=\dfrac14$。
+
+</Solution>
+
+**2.** 求 $\sin105^\circ-\sin15^\circ$。
+
+<Solution answer>
+
+$2\cos\dfrac{105^\circ+15^\circ}{2}\sin\dfrac{105^\circ-15^\circ}{2}=2\cos60^\circ\sin45^\circ=2\cdot\dfrac12\cdot\dfrac{\sqrt2}{2}=\dfrac{\sqrt2}{2}$。
+
+</Solution>
+
+**3.** 證明 $\dfrac{\sin x+\sin3x}{\cos x+\cos3x}=\tan2x$（分母不為 $0$）。
+
+<Solution answer>
+
+分子、分母都用和差化積，$\dfrac{3x+x}{2}=2x$，$\dfrac{3x-x}{2}=x$：
+
+$$
+\frac{2\sin2x\cos x}{2\cos2x\cos x}=\frac{\sin2x}{\cos2x}=\tan2x
+$$
+
+約掉 $2\cos x$ 時，$\cos x\neq0$ 由分母不為 $0$ 保證。
+
+</Solution>
+
+**4.** 求 $\cos20^\circ+\cos100^\circ+\cos140^\circ$。
+
+<Solution answer>
+
+先合併後兩項：$\cos100^\circ+\cos140^\circ=2\cos120^\circ\cos(-20^\circ)=2\cdot\left(-\dfrac12\right)\cos20^\circ=-\cos20^\circ$。所以總和是 $\cos20^\circ-\cos20^\circ=0$。
+
+</Solution>
+
+**5.** 用積化和差計算 $\sin x\sin x$，並和降冪公式比較。（需要〈倍角與半角公式〉的降冪公式）
+
+<Solution answer>
+
+取 $\alpha=\beta=x$：$\sin x\sin x=-\dfrac12[\cos2x-\cos0]=\dfrac{1-\cos2x}{2}$，正好是降冪公式 $\sin^2x=\dfrac{1-\cos2x}{2}$。降冪公式是積化和差的特例。
+
+</Solution>
