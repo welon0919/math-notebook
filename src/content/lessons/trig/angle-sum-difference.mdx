@@ -22,31 +22,70 @@ $\sin(\alpha+\beta)$ 不等於 $\sin\alpha+\sin\beta$。代數字檢查：$\sin(
 
 ### 推導 $\cos(\alpha-\beta)$
 
-在單位圓上取角 $\alpha$ 的點 $A(\cos\alpha,\sin\alpha)$ 和角 $\beta$ 的點 $B(\cos\beta,\sin\beta)$，用兩種方法算弦 $AB$ 的長度。
+在單位圓上取兩個點，用兩種方法算它們之間的弦長，再讓兩個結果相等。按「下一步」逐步看，或點下面任一段跳到那一步：
 
-**第一種：直接用兩點距離公式。**
+<Graph name="trig/cos-difference" proof />
 
-<Derivation rows={[
-  [String.raw`|AB|^2`, String.raw`=(\cos\alpha-\cos\beta)^2+(\sin\alpha-\sin\beta)^2`, '兩點距離公式'],
-  ['', String.raw`=2-2(\cos\alpha\cos\beta+\sin\alpha\sin\beta)`, String.raw`展開兩個平方：$\cos^2\alpha+\sin^2\alpha=1$、$\cos^2\beta+\sin^2\beta=1$，剩下兩個交叉項 $-2\cos\alpha\cos\beta$、$-2\sin\alpha\sin\beta$`],
-]} />
+<ProofStep n={1}>
 
-**第二種：先把整個圖形轉一下。** 把 $A$、$B$ 一起繞原點轉 $-\beta$。$B$ 轉到 $B'(1,0)$，$A$ 轉到角 $\alpha-\beta$ 的點 $A'(\cos(\alpha-\beta),\sin(\alpha-\beta))$。轉動不改變長度：$\triangle OAB$ 和 $\triangle OA'B'$ 的兩邊都是半徑 $1$，夾角都是 $\alpha$ 和 $\beta$ 相差的角，由 SAS 全等，所以 $|A'B'|=|AB|$。
+**取兩點**：角 $\alpha$ 的點 $A(\cos\alpha,\sin\alpha)$，角 $\beta$ 的點 $B(\cos\beta,\sin\beta)$，兩點都在單位圓上。
 
-<Derivation rows={[
-  [String.raw`|A'B'|^2`, String.raw`=(\cos(\alpha-\beta)-1)^2+\sin^2(\alpha-\beta)`, '兩點距離公式'],
-  ['', String.raw`=2-2\cos(\alpha-\beta)`, String.raw`展開平方，再用平方關係 $\cos^2(\alpha-\beta)+\sin^2(\alpha-\beta)=1$`],
-]} />
+</ProofStep>
 
-兩個結果相等，消去 $2$ 再除以 $-2$：
+<ProofStep n={2}>
+
+**第一種算法，直接用兩點距離公式**：
+
+$$
+|AB|^2=(\cos\alpha-\cos\beta)^2+(\sin\alpha-\sin\beta)^2
+$$
+
+</ProofStep>
+
+<ProofStep n={3}>
+
+**展開**：兩個平方展開後，$\cos^2\alpha+\sin^2\alpha=1$、$\cos^2\beta+\sin^2\beta=1$（平方關係），剩下兩個交叉項 $-2\cos\alpha\cos\beta$ 和 $-2\sin\alpha\sin\beta$：
+
+$$
+|AB|^2=2-2(\cos\alpha\cos\beta+\sin\alpha\sin\beta)
+$$
+
+</ProofStep>
+
+<ProofStep n={4}>
+
+**第二種算法，先把圖形轉一下**：把 $A$、$B$ 一起繞原點轉 $-\beta$。$B$ 轉到 $B'(1,0)$；$A$ 的角度變成 $\alpha-\beta$，轉到 $A'(\cos(\alpha-\beta),\sin(\alpha-\beta))$。
+
+</ProofStep>
+
+<ProofStep n={5}>
+
+**轉動不改變長度**：$\triangle OAB$ 和 $\triangle OA'B'$ 的兩邊都是半徑 $1$，夾角是同一個角（兩條半徑一起轉，夾角不變），由 SAS 全等，所以 $|A'B'|=|AB|$。
+
+</ProofStep>
+
+<ProofStep n={6}>
+
+**用距離公式算 $|A'B'|$**：展開平方，再用 $\cos^2(\alpha-\beta)+\sin^2(\alpha-\beta)=1$：
+
+$$
+\begin{aligned}
+|A'B'|^2&=(\cos(\alpha-\beta)-1)^2+\sin^2(\alpha-\beta)\\
+&=2-2\cos(\alpha-\beta)
+\end{aligned}
+$$
+
+</ProofStep>
+
+<ProofStep n={7}>
+
+**兩個結果相等**：$2-2\cos(\alpha-\beta)=2-2(\cos\alpha\cos\beta+\sin\alpha\sin\beta)$，兩邊減 $2$ 再除以 $-2$：
 
 $$
 \cos(\alpha-\beta)=\cos\alpha\cos\beta+\sin\alpha\sin\beta
 $$
 
-拖動 $A$、$B$，再按播放看轉動前後的兩條弦：
-
-<Graph name="trig/cos-difference" />
+</ProofStep>
 
 ### 推出其他公式
 
@@ -80,10 +119,6 @@ $$
   $$
 
 記憶方法：**正弦「正餘餘正」、符號不變；餘弦「餘餘正正」、符號相反**。例如 $\cos(\alpha+\beta)$ 中間是減號。
-
-$\alpha$、$\beta$ 都是銳角時，$\sin(\alpha+\beta)$ 的公式也可以直接從兩個疊起來的直角三角形讀出來，拖動滑桿看看：
-
-<Graph name="trig/angle-sum" />
 
 ## 例題
 

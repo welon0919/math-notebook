@@ -8,7 +8,7 @@ export default sinusoidPlot({
     '實線是 y = 3 sin(2x − π/3) + 1，從 −π/2 畫到 2π；虛線是沒有平移的 y = 3 sin 2x + 1，水平虛線是中線 y = 1。實線的最高點 (5π/12, 4) 比虛線的最高點 (π/4, 4) 右移 π/6；最低點是 (11π/12, −2)，週期 π，起點 (π/6, 1) 在中線上、正在往上。',
   f: (x) => 3 * Math.sin(2 * x - PI / 3) + 1,
   tex: 'y=3\\sin\\left(2x-\\frac{\\pi}{3}\\right)+1',
-  compare: { f: (x) => 3 * Math.sin(2 * x) + 1, tex: 'y=3\\sin2x+1' },
+  compare: [{ f: (x) => 3 * Math.sin(2 * x) + 1, tex: 'y=3\\sin2x+1' }],
   halfPis: [-1, 4],
   y: [-2, 4],
   midline: 1,

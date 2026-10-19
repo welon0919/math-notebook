@@ -17,8 +17,8 @@ interface SinusoidPlotOptions {
   f: (x: number) => number;
   /** LaTeX of the function, for the legend. */
   tex: string;
-  /** A dashed curve to compare with, e.g. before a shift. */
-  compare?: { f: (x: number) => number; tex: string };
+  /** Dashed curves to compare with, e.g. before a shift; the first is drawn muted, the next in the highlight color. */
+  compare?: { f: (x: number) => number; tex: string }[];
   /** The x range shown, in units of π/2, e.g. [-1, 4] for -π/2 to 2π. */
   halfPis: [number, number];
   /** The y range shown. */
@@ -71,7 +71,10 @@ export function sinusoidPlot(opts: SinusoidPlotOptions): GraphDef {
 
       const [a, b] = [k0 * half, k1 * half];
       board.create('segment', [[a, opts.midline], [b, opts.midline]], { ...fixed, strokeColor: color.accent2, strokeWidth: 1.5, dash: 3 });
-      if (opts.compare) board.create('functiongraph', [opts.compare.f, a, b], { ...fixed, strokeColor: color.muted, strokeWidth: 2, dash: 2 });
+      const compareColor = (i: number) => (i === 0 ? color.muted : color.highlight);
+      (opts.compare ?? []).forEach((c, i) =>
+        board.create('functiongraph', [c.f, a, b], { ...fixed, strokeColor: compareColor(i), strokeWidth: 2, dash: i === 0 ? 2 : 1 }),
+      );
       board.create('functiongraph', [opts.f, a, b], { ...fixed, strokeColor: color.accent, strokeWidth: 3 });
 
       for (const m of opts.marks) {
@@ -87,7 +90,7 @@ export function sinusoidPlot(opts: SinusoidPlotOptions): GraphDef {
 
       ctx.legend([
         { label: `$${opts.tex}$`, color: color.accent, width: 3 },
-        ...(opts.compare ? [{ label: `$${opts.compare.tex}$`, color: color.muted, dash: true }] : []),
+        ...(opts.compare ?? []).map((c, i) => ({ label: `$${c.tex}$`, color: compareColor(i), dash: true })),
         { label: `中線 $y=${opts.midline}$`, color: color.accent2, dash: true, width: 1.5 },
       ]);
       for (const text of opts.readouts ?? []) ctx.readout(() => text);
