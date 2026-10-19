@@ -1,11 +1,10 @@
-import { snap, toDegrees } from '../helpers';
+import { toDegrees } from '../helpers';
 import type { GraphDef } from '../types';
 
-const step = 0.1;
 const num = (v: number) => String(+v.toFixed(2));
 const eps = 1e-9;
 // Within this many degrees of a multiple of 30° or 45°, P is rotated onto it (keeping r).
-const magnetDeg = 2;
+const magnetDeg = 1.5;
 
 export default {
   title: '廣義角與參考角',
@@ -18,7 +17,8 @@ export default {
     const X = board.create('point', [1, 0], { visible: false, fixed: true });
     const P = board.create('point', [-3, 2], { name: 'P', size: 4, label: { offset: [8, 8] } });
     P.on('drag', () => {
-      let [x, y] = [snap(P.X(), step), snap(P.Y(), step)];
+      // P moves freely and smoothly; it only stays inside the frame and away from O.
+      let [x, y] = [P.X(), P.Y()];
       x = Math.max(-3.7, Math.min(3.7, x));
       y = Math.max(-2.7, Math.min(2.7, y));
       if (Math.hypot(x, y) < 0.5) [x, y] = [0.5, 0];

@@ -49,6 +49,11 @@ for (const path of pages) {
     // Graphs load when scrolled near, so visit each one and wait for it to draw.
     for (let i = 0; i < count; i++) {
       const graph = graphs.nth(i);
+      // A graph inside a solution only draws once the solution is opened.
+      await graph.evaluate((el) => {
+        const details = el.closest('details');
+        if (details) details.open = true;
+      });
       await graph.scrollIntoViewIfNeeded();
       await expect(graph.locator('.graph-board svg').first()).toBeVisible();
       await expect(graph.locator('[data-graph-status]')).toHaveCount(0);
