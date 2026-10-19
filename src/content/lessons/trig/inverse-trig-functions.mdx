@@ -1,0 +1,196 @@
+---
+subject: trig
+unit: trig-graphs
+order: 7
+title: 反三角函數
+summary: 限制定義域讓三角函數變成一對一，定義 $\sin^{-1}$、$\cos^{-1}$、$\tan^{-1}$ 並求主值。
+prerequisites: [tangent-graph, inverse-functions]
+formulas: [special-angles, pythagorean-identities]
+---
+
+## 學習目標
+
+- 學完這課，你能說明為什麼要限制定義域，並說出三個反三角函數的定義域和值域。
+- 學完這課，你能求出特殊值的反三角函數，例如 $\sin^{-1}\left(-\frac12\right)$。
+- 學完這課，你能化簡 $\sin(\cos^{-1}x)$ 這類合成式。
+
+## 概念說明
+
+### 為什麼要限制定義域
+
+到目前為止都是「給角度，求三角函數值」。反過來的問題也很常見：坡道的高和水平距離已知，坡度角是多少？也就是「$\sin x=\frac12$，$x$ 是多少？」
+
+在〈反函數〉學過，只有一對一的函數才有反函數。但 $y=\sin x$ 不是一對一：水平線 $y=\frac12$ 和正弦曲線交於無限多點，$x=\frac{\pi}{6},\frac{5\pi}{6},\frac{13\pi}{6},\dots$ 都滿足 $\sin x=\frac12$。
+
+解決方法和 $y=x^2$ 限制成 $x\ge0$ 一樣：**只取一段一對一、而且取遍所有函數值的區間**。對正弦，選 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$：
+
+- 在這一段上，角越大，單位圓上的點越高，$\sin x$ 從 $-1$ 一路上升到 $1$，所以是一對一。
+- $[-1,1]$ 中的每個值都取得到，一個都沒少。
+- 這一段包含 $0$ 和常用的銳角，用起來最方便。
+
+### 三個反三角函數
+
+**反正弦**：對 $-1\le x\le1$，
+
+$$
+\begin{gathered}
+y=\sin^{-1}x\iff \sin y=x\\
+\text{且}\ -\frac{\pi}{2}\le y\le\frac{\pi}{2}
+\end{gathered}
+$$
+
+也寫成 $\arcsin x$。白話說，$\sin^{-1}x$ 是「$\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中正弦值為 $x$ 的那個角」，稱為**主值**。
+
+**反餘弦**：$\cos x$ 在 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 上不是一對一（$\cos(-x)=\cos x$），所以改選 $[0,\pi]$。在這一段上，點從 $(1,0)$ 沿上半圓走到 $(-1,0)$，$x$ 坐標從 $1$ 一路降到 $-1$。
+
+$$
+\begin{gathered}
+y=\cos^{-1}x\iff \cos y=x\\
+\text{且}\ 0\le y\le\pi
+\end{gathered}
+$$
+
+**反正切**：$\tan x$ 在 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ 上一直上升，取遍所有實數（〈正切函數的圖形〉）。
+
+$$
+\begin{gathered}
+y=\tan^{-1}x\iff \tan y=x\\
+\text{且}\ -\frac{\pi}{2}<y<\frac{\pi}{2}
+\end{gathered}
+$$
+
+| | 定義域 | 值域 |
+|---|---|---|
+| $\sin^{-1}x$ | $[-1,1]$ | $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ |
+| $\cos^{-1}x$ | $[-1,1]$ | $[0,\pi]$ |
+| $\tan^{-1}x$ | 所有實數 | $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ |
+
+和所有反函數一樣，反三角函數的圖形是限制後那一段對 $y=x$ 的鏡射。切換函數，拖動 $P$ 看看：
+
+<Graph name="trig/inverse-trig" />
+
+**注意記號**：$\sin^{-1}x$ 是反正弦，**不是** $\dfrac{1}{\sin x}$（那是 $\csc x$）。
+
+### 合成：誰抵消誰
+
+由定義，$\sin(\sin^{-1}x)=x$ 對 $[-1,1]$ 中的每個 $x$ 都成立：$\sin^{-1}x$ 是正弦值為 $x$ 的角，再取正弦當然得 $x$。
+
+反過來 $\sin^{-1}(\sin x)=x$ **只在** $-\frac{\pi}{2}\le x\le\frac{\pi}{2}$ 時成立，因為 $\sin^{-1}$ 的結果一定落在這個範圍。例如 $\sin^{-1}\left(\sin\frac{5\pi}{6}\right)=\sin^{-1}\frac12=\frac{\pi}{6}$，不是 $\frac{5\pi}{6}$。
+
+化簡 $\sin(\cos^{-1}x)$ 這類式子時，令 $\theta=\cos^{-1}x$，把問題變成「已知 $\cos\theta=x$ 和 $\theta$ 的範圍，求 $\sin\theta$」。角 $\theta$ 的點 $(\cos\theta,\sin\theta)$ 在單位圓 $x^2+y^2=1$ 上，所以 $\sin^2\theta=1-\cos^2\theta=1-x^2$。又 $0\le\theta\le\pi$，點在上半圓，$\sin\theta\ge0$，取正號：
+
+$$
+\sin(\cos^{-1}x)=\sqrt{1-x^2}
+$$
+
+## 例題
+
+### 例題 1
+
+求 $\sin^{-1}\left(-\dfrac12\right)$、$\cos^{-1}\left(-\dfrac12\right)$、$\tan^{-1}\sqrt3$。
+
+<Solution>
+
+- $\sin^{-1}\left(-\frac12\right)$：要找 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中正弦值為 $-\frac12$ 的角。正弦為負，所以角在 $\left[-\frac{\pi}{2},0\right)$；參考角是 $\frac{\pi}{6}$。答案是 $-\dfrac{\pi}{6}$。
+- $\cos^{-1}\left(-\frac12\right)$：要找 $[0,\pi]$ 中餘弦值為 $-\frac12$ 的角。餘弦為負，所以在 $\left(\frac{\pi}{2},\pi\right]$；參考角 $\frac{\pi}{3}$，角是 $\pi-\frac{\pi}{3}=\dfrac{2\pi}{3}$。
+- $\tan^{-1}\sqrt3$：$\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ 中 $\tan\frac{\pi}{3}=\sqrt3$，答案是 $\dfrac{\pi}{3}$。
+
+驗算：$\sin\left(-\frac{\pi}{6}\right)=-\frac12$，$\cos\frac{2\pi}{3}=-\frac12$，$\tan\frac{\pi}{3}=\sqrt3$，三個角也都在各自的值域裡。
+
+</Solution>
+
+### 例題 2
+
+求 $\sin^{-1}\left(\sin\dfrac{5\pi}{6}\right)$ 和 $\cos^{-1}\left(\cos\left(-\dfrac{\pi}{4}\right)\right)$。
+
+<Solution>
+
+先算裡面，再找值域中的角：
+
+- $\sin\dfrac{5\pi}{6}=\dfrac12$，$\sin^{-1}\dfrac12=\dfrac{\pi}{6}$。$\dfrac{5\pi}{6}$ 不在 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中，所以不會原封不動地回來。
+- $\cos\left(-\dfrac{\pi}{4}\right)=\dfrac{\sqrt2}{2}$，$\cos^{-1}\dfrac{\sqrt2}{2}=\dfrac{\pi}{4}$。$-\dfrac{\pi}{4}$ 不在 $[0,\pi]$ 中，得到的是同一個餘弦值在 $[0,\pi]$ 中的角。
+
+</Solution>
+
+### 例題 3
+
+1. 求 $\cos\left(\sin^{-1}\left(-\dfrac35\right)\right)$ 和 $\tan\left(\sin^{-1}\left(-\dfrac35\right)\right)$。
+2. 化簡 $\tan(\sin^{-1}x)$，$-1<x<1$。
+
+<Solution>
+
+1. 令 $\theta=\sin^{-1}\left(-\frac35\right)$，則 $\sin\theta=-\frac35$，且 $-\frac{\pi}{2}\le\theta\le\frac{\pi}{2}$。在這個範圍內 $\cos\theta\ge0$（點在右半圓）。由 $\sin^2\theta+\cos^2\theta=1$，$\cos^2\theta=1-\frac{9}{25}=\frac{16}{25}$，取正號 $\cos\theta=\frac45$。所以
+
+   $$
+   \begin{gathered}
+   \cos\left(\sin^{-1}\left(-\frac35\right)\right)=\frac45\\
+   \tan\left(\sin^{-1}\left(-\frac35\right)\right)=\frac{-3/5}{4/5}=-\frac34
+   \end{gathered}
+   $$
+
+2. 同樣令 $\theta=\sin^{-1}x$，$\sin\theta=x$，$\cos\theta=\sqrt{1-x^2}$（$-\frac{\pi}{2}<\theta<\frac{\pi}{2}$，$\cos\theta>0$）。所以 $\tan(\sin^{-1}x)=\dfrac{x}{\sqrt{1-x^2}}$。
+   驗算：代 $x=-\frac35$ 得 $\dfrac{-3/5}{4/5}=-\dfrac34$，和第 1 小題一致。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把 $\sin^{-1}x$ 當成 $\dfrac{1}{\sin x}$。**
+
+- 錯誤寫法：$\sin^{-1}\dfrac12=\dfrac{1}{1/2}=2$，或 $\sin^{-1}\dfrac12=\dfrac{1}{\sin\frac12}$。
+- 為什麼錯：$-1$ 在這裡是反函數的記號。$\sin^{-1}\frac12$ 問的是「哪個角的正弦是 $\frac12$」，答案是一個角。檢查：$\sin2\approx0.91$，不是 $\frac12$。
+- 正確寫法：$\sin^{-1}\dfrac12=\dfrac{\pi}{6}$；倒數要寫成 $(\sin x)^{-1}$ 或 $\csc x$。
+
+**錯誤 2：答案不在值域裡。**
+
+- 錯誤寫法：$\sin^{-1}\left(-\dfrac12\right)=\dfrac{7\pi}{6}$ 或 $\dfrac{11\pi}{6}$；$\cos^{-1}\left(-\dfrac12\right)=-\dfrac{\pi}{3}$。
+- 為什麼錯：這些角的三角函數值雖然對，但反函數只能給出一個值，規定是值域裡的那一個。$\frac{7\pi}{6}$、$\frac{11\pi}{6}$ 不在 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中；而且 $\cos\left(-\frac{\pi}{3}\right)=\frac12$，連值都不對。
+- 正確寫法：$\sin^{-1}\left(-\dfrac12\right)=-\dfrac{\pi}{6}$，$\cos^{-1}\left(-\dfrac12\right)=\dfrac{2\pi}{3}$。
+
+**錯誤 3：以為 $\sin^{-1}(\sin x)$ 一定等於 $x$。**
+
+- 錯誤寫法：$\sin^{-1}\left(\sin\dfrac{5\pi}{6}\right)=\dfrac{5\pi}{6}$。
+- 為什麼錯：$\sin^{-1}$ 的結果一定在 $\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中，$\frac{5\pi}{6}$ 不在裡面。$\sin$ 把 $\frac{\pi}{6}$ 和 $\frac{5\pi}{6}$ 送到同一個值，$\sin^{-1}$ 只能送回其中一個。
+- 正確寫法：$\sin^{-1}\left(\sin\dfrac{5\pi}{6}\right)=\sin^{-1}\dfrac12=\dfrac{\pi}{6}$。
+
+## 練習題
+
+**1.** 求 $\cos^{-1}\dfrac{\sqrt2}{2}$、$\sin^{-1}1$、$\tan^{-1}(-1)$、$\cos^{-1}(-1)$。
+
+<Solution answer>
+
+$\dfrac{\pi}{4}$、$\dfrac{\pi}{2}$、$-\dfrac{\pi}{4}$、$\pi$。
+
+</Solution>
+
+**2.** 求 $\sin^{-1}\left(\sin\dfrac{4\pi}{3}\right)$。
+
+<Solution answer>
+
+$\sin\dfrac{4\pi}{3}=-\dfrac{\sqrt3}{2}$（第三象限，參考角 $\frac{\pi}{3}$）。$\left[-\frac{\pi}{2},\frac{\pi}{2}\right]$ 中正弦為 $-\frac{\sqrt3}{2}$ 的角是 $-\dfrac{\pi}{3}$。
+
+</Solution>
+
+**3.** 求 $\cos(\tan^{-1}2)$。（需要〈廣義角與象限〉的終邊上取點）
+
+<Solution answer>
+
+令 $\theta=\tan^{-1}2$，$-\frac{\pi}{2}<\theta<\frac{\pi}{2}$，$\tan\theta=2>0$，所以 $\theta$ 在第一象限。在終邊上取點 $(1,2)$，$r=\sqrt5$。$\cos\theta=\dfrac{1}{\sqrt5}=\dfrac{\sqrt5}{5}$。
+
+</Solution>
+
+**4.** 求 $y=\sin^{-1}(2x-1)$ 的定義域。（需要代數〈函數的概念、定義域與值域〉）
+
+<Solution answer>
+
+$\sin^{-1}$ 只能輸入 $[-1,1]$ 中的數：$-1\le2x-1\le1$。各邊加 $1$ 得 $0\le2x\le2$，再除以 $2$ 得 $0\le x\le1$。定義域是 $[0,1]$。
+
+</Solution>
+
+**5.** 化簡 $\tan(\cos^{-1}x)$，$-1\le x\le1$ 且 $x\neq0$。
+
+<Solution answer>
+
+令 $\theta=\cos^{-1}x$，$\cos\theta=x$，$0\le\theta\le\pi$，$\sin\theta=\sqrt{1-x^2}$（上半圓，$\sin\theta\ge0$）。所以 $\tan(\cos^{-1}x)=\dfrac{\sqrt{1-x^2}}{x}$。$x=0$ 時 $\theta=\frac{\pi}{2}$，正切無定義，所以要排除。驗算：$x=\frac12$ 時 $\theta=\frac{\pi}{3}$，$\tan\frac{\pi}{3}=\sqrt3$，而 $\dfrac{\sqrt{3/4}}{1/2}=\sqrt3$。
+
+</Solution>

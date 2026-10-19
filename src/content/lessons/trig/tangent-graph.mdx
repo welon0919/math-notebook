@@ -1,0 +1,172 @@
+---
+subject: trig
+unit: trig-graphs
+order: 6
+title: 正切函數的圖形
+summary: 由 $\tan x=\frac{\sin x}{\cos x}$ 畫出正切曲線，認識它的週期 $\pi$ 和鉛直漸近線。
+prerequisites: [sine-cosine-graphs]
+formulas: [quotient-identities, special-angles]
+---
+
+## 學習目標
+
+- 學完這課，你能說明 $\cos x=0$ 的地方為什麼出現鉛直漸近線。
+- 學完這課，你能說出 $y=\tan x$ 的週期、值域與奇偶性。
+- 學完這課，你能畫出 $y=\tan Bx$ 的圖形並求出週期。
+
+## 概念說明
+
+### 正切是單位圓上的切線長
+
+在單位圓上，角 $x$ 的點是 $P(\cos x,\sin x)$，所以
+
+$$
+\tan x=\frac{\sin x}{\cos x}\qquad(\cos x\neq0)
+$$
+
+這個比值也有圖形上的意義：它是直線 $OP$ 的**斜率**（$y$ 坐標的變化除以 $x$ 坐標的變化，從 $O(0,0)$ 到 $P$ 就是 $\frac{\sin x}{\cos x}$）。過原點、斜率為 $m$ 的直線在 $x=1$ 時高度是 $m$，所以把 $OP$ 延長，和單位圓在 $(1,0)$ 的切線 $x=1$ 交於 $T$，**$T$ 的高度就是 $\tan x$**。「正切」這個名字就是這樣來的。
+
+拖動 $P$ 繞一圈，看 $T$ 怎麼移動，右邊同步畫出 $y=\tan x$：
+
+<Graph name="trig/tangent-line" />
+
+### 漸近線
+
+$\cos x=0$ 時，也就是 $x=\frac{\pi}{2}+k\pi$，$\tan x$ 的分母是 $0$，沒有定義。在圖上，這時 $OP$ 是鉛直線，和切線 $x=1$ 平行，沒有交點。
+
+接近 $\frac{\pi}{2}$ 時會發生什麼事？$x$ 從左邊接近 $\frac{\pi}{2}$ 時，$\sin x$ 接近 $1$，$\cos x$ 是越來越小的正數。$1$ 除以很小的正數會很大，例如 $\dfrac{1}{0.01}=100$、$\dfrac{1}{0.0001}=10000$，所以 $\tan x$ 越來越大，沒有上限。從右邊接近時 $\cos x$ 是很小的負數，$\tan x$ 是很大的負數。圖形沿著直線 $x=\frac{\pi}{2}$ 往上、往下無限延伸，卻永遠碰不到它，這種直線稱為**鉛直漸近線**。
+
+### 正切曲線的性質
+
+先在 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ 上列幾個值：
+
+$$
+\begin{array}{c|ccccc}
+x & -\frac{\pi}{3} & -\frac{\pi}{4} & 0 & \frac{\pi}{4} & \frac{\pi}{3}\\ \hline
+\tan x & -\sqrt3 & -1 & 0 & 1 & \sqrt3
+\end{array}
+$$
+
+這一段曲線從左下的漸近線出發，經過原點，一路上升到右上的漸近線。
+
+- **定義域：** $x\neq\frac{\pi}{2}+k\pi$（$k$ 是整數）。
+- **值域：** 所有實數。$T$ 可以在切線上任何高度：給定高度 $c$，連接 $O$ 和 $(1,c)$ 的直線一定和單位圓相交，交點就是 $\tan x=c$ 的角。
+- **週期是 $\pi$：** 角加上 $\pi$，$P$ 轉到正對面的點 $(-\cos x,-\sin x)$，所以
+
+  $$
+  \tan(x+\pi)=\frac{-\sin x}{-\cos x}=\tan x
+  $$
+
+  在圖上，$P$ 和它的對面點在同一條過原點的直線上，交出同一個 $T$。沒有更短的週期：在 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ 這一段長度為 $\pi$ 的區間中，曲線一直上升，每個值只出現一次。
+- **奇函數：** $\tan(-x)=\dfrac{\sin(-x)}{\cos(-x)}=\dfrac{-\sin x}{\cos x}=-\tan x$，圖形對原點對稱。
+
+### $y=\tan Bx$
+
+和正弦一樣，$B>0$ 讓圖形左右壓縮。括號裡的 $Bx$ 走過長度 $\pi$ 時正切重複一次，所以週期是 $\dfrac{\pi}{B}$（不是 $\dfrac{2\pi}{B}$）。漸近線在 $Bx=\frac{\pi}{2}+k\pi$，也就是 $x=\dfrac{\pi}{2B}+\dfrac{k\pi}{B}$。
+
+## 例題
+
+### 例題 1
+
+求 $y=\tan2x$ 的週期與漸近線，並說明它在一個週期中的圖形。
+
+<Solution>
+
+週期 $\dfrac{\pi}{2}$。漸近線在 $2x=\dfrac{\pi}{2}+k\pi$，即 $x=\dfrac{\pi}{4}+\dfrac{k\pi}{2}$。
+
+取 $k=-1$ 和 $k=0$ 的兩條漸近線 $x=-\dfrac{\pi}{4}$、$x=\dfrac{\pi}{4}$，中間是一個週期。中點 $x=0$ 時 $y=\tan0=0$；$x=\dfrac{\pi}{8}$ 時 $y=\tan\dfrac{\pi}{4}=1$；$x=-\dfrac{\pi}{8}$ 時 $y=-1$。曲線從 $x=-\frac{\pi}{4}$ 的漸近線旁邊由下往上，經過 $\left(-\frac{\pi}{8},-1\right)$、$(0,0)$、$\left(\frac{\pi}{8},1\right)$，再往上靠近 $x=\frac{\pi}{4}$。
+
+</Solution>
+
+### 例題 2
+
+1. 求 $\tan\dfrac{4\pi}{3}$ 和 $\tan\left(-\dfrac{5\pi}{6}\right)$。
+2. 在 $\left(-\dfrac{\pi}{2},\dfrac{\pi}{2}\right)$ 中，解 $\tan x=-1$。
+
+<Solution>
+
+1. 正切的週期是 $\pi$，可以加減 $\pi$ 把角移到 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$：
+   $\tan\dfrac{4\pi}{3}=\tan\left(\dfrac{4\pi}{3}-\pi\right)=\tan\dfrac{\pi}{3}=\sqrt3$；
+   $\tan\left(-\dfrac{5\pi}{6}\right)=\tan\left(-\dfrac{5\pi}{6}+\pi\right)=\tan\dfrac{\pi}{6}=\dfrac{\sqrt3}{3}$。
+2. 在 $\left(-\frac{\pi}{2},\frac{\pi}{2}\right)$ 上正切一直上升，每個值恰好出現一次，所以最多一個解。$\tan\left(-\dfrac{\pi}{4}\right)=-\tan\dfrac{\pi}{4}=-1$（奇函數），所以 $x=-\dfrac{\pi}{4}$ 是唯一的解。
+
+</Solution>
+
+### 例題 3
+
+一座燈塔離一道長而直的海堤 $10$ 公尺，燈光繞著燈塔旋轉。設光束和「燈塔到海堤的垂線」夾角為 $\theta$（$0\le\theta<\frac{\pi}{2}$），光點落在海堤上，離垂足 $s$ 公尺。
+
+1. 用 $\theta$ 表示 $s$。
+2. 求 $\theta=\dfrac{\pi}{6}$、$\dfrac{\pi}{4}$、$\dfrac{\pi}{3}$ 時的 $s$。（取 $\sqrt3\approx1.732$）
+3. $\theta$ 接近 $\dfrac{\pi}{2}$ 時，光點會怎樣？
+
+<Solution>
+
+1. 燈塔、垂足、光點形成直角三角形，直角在垂足。$\theta$ 的鄰邊是 $10$，對邊是 $s$，所以 $\tan\theta=\dfrac{s}{10}$，$s=10\tan\theta$。
+2. $\theta=\dfrac{\pi}{6}$：$s=10\cdot\dfrac{\sqrt3}{3}\approx5.77$ 公尺；$\theta=\dfrac{\pi}{4}$：$s=10$ 公尺；$\theta=\dfrac{\pi}{3}$：$s=10\sqrt3\approx17.32$ 公尺。
+   注意從 $\frac{\pi}{6}$ 到 $\frac{\pi}{4}$ 和從 $\frac{\pi}{4}$ 到 $\frac{\pi}{3}$ 都只轉了 $\frac{\pi}{12}$，光點卻分別移動了約 $4.23$ 和 $7.32$ 公尺，越轉越快。
+3. $\theta$ 接近 $\frac{\pi}{2}$ 時，光束幾乎和海堤平行，$\tan\theta$ 沒有上限，光點沿著海堤跑向無窮遠；$\theta=\frac{\pi}{2}$ 時光束和海堤平行，照不到海堤。這就是漸近線 $\theta=\frac{\pi}{2}$ 的實際意義。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：以為正切的週期是 $2\pi$。**
+
+- 錯誤想法：「正弦、餘弦的週期是 $2\pi$，正切是兩者相除，週期也是 $2\pi$。」
+- 為什麼錯：$\sin$ 和 $\cos$ 加 $\pi$ 時都變號，相除時負號抵消。檢查：$\tan\dfrac{\pi}{4}=1$，$\tan\dfrac{5\pi}{4}=\dfrac{-\sqrt2/2}{-\sqrt2/2}=1$，相差 $\pi$ 就重複了。
+- 正確寫法：$\tan(x+\pi)=\tan x$，週期是 $\pi$。
+
+**錯誤 2：寫 $\tan\dfrac{\pi}{2}=\infty$。**
+
+- 錯誤寫法：$\tan\dfrac{\pi}{2}=\dfrac{1}{0}=\infty$。
+- 為什麼錯：$\infty$ 不是一個數，而且除以 $0$ 沒有意義。另外從左右兩邊接近 $\frac{\pi}{2}$ 時，$\tan x$ 一邊變得很大、一邊變得很負，根本不會趨近同一個方向。
+- 正確寫法：$\tan\dfrac{\pi}{2}$ 無定義，$x=\dfrac{\pi}{2}$ 是 $y=\tan x$ 的鉛直漸近線。
+
+**錯誤 3：用正弦的公式算 $y=\tan Bx$ 的週期。**
+
+- 錯誤寫法：$y=\tan2x$ 的週期是 $\dfrac{2\pi}{2}=\pi$。
+- 為什麼錯：$\tan$ 本身的週期是 $\pi$，壓縮成 $\frac12$ 後是 $\frac{\pi}{2}$。檢查：$\tan2\left(x+\dfrac{\pi}{2}\right)=\tan(2x+\pi)=\tan2x$，相差 $\frac{\pi}{2}$ 就重複了。
+- 正確寫法：週期是 $\dfrac{\pi}{B}=\dfrac{\pi}{2}$。
+
+## 練習題
+
+**1.** 求 $\tan\dfrac{7\pi}{6}$、$\tan\left(-\dfrac{\pi}{3}\right)$、$\tan\dfrac{3\pi}{4}$。
+
+<Solution answer>
+
+$\tan\dfrac{7\pi}{6}=\tan\dfrac{\pi}{6}=\dfrac{\sqrt3}{3}$；$\tan\left(-\dfrac{\pi}{3}\right)=-\sqrt3$；$\tan\dfrac{3\pi}{4}=\tan\left(-\dfrac{\pi}{4}\right)=-1$。
+
+</Solution>
+
+**2.** 求 $y=\tan\dfrac{x}{2}$ 的週期和漸近線。
+
+<Solution answer>
+
+週期 $\dfrac{\pi}{1/2}=2\pi$。漸近線：$\dfrac x2=\dfrac{\pi}{2}+k\pi$，$x=\pi+2k\pi$。
+
+</Solution>
+
+**3.** 用 $\sin$、$\cos$ 的奇偶性，說明 $y=\tan x$ 的圖形對原點對稱。（需要〈正弦與餘弦函數的圖形〉的奇偶性）
+
+<Solution answer>
+
+$\sin(-x)=-\sin x$，$\cos(-x)=\cos x$，所以 $\tan(-x)=\dfrac{-\sin x}{\cos x}=-\tan x$，是奇函數。點 $(x,y)$ 在圖上時，$(-x,-y)$ 也在圖上，所以圖形對原點對稱。
+
+</Solution>
+
+**4.** 求 $y=\tan\left(x-\dfrac{\pi}{4}\right)$ 的零點和漸近線。
+
+<Solution answer>
+
+圖形是 $y=\tan x$ 向右平移 $\dfrac{\pi}{4}$。零點：$x-\dfrac{\pi}{4}=k\pi$，$x=\dfrac{\pi}{4}+k\pi$。漸近線：$x-\dfrac{\pi}{4}=\dfrac{\pi}{2}+k\pi$，$x=\dfrac{3\pi}{4}+k\pi$。
+
+</Solution>
+
+**5.** 不用計算機，比較 $\tan1$、$\tan2$、$\tan4$ 的大小。（取 $\pi\approx3.14$）
+
+<Solution answer>
+
+$\tan2$：$\frac{\pi}{2}\approx1.57<2<\pi$，第二象限，$\tan2<0$。$\tan4=\tan(4-\pi)$，$4-\pi\approx0.86$。$1$ 和 $0.86$ 都在 $\left(0,\frac{\pi}{2}\right)$ 中，正切在這裡上升，所以 $\tan0.86<\tan1$，兩者都是正的。結論：$\tan2<\tan4<\tan1$。
+
+</Solution>

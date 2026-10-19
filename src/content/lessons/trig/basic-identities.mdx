@@ -1,0 +1,247 @@
+---
+subject: trig
+unit: trig-identities
+order: 8
+title: 基本恆等式與證明技巧
+summary: 平方關係、商數關係、負角與餘角關係，以及證明恆等式的常用策略。
+prerequisites: [unit-circle-radians]
+formulas: [pythagorean-identities, quotient-identities, angle-relations]
+---
+
+## 學習目標
+
+- 學完這課，你能由單位圓推出平方關係、商數關係、負角與餘角關係。
+- 學完這課，你能在已知一個三角函數值和象限時，求出其他三角函數值。
+- 學完這課，你能用「從複雜的一邊化到簡單的一邊」等策略證明恆等式。
+
+## 概念說明
+
+**恆等式**是對所有使兩邊都有意義的角都成立的等式，例如 $\sin^2\theta+\cos^2\theta=1$；而 $\sin\theta=\frac12$ 只對某些角成立，是方程式。這一課的恆等式都來自單位圓上的點 $P(\cos\theta,\sin\theta)$。
+
+### 平方關係
+
+$P$ 在單位圓 $x^2+y^2=1$ 上，代入坐標得
+
+$$
+\sin^2\theta+\cos^2\theta=1
+$$
+
+〈直角三角形與三角比〉用畢氏定理證過銳角的情形，現在對所有角都成立。兩邊同除以 $\cos^2\theta$（$\cos\theta\neq0$）或 $\sin^2\theta$（$\sin\theta\neq0$），得到另外兩式：
+
+$$
+1+\tan^2\theta=\sec^2\theta,\qquad 1+\cot^2\theta=\csc^2\theta
+$$
+
+### 商數關係與倒數關係
+
+由〈廣義角與象限〉的定義：
+
+$$
+\tan\theta=\frac{\sin\theta}{\cos\theta},\qquad \cot\theta=\frac{\cos\theta}{\sin\theta}
+$$
+
+$$
+\csc\theta=\frac{1}{\sin\theta},\qquad \sec\theta=\frac{1}{\cos\theta}
+$$
+
+$$
+\cot\theta=\frac{1}{\tan\theta}
+$$
+
+這些關係表示：**只要知道 $\sin\theta$ 和 $\cos\theta$，其他四個都算得出來**。證明恆等式時，把所有函數都換成 $\sin$ 和 $\cos$ 常常是第一步。
+
+### 負角、補角、餘角
+
+角 $\theta$ 的點 $P$ 做鏡射或旋轉，會得到另一個角的點；比較兩點的坐標，就得到一組公式。
+
+- 角 $-\theta$：$P$ 對 $x$ 軸鏡射，點是 $(\cos\theta,-\sin\theta)$。
+- 角 $\pi-\theta$：$P$ 對 $y$ 軸鏡射，點是 $(-\cos\theta,\sin\theta)$。
+- 角 $\frac{\pi}{2}-\theta$：$P$ 對直線 $y=x$ 鏡射，點是 $(\sin\theta,\cos\theta)$。
+- 角 $\pi+\theta$：$P$ 繞原點轉半圈，點是 $(-\cos\theta,-\sin\theta)$。
+
+前兩個在〈正弦與餘弦函數的圖形〉看過。第三個的理由：對 $y=x$ 鏡射會把正 $x$ 軸和正 $y$ 軸互換，所以「從正 $x$ 軸逆時針轉 $\theta$」變成「從正 $y$ 軸順時針轉 $\theta$」，也就是從正 $x$ 軸逆時針轉 $\frac{\pi}{2}-\theta$；而鏡射把點 $(a,b)$ 變成 $(b,a)$。
+
+讀出坐標，例如角 $\pi-\theta$ 的點的 $y$ 坐標是 $\sin\theta$，所以 $\sin(\pi-\theta)=\sin\theta$。整理如下（$\tan$ 由 $\frac{\sin}{\cos}$ 得到）：
+
+$$
+\begin{aligned}
+\sin(-\theta)&=-\sin\theta\\
+\sin(\pi-\theta)&=\sin\theta\\
+\sin\left(\tfrac{\pi}{2}-\theta\right)&=\cos\theta
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\cos(-\theta)&=\cos\theta\\
+\cos(\pi-\theta)&=-\cos\theta\\
+\cos\left(\tfrac{\pi}{2}-\theta\right)&=\sin\theta
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\tan(-\theta)&=-\tan\theta\\
+\tan(\pi-\theta)&=-\tan\theta\\
+\tan\left(\tfrac{\pi}{2}-\theta\right)&=\cot\theta
+\end{aligned}
+$$
+
+拖動 $P$，切換四種關係，看 $Q$ 的坐標怎麼由 $P$ 的坐標得到：
+
+<Graph name="trig/angle-relations" />
+
+不必背這些公式：記住「鏡射或旋轉」的圖，需要時讀坐標就好。
+
+### 已知一個值求其他值
+
+已知 $\sin\theta$ 和象限，求 $\cos\theta$：由平方關係 $\cos^2\theta=1-\sin^2\theta$，開根號得 $\cos\theta=\pm\sqrt{1-\sin^2\theta}$，**正負號由象限決定**。再用商數關係和倒數關係求其他四個。
+
+### 證明恆等式的策略
+
+證明「左邊 $=$ 右邊」對所有角都成立，常用的策略：
+
+1. **從比較複雜的一邊開始**，一步一步化成另一邊。每一步都要是已知成立的變形。
+2. **全部換成 $\sin$ 和 $\cos$**，再通分、約分。
+3. **找 $\sin^2\theta+\cos^2\theta$**，或製造它：例如 $1-\sin^2\theta$ 換成 $\cos^2\theta$，或把分子分母同乘 $1+\sin\theta$，用 $(1-\sin\theta)(1+\sin\theta)=\cos^2\theta$。
+
+**不要**把要證明的等式當成已知，兩邊同時平方、移項，最後得到 $1=1$ 就說證完了。這樣的推論方向是反的：從「假設它成立」推出一件真的事，不代表它真的成立（常見錯誤 3 有例子）。
+
+## 例題
+
+### 例題 1
+
+已知 $\sin\theta=-\dfrac{5}{13}$，且 $\theta$ 在第三象限，求 $\cos\theta$、$\tan\theta$ 和 $\sec\theta$。
+
+<Solution>
+
+由平方關係：
+
+$$
+\begin{aligned}
+\cos^2\theta&=1-\sin^2\theta=1-\frac{25}{169}=\frac{144}{169}\\
+\cos\theta&=\pm\frac{12}{13}
+\end{aligned}
+$$
+
+第三象限 $\cos\theta<0$，所以 $\cos\theta=-\dfrac{12}{13}$。再由商數與倒數關係：
+
+$$
+\begin{gathered}
+\tan\theta=\frac{-5/13}{-12/13}=\frac{5}{12}\\[4pt]
+\sec\theta=\frac{1}{\cos\theta}=-\frac{13}{12}
+\end{gathered}
+$$
+
+檢查：第三象限只有 $\tan$、$\cot$ 為正，符合。
+
+</Solution>
+
+### 例題 2
+
+化簡 $\dfrac{\sin(-\theta)\cos(\pi-\theta)}{\sin\left(\frac{\pi}{2}-\theta\right)}$，其中 $\cos\theta\neq0$。
+
+<Solution>
+
+逐項用負角、補角、餘角關係：$\sin(-\theta)=-\sin\theta$，$\cos(\pi-\theta)=-\cos\theta$，$\sin\left(\frac{\pi}{2}-\theta\right)=\cos\theta$。所以
+
+$$
+\frac{(-\sin\theta)(-\cos\theta)}{\cos\theta}=\frac{\sin\theta\cos\theta}{\cos\theta}=\sin\theta
+$$
+
+最後一步約掉 $\cos\theta$，這需要 $\cos\theta\neq0$，題目已經給了。驗算：取 $\theta=\frac{\pi}{6}$，左邊 $\dfrac{\left(-\frac12\right)\left(-\frac{\sqrt3}{2}\right)}{\frac{\sqrt3}{2}}=\dfrac12=\sin\dfrac{\pi}{6}$。
+
+</Solution>
+
+### 例題 3
+
+證明 $\dfrac{\cos\theta}{1-\sin\theta}=\dfrac{1+\sin\theta}{\cos\theta}$（$\cos\theta\neq0$）。
+
+<Solution>
+
+$\cos\theta\neq0$ 時 $\sin\theta\neq\pm1$，兩邊的分母都不是 $0$。從左邊開始，分子分母同乘 $1+\sin\theta$（它不是 $0$，所以值不變）：
+
+<Derivation rows={[
+  [String.raw`\frac{\cos\theta}{1-\sin\theta}`, String.raw`=\frac{\cos\theta(1+\sin\theta)}{(1-\sin\theta)(1+\sin\theta)}`, String.raw`分子分母同乘 $1+\sin\theta$`],
+  ['', String.raw`=\frac{\cos\theta(1+\sin\theta)}{1-\sin^2\theta}`, '平方差公式'],
+  ['', String.raw`=\frac{\cos\theta(1+\sin\theta)}{\cos^2\theta}`, String.raw`平方關係：$1-\sin^2\theta=\cos^2\theta$`],
+  ['', String.raw`=\frac{1+\sin\theta}{\cos\theta}`, String.raw`約掉 $\cos\theta$（不是 $0$）`],
+]} />
+
+這就是右邊，證明完畢。乘 $1+\sin\theta$ 的想法是：分母 $1-\sin\theta$ 配上 $1+\sin\theta$ 可以變成 $\cos^2\theta$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把平方關係用成一次的。**
+
+- 錯誤寫法：$\sin\theta+\cos\theta=1$，所以 $\cos\theta=1-\sin\theta$。
+- 為什麼錯：平方關係是平方相加等於 $1$。檢查 $\theta=\frac{\pi}{4}$：$\sin\theta+\cos\theta=\frac{\sqrt2}{2}+\frac{\sqrt2}{2}=\sqrt2\neq1$。
+- 正確寫法：$\sin^2\theta+\cos^2\theta=1$，$\cos\theta=\pm\sqrt{1-\sin^2\theta}$。
+
+**錯誤 2：開根號時一律取正號。**
+
+- 錯誤寫法：$\sin\theta=\dfrac35$，$\theta$ 在第二象限，所以 $\cos\theta=\sqrt{1-\frac{9}{25}}=\dfrac45$。
+- 為什麼錯：$\sqrt{\ }$ 只給出非負的值，而第二象限的 $\cos\theta<0$。平方關係只告訴我們 $\cos^2\theta$，正負號要另外由象限決定。
+- 正確寫法：$\cos\theta=-\dfrac45$。
+
+**錯誤 3：從要證明的式子出發，推出 $1=1$ 就說證完了。**
+
+- 錯誤寫法：「證明 $\sin\theta=\sqrt{1-\cos^2\theta}$：兩邊平方，$\sin^2\theta=1-\cos^2\theta$，即 $\sin^2\theta+\cos^2\theta=1$，成立。」
+- 為什麼錯：平方之後的式子成立，原式不一定成立，因為平方會把正負號的差別蓋掉。反例：$\theta=-\frac{\pi}{2}$ 時左邊 $\sin\left(-\frac{\pi}{2}\right)=-1$，右邊 $\sqrt{1-0}=1$。這個「恆等式」根本是錯的。
+- 正確寫法：從一邊出發，用已知成立的變形化到另一邊；做不可逆的步驟（平方、約分）時要檢查條件。正確的結論是 $|\sin\theta|=\sqrt{1-\cos^2\theta}$。
+
+## 練習題
+
+**1.** 已知 $\cos\theta=-\dfrac45$，且 $\theta$ 在第二象限，求 $\sin\theta$、$\tan\theta$、$\csc\theta$。
+
+<Solution answer>
+
+$\sin^2\theta=1-\dfrac{16}{25}=\dfrac{9}{25}$，第二象限 $\sin\theta>0$，$\sin\theta=\dfrac35$。$\tan\theta=\dfrac{3/5}{-4/5}=-\dfrac34$，$\csc\theta=\dfrac53$。
+
+</Solution>
+
+**2.** 已知 $\tan\theta=-2$，且 $\theta$ 在第四象限，求 $\cos\theta$ 和 $\sin\theta$。（需要〈廣義角與象限〉的象限正負）
+
+<Solution answer>
+
+由 $1+\tan^2\theta=\sec^2\theta$，$\sec^2\theta=5$。第四象限 $\cos\theta>0$，所以 $\sec\theta=\sqrt5$，$\cos\theta=\dfrac{1}{\sqrt5}=\dfrac{\sqrt5}{5}$。$\sin\theta=\tan\theta\cos\theta=-2\cdot\dfrac{\sqrt5}{5}=-\dfrac{2\sqrt5}{5}$（第四象限 $\sin\theta<0$，符合）。
+
+</Solution>
+
+**3.** 求 $\sin^220^\circ+\sin^270^\circ$。
+
+<Solution answer>
+
+$70^\circ=90^\circ-20^\circ$，由餘角關係 $\sin70^\circ=\cos20^\circ$。所以原式 $=\sin^220^\circ+\cos^220^\circ=1$。
+
+</Solution>
+
+**4.** 證明 $\tan\theta+\cot\theta=\sec\theta\csc\theta$（$\sin\theta\neq0$ 且 $\cos\theta\neq0$）。
+
+<Solution answer>
+
+從左邊開始，全部換成 $\sin$、$\cos$ 再通分：
+
+$$
+\begin{aligned}
+\tan\theta+\cot\theta&=\frac{\sin\theta}{\cos\theta}+\frac{\cos\theta}{\sin\theta}\\
+&=\frac{\sin^2\theta+\cos^2\theta}{\sin\theta\cos\theta}=\frac{1}{\sin\theta\cos\theta}\\
+&=\frac{1}{\cos\theta}\cdot\frac{1}{\sin\theta}=\sec\theta\csc\theta
+\end{aligned}
+$$
+
+</Solution>
+
+**5.** 已知 $\sin\theta+\cos\theta=\dfrac15$，且 $0<\theta<\pi$。求 $\sin\theta\cos\theta$、$\sin\theta-\cos\theta$，以及 $\sin\theta$ 和 $\cos\theta$。
+
+<Solution answer>
+
+兩邊平方：$\sin^2\theta+2\sin\theta\cos\theta+\cos^2\theta=\dfrac{1}{25}$，即 $1+2\sin\theta\cos\theta=\dfrac{1}{25}$，所以 $\sin\theta\cos\theta=-\dfrac{12}{25}$。
+
+$(\sin\theta-\cos\theta)^2=1-2\sin\theta\cos\theta=1+\dfrac{24}{25}=\dfrac{49}{25}$。因為 $0<\theta<\pi$，$\sin\theta>0$；乘積是負的，所以 $\cos\theta<0$，$\sin\theta-\cos\theta>0$，取 $\dfrac75$。
+
+兩式相加除以 $2$：$\sin\theta=\dfrac12\left(\dfrac15+\dfrac75\right)=\dfrac45$；相減除以 $2$：$\cos\theta=\dfrac12\left(\dfrac15-\dfrac75\right)=-\dfrac35$。驗算：$\dfrac{16}{25}+\dfrac{9}{25}=1$。
+
+</Solution>
