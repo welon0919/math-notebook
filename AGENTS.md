@@ -112,4 +112,3 @@ Details worth knowing:
 - Follow the phases in the plan files under `features/` in order, one phase at a time. When a phase is done, list the files you changed and stop for my review.
 - Ask me about design decisions you are unsure of; don't guess.
 - If the code and a plan file disagree, the code wins — tell me what the difference is.
-- Reply to me in Traditional Chinese. Reply to me in Traditional Chinese.
