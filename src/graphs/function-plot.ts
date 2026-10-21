@@ -16,7 +16,7 @@ interface Dot {
   /** LaTeX label, e.g. `(1,3)`. */
   label?: string;
   /** Where the label goes, relative to the point. Default above. */
-  side?: 'above' | 'below' | 'left' | 'right';
+  side?: 'above' | 'below' | 'left' | 'right' | 'above-right';
 }
 
 interface FunctionPlotOptions {
@@ -50,6 +50,7 @@ const labelPlacement = {
   below: { offset: [0, -10], anchorX: 'middle', anchorY: 'top' },
   left: { offset: [-10, 0], anchorX: 'right', anchorY: 'middle' },
   right: { offset: [10, 0], anchorX: 'left', anchorY: 'middle' },
+  'above-right': { offset: [8, 8], anchorX: 'left', anchorY: 'bottom' },
 } as const;
 
 /** Tick numbers without floating-point noise: 0.1 · 3 prints 0.3. */

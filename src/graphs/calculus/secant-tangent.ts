@@ -2,14 +2,14 @@ import { snap } from '../helpers';
 import type { GraphDef } from '../types';
 
 const step = 0.05;
-// Same critical points (x = ±1) as the lesson's example x³ − 3x, scaled to fit.
+// x³/3 − x has horizontal tangents at x = ±1, so the slope changes sign on the frame.
 const f = (x: number) => x ** 3 / 3 - x;
 const df = (x: number) => x * x - 1;
 
 export default {
   title: '割線變成切線',
   description:
-    'y = f(x) = x³/3 − x 上的點 P 和 Q 相距 h，連成割線。用滑桿把 h 縮小到接近 0，割線就越來越接近 P 點的切線（黃色虛線），斜率趨近 f′(x)。拖動 P 沿曲線移動，看切線斜率怎麼變。',
+    'y = f(x) = x³/3 − x 上的點 P 和 Q 相距 h，連成割線。用滑桿把 h 縮小到接近 0，割線就越來越接近 P 點的切線（虛線），斜率趨近 f′(x)。拖動 P 沿曲線移動，看切線斜率怎麼變。',
   boundingBox: [-4, 5, 4, -1],
   build(board, ctx) {
     const { color } = ctx;
@@ -31,7 +31,7 @@ export default {
 
     ctx.legend([
       { label: '割線 $PQ$', color: color.accent2 },
-      { label: '$P$ 點的切線（黃色虛線）', color: color.highlight, dash: true },
+      { label: '$P$ 點的切線（虛線）', color: color.highlight, dash: true },
     ]);
 
     const fm = ctx.fmt;
@@ -42,8 +42,8 @@ export default {
     );
     ctx.readout(() => {
       const d = df(x());
-      const trend = Math.abs(d) < 0.005 ? '切線水平，可能是極值' : d > 0 ? '$f$ 在這裡遞增' : '$f$ 在這裡遞減';
-      return `$x=${fm(x())}$，切線（黃色虛線）斜率 $f'(x)=${fm(d)}$，${trend}`;
+      const trend = Math.abs(d) < 0.005 ? '切線水平' : d > 0 ? '切線往右上升' : '切線往右下降';
+      return `$x=${fm(x())}$，切線（虛線）斜率 $f'(x)=${fm(d)}$，${trend}`;
     });
   },
 } satisfies GraphDef;
