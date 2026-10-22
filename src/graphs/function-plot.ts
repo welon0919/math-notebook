@@ -63,7 +63,8 @@ export function functionPlot(opts: FunctionPlotOptions): GraphDef {
   const mx = (x1 - x0) * 0.06;
   const my = (y1 - y0) * 0.08;
   // More room below, for the x-axis numbers when the axis runs along the bottom.
-  const [xmin, xmax, ymin, ymax] = [x0 - mx, x1 + mx, y0 - 1.6 * my, y1 + my];
+  // When the y-axis runs along the left edge, its numbers (up to three digits) need room too.
+  const [xmin, xmax, ymin, ymax] = [x0 - (x0 >= 0 ? 2 : 1) * mx, x1 + mx, y0 - 1.6 * my, y1 + my];
   const ratio = (xmax - xmin) / (ymax - ymin);
   const aspect = opts.aspect ?? Math.min(2, Math.max(0.75, ratio));
   const xStep = opts.xStep ?? 1;
