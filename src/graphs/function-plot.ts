@@ -1,3 +1,4 @@
+import { shadeUnder } from './helpers';
 import type { GraphDef } from './types';
 
 /** Shared by the fixed function graphs of worked examples in calculus lessons (not a graph itself). */
@@ -29,6 +30,11 @@ interface FunctionPlotOptions {
   /** Curves to compare with, drawn in another color, solid. */
   compare?: { f: (x: number) => number; from: number; to: number; tex: string }[];
   dots?: Dot[];
+  /**
+   * Regions between the first piece and the x-axis, e.g. the parts of a definite integral above and below the axis.
+   * `negative` shades in the second color; `label` names it in the legend.
+   */
+  shade?: { from: number; to: number; negative?: boolean; label: string }[];
   /** Dashed lines x = a and y = b, with their equations in the legend. */
   asymptotes?: { vertical?: number[]; horizontal?: number[] };
   /** The x and y ranges shown. */
@@ -113,6 +119,10 @@ export function functionPlot(opts: FunctionPlotOptions): GraphDef {
       for (const a of opts.asymptotes?.vertical ?? []) board.create('segment', [[a, ymin], [a, ymax]], dashed);
       for (const b of opts.asymptotes?.horizontal ?? []) board.create('segment', [[xmin, b], [xmax, b]], dashed);
 
+      const shadeColor = (s: { negative?: boolean }) => (s.negative ? color.accent2 : color.accent);
+      for (const s of opts.shade ?? []) {
+        shadeUnder(board, opts.pieces[0].f, () => s.from, () => s.to, { fillColor: shadeColor(s), fillOpacity: 0.3 });
+      }
       for (const c of opts.compare ?? []) board.create('functiongraph', [c.f, c.from, c.to], { ...fixed, strokeColor: color.highlight, strokeWidth: 2 });
       for (const p of opts.pieces) board.create('functiongraph', [p.f, p.from, p.to], { ...fixed, strokeColor: color.accent, strokeWidth: 3 });
 
@@ -136,6 +146,7 @@ export function functionPlot(opts: FunctionPlotOptions): GraphDef {
         ...(opts.compare ?? []).map((c) => ({ label: `$${c.tex}$`, color: color.highlight, width: 2 })),
         ...(opts.asymptotes?.vertical ?? []).map((a) => asym(`x=${num(a)}`)),
         ...(opts.asymptotes?.horizontal ?? []).map((b) => asym(`y=${num(b)}`)),
+        ...(opts.shade ?? []).map((s) => ({ label: s.label, color: shadeColor(s), width: 10, opacity: 0.3 })),
       ]);
       for (const text of opts.readouts ?? []) ctx.readout(() => text);
     },
