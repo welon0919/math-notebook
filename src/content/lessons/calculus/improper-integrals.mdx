@@ -19,7 +19,7 @@ theorems: [series-tests, fundamental-theorem-of-calculus]
 
 ### 什麼是瑕積分
 
-〈定積分與面積〉的定積分 $\int_a^bf(x)\,dx$ 有兩個前提：區間 $[a,b]$ 有限長，而且 $f$ 在區間上連續（所以不會衝到無限大）。少了其中一個，黎曼和就沒有意義，例如：
+〈[定積分與面積](/calculus/definite-integrals/)〉的定積分 $\int_a^bf(x)\,dx$ 有兩個前提：區間 $[a,b]$ 有限長，而且 $f$ 在區間上連續（所以不會衝到無限大）。少了其中一個，黎曼和就沒有意義，例如：
 
 - $\displaystyle\int_1^\infty\frac{1}{x^2}\,dx$：區間無限長，沒辦法切成 $n$ 段等寬的小段。
 - $\displaystyle\int_0^1\frac{1}{\sqrt x}\,dx$：$x\to0^+$ 時 $\frac{1}{\sqrt x}\to\infty$，靠近 $0$ 的長方形高度沒有上限。
@@ -59,7 +59,7 @@ $$
 > \int_a^bf(x)\,dx=\lim_{t\to a^+}\int_t^bf(x)\,dx
 > $$
 
-右端點出問題時，令 $t\to b^-$。如果出問題的點 $c$ 在區間**內部**，就在 $c$ 切開成兩個瑕積分，兩個都收斂，原積分才收斂。〈定積分與面積〉常見錯誤 3 的 $\int_0^2\frac{1}{(x-1)^2}\,dx$ 就是這種情形（例題 2）。
+右端點出問題時，令 $t\to b^-$。如果出問題的點 $c$ 在區間**內部**，就在 $c$ 切開成兩個瑕積分，兩個都收斂，原積分才收斂。〈[定積分與面積](/calculus/definite-integrals/)〉常見錯誤 3 的 $\int_0^2\frac{1}{(x-1)^2}\,dx$ 就是這種情形（例題 2）。
 
 ### $p$ 積分
 
@@ -86,7 +86,7 @@ $$
 > - 若 $\int_a^\infty g(x)\,dx$ 收斂，則 $\int_a^\infty f(x)\,dx$ 收斂。
 > - 若 $\int_a^\infty f(x)\,dx$ 發散，則 $\int_a^\infty g(x)\,dx$ 發散。
 
-理由和級數的直接比較相同（〈無窮級數與斂散性〉）：$f\ge0$，所以 $\int_a^tf\,dx$ 隨 $t$ 增加；它不超過 $\int_a^\infty g\,dx$，有上限，所以有極限。
+理由和級數的直接比較相同（〈[無窮級數與斂散性](/calculus/infinite-series/)〉）：$f\ge0$，所以 $\int_a^tf\,dx$ 隨 $t$ 增加；它不超過 $\int_a^\infty g\,dx$，有上限，所以有極限。
 
 瑕積分和無窮級數關係密切：〈[級數審斂法](/calculus/theorems/series-tests/)〉的**積分審斂法**說，$\sum\frac1{n^p}$ 和 $\int_1^\infty\frac{1}{x^p}\,dx$ 同時收斂或發散，所以 $p$ 級數的結論和 $p$ 積分完全相同。
 
@@ -148,7 +148,7 @@ $$
 
 $t\to1^-$ 時 $t-1$ 是很小的負數，$-\frac{1}{t-1}\to\infty$，左半發散。只要一半發散，整個積分就發散，右半不必再算。
 
-這說明了〈定積分與面積〉常見錯誤 3：直接代基本定理得到 $-2$ 是錯的，因為 $x=1$ 不連續，正確的結論是發散。
+這說明了〈[定積分與面積](/calculus/definite-integrals/)〉常見錯誤 3：直接代基本定理得到 $-2$ 是錯的，因為 $x=1$ 不連續，正確的結論是發散。
 
 </Solution>
 
@@ -158,7 +158,7 @@ $t\to1^-$ 時 $t-1$ 是很小的負數，$-\frac{1}{t-1}\to\infty$，左半發�
 
 <Solution>
 
-先求定積分 $\int_0^txe^{-x}\,dx$。用〈分部積分〉，$u=x$、$dv=e^{-x}\,dx$，$du=dx$、$v=-e^{-x}$：
+先求定積分 $\int_0^txe^{-x}\,dx$。用〈[分部積分](/calculus/integration-by-parts/)〉，$u=x$、$dv=e^{-x}\,dx$，$du=dx$、$v=-e^{-x}$：
 
 $$
 \begin{aligned}
@@ -168,7 +168,7 @@ $$
 \end{aligned}
 $$
 
-再讓 $t\to\infty$：$e^{-t}\to0$；$te^{-t}=\frac{t}{e^t}$ 是 $\frac\infty\infty$ 型，由〈羅必達法則〉$\lim\limits_{t\to\infty}\frac{t}{e^t}=\lim\limits_{t\to\infty}\frac{1}{e^t}=0$。所以
+再讓 $t\to\infty$：$e^{-t}\to0$；$te^{-t}=\frac{t}{e^t}$ 是 $\frac\infty\infty$ 型，由〈[羅必達法則](/calculus/lhopitals-rule/)〉$\lim\limits_{t\to\infty}\frac{t}{e^t}=\lim\limits_{t\to\infty}\frac{1}{e^t}=0$。所以
 
 $$
 \int_0^\infty xe^{-x}\,dx=0-0+1=1
@@ -216,11 +216,11 @@ $\displaystyle\int_0^te^{-2x}\,dx=\left[-\frac12e^{-2x}\right]_0^t=\frac12-\frac
 
 </Solution>
 
-**3.** 求 $\displaystyle\int_0^1\ln x\,dx$。（需要〈分部積分〉和〈羅必達法則〉）
+**3.** 求 $\displaystyle\int_0^1\ln x\,dx$。（需要〈[分部積分](/calculus/integration-by-parts/)〉和〈[羅必達法則](/calculus/lhopitals-rule/)〉）
 
 <Solution answer>
 
-$x\to0^+$ 時 $\ln x\to-\infty$。由〈分部積分〉練習 2，$\int\ln x\,dx=x\ln x-x+C$：
+$x\to0^+$ 時 $\ln x\to-\infty$。由〈[分部積分](/calculus/integration-by-parts/)〉練習 2，$\int\ln x\,dx=x\ln x-x+C$：
 
 $$
 \begin{aligned}
@@ -229,7 +229,7 @@ $$
 \end{aligned}
 $$
 
-$t\to0^+$ 時 $t\ln t\to0$（〈羅必達法則〉練習 2），所以積分是 $-1$。負號是因為 $\ln x$ 在 $0<x<1$ 是負的。
+$t\to0^+$ 時 $t\ln t\to0$（〈[羅必達法則](/calculus/lhopitals-rule/)〉練習 2），所以積分是 $-1$。負號是因為 $\ln x$ 在 $0<x<1$ 是負的。
 
 </Solution>
 

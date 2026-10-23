@@ -21,7 +21,7 @@ theorems: [de-moivre]
 
 描述平面上一點的位置，除了「往右 $x$、往上 $y$」，也可以說「離原點多遠、在哪個方向」。點 $P$ 的**極座標** $(r,\theta)$ 中，$r$ 是 $P$ 到原點的距離，$\theta$ 是從正 $x$ 軸轉到 $OP$ 的角。
 
-由〈廣義角與象限〉的定義 $\cos\theta=\frac xr$、$\sin\theta=\frac yr$，兩種座標的換算是
+由〈[廣義角與象限](/trig/general-angles/)〉的定義 $\cos\theta=\frac xr$、$\sin\theta=\frac yr$，兩種座標的換算是
 
 $$
 x=r\cos\theta,\quad y=r\sin\theta;\qquad r=\sqrt{x^2+y^2}
@@ -31,7 +31,7 @@ $$
 
 ### 複數的極式
 
-〈複數與複數平面〉把 $z=a+bi$ 畫成點 $(a,b)$，$|z|=\sqrt{a^2+b^2}$ 是它到原點的距離。用極座標寫這個點：$a=r\cos\theta$，$b=r\sin\theta$，所以
+〈[複數與複數平面](/algebra/complex-numbers/)〉把 $z=a+bi$ 畫成點 $(a,b)$，$|z|=\sqrt{a^2+b^2}$ 是它到原點的距離。用極座標寫這個點：$a=r\cos\theta$，$b=r\sin\theta$，所以
 
 $$
 z=r(\cos\theta+i\sin\theta),\qquad r=|z|
@@ -51,7 +51,7 @@ z_1z_2&=r_1r_2\big[(\cos\theta_1\cos\theta_2-\sin\theta_1\sin\theta_2)\\
 \end{aligned}
 $$
 
-最後一步是〈和角與差角公式〉：兩個括號正好是 $\cos(\theta_1+\theta_2)$ 和 $\sin(\theta_1+\theta_2)$。所以**乘積的長度是長度相乘，幅角是幅角相加**。在複數平面上，乘以 $z_2$ 就是「伸縮 $r_2$ 倍、再旋轉 $\theta_2$」。例如乘以 $i=\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}$ 就是逆時針轉 $90^\circ$。
+最後一步是〈[和角與差角公式](/trig/angle-sum-difference/)〉：兩個括號正好是 $\cos(\theta_1+\theta_2)$ 和 $\sin(\theta_1+\theta_2)$。所以**乘積的長度是長度相乘，幅角是幅角相加**。在複數平面上，乘以 $z_2$ 就是「伸縮 $r_2$ 倍、再旋轉 $\theta_2$」。例如乘以 $i=\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}$ 就是逆時針轉 $90^\circ$。
 
 同理，除法是長度相除、幅角相減：$\dfrac{z_1}{z_2}=\dfrac{r_1}{r_2}\big[\cos(\theta_1-\theta_2)+i\sin(\theta_1-\theta_2)\big]$。拖動 $z$ 和 $w$，看乘積怎麼變：
 
@@ -65,7 +65,7 @@ $$
 \big[r(\cos\theta+i\sin\theta)\big]^n=r^n(\cos n\theta+i\sin n\theta)
 $$
 
-這就是**棣美弗定理**（$n$ 是正整數；用數學歸納法的證明在〈棣美弗定理〉定理頁）。展開 $(a+bi)^{10}$ 要乘很多次，用極式只要算 $r^{10}$ 和 $10\theta$。
+這就是**棣美弗定理**（$n$ 是正整數；用數學歸納法的證明在〈[棣美弗定理](/trig/theorems/de-moivre/)〉定理頁）。展開 $(a+bi)^{10}$ 要乘很多次，用極式只要算 $r^{10}$ 和 $10\theta$。
 
 反過來，解 $z^n=w$（求 $w$ 的 **$n$ 次方根**）：設 $w=R(\cos\phi+i\sin\phi)$，$z=r(\cos\theta+i\sin\theta)$，由棣美弗定理需要 $r^n=R$，而 $n\theta$ 和 $\phi$ 只要差 $2\pi$ 的整數倍：
 
@@ -181,7 +181,7 @@ $zw=6(\cos120^\circ+i\sin120^\circ)=6\left(-\dfrac12+\dfrac{\sqrt3}{2}i\right)=-
 
 </Solution>
 
-**4.** 求 $(\sqrt3+i)^6$。（需要代數〈複數與複數平面〉的 $|z|$）
+**4.** 求 $(\sqrt3+i)^6$。（需要代數〈[複數與複數平面](/algebra/complex-numbers/)〉的 $|z|$）
 
 <Solution answer>
 
