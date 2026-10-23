@@ -178,5 +178,11 @@ check('端點 Σxᵏ/k 比值', limit(n / (n + 1) * Abs(x), n, oo), Abs(x))
 check('端點 x=−1 收斂', Sum((-1)**k / k, (k, 1, oo)).doit(), -log(2))
 check('端點 x=1 發散', Sum(1 / k, (k, 1, oo)).doit(), oo)
 
+print('== 修改：表格法在任何一列停下來')
+antiderivative('表格法 x² ln x', xp**3 / 3 * log(xp) - xp**3 / 9, xp**2 * log(xp), xp)
+I = symbols('I')
+check('表格法 eˣ sin x 解 I', simplify(solve(exp(x) * sin(x) - exp(x) * cos(x) - I - I, I)[0] - exp(x) * (sin(x) - cos(x)) / 2), 0)
+check('表格法 第 3 列橫著乘', integrate(-sin(x) * exp(x), x) + integrate(exp(x) * sin(x), x), 0)
+
 print()
 print('all passed' if failures == 0 else f'{failures} FAILED')
