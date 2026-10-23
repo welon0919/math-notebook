@@ -31,10 +31,10 @@ interface FunctionPlotOptions {
   compare?: { f: (x: number) => number; from: number; to: number; tex: string }[];
   dots?: Dot[];
   /**
-   * Regions between the first piece and the x-axis, e.g. the parts of a definite integral above and below the axis.
-   * `negative` shades in the second color; `label` names it in the legend.
+   * Regions between the first piece and the x-axis (or the curve `lower`), e.g. the parts of a definite integral
+   * above and below the axis, or the area between two curves. `negative` shades in the second color; `label` names it.
    */
-  shade?: { from: number; to: number; negative?: boolean; label: string }[];
+  shade?: { from: number; to: number; lower?: (x: number) => number; negative?: boolean; label: string }[];
   /** Dashed lines x = a and y = b, with their equations in the legend. */
   asymptotes?: { vertical?: number[]; horizontal?: number[] };
   /** The x and y ranges shown. */
@@ -121,7 +121,20 @@ export function functionPlot(opts: FunctionPlotOptions): GraphDef {
 
       const shadeColor = (s: { negative?: boolean }) => (s.negative ? color.accent2 : color.accent);
       for (const s of opts.shade ?? []) {
-        shadeUnder(board, opts.pieces[0].f, () => s.from, () => s.to, { fillColor: shadeColor(s), fillOpacity: 0.3 });
+        const attrs = { fillColor: shadeColor(s), fillOpacity: 0.3 };
+        if (!s.lower) {
+          shadeUnder(board, opts.pieces[0].f, () => s.from, () => s.to, attrs);
+          continue;
+        }
+        // Along the upper curve, then back along the lower one.
+        const n = 100;
+        const xs = Array.from({ length: n + 1 }, (_, i) => s.from + ((s.to - s.from) * i) / n);
+        const lower = s.lower;
+        board.create('curve', [[...xs, ...[...xs].reverse()], [...xs.map(opts.pieces[0].f), ...[...xs].reverse().map(lower)]], {
+          ...fixed,
+          strokeWidth: 0,
+          ...attrs,
+        });
       }
       for (const c of opts.compare ?? []) board.create('functiongraph', [c.f, c.from, c.to], { ...fixed, strokeColor: color.highlight, strokeWidth: 2 });
       for (const p of opts.pieces) board.create('functiongraph', [p.f, p.from, p.to], { ...fixed, strokeColor: color.accent, strokeWidth: 3 });
