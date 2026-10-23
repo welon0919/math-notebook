@@ -1,0 +1,369 @@
+---
+subject: calculus
+unit: integrals
+order: 17
+title: 分部積分
+summary: 把乘法法則倒過來用，處理 $x e^x$、$x\sin x$、$\ln x$ 這類積分。
+prerequisites: [substitution, differentiation-rules]
+formulas: [integration-by-parts, product-quotient-rules]
+---
+
+## 學習目標
+
+- 學完這課，你能由乘法法則推導分部積分公式。
+- 學完這課，你能選擇適當的 $u$ 和 $dv$。
+- 學完這課，你能處理需要重複分部積分或繞回原式的積分，並用表格法簡化重複的分部積分。
+
+## 概念說明
+
+### 把乘法法則倒過來
+
+〈[變數變換](/calculus/substitution/)〉把連鎖律倒過來用。但像 $\displaystyle\int x\cos x\,dx$ 這樣兩種不同函數相乘的積分，找不到適合的 $u$：令 $u=x$ 或 $u=\cos x$，都換不掉另一個因式。
+
+這時要把**乘法法則**倒過來。由〈[微分法則](/calculus/differentiation-rules/)〉，
+
+$$
+\big(u(x)v(x)\big)'=u'(x)v(x)+u(x)v'(x)
+$$
+
+兩邊積分，左邊的積分就是 $uv$ 本身（$uv$ 是自己導數的反導函數）：
+
+$$
+\begin{aligned}
+u(x)v(x)={}&\int u'(x)v(x)\,dx\\
+&+\int u(x)v'(x)\,dx
+\end{aligned}
+$$
+
+移項，得到**分部積分公式**：
+
+$$
+\begin{aligned}
+&\int u(x)v'(x)\,dx\\
+={}&u(x)v(x)-\int v(x)u'(x)\,dx
+\end{aligned}
+$$
+
+用〈[變數變換](/calculus/substitution/)〉的記號 $du=u'(x)\,dx$、$dv=v'(x)\,dx$，寫成好記的形式：
+
+> $\displaystyle\int u\,dv=uv-\int v\,du$
+
+（公式兩邊的積分常數可以合併，所以最後只寫一個 $C$。）
+
+### 怎麼用
+
+把被積函數拆成兩部分：一部分當 $u$（要**微分**），其餘連同 $dx$ 當 $dv$（要**積分**）。公式把原來的積分換成 $\int v\,du$，目的是讓它比原來的簡單。所以：
+
+- **$u$ 選微分後會變簡單的**：多項式微分後次數降低，$\ln x$ 微分後變成 $\frac1x$。
+- **$dv$ 選容易積分的**：$e^x$、$\sin x$、$\cos x$ 積分後不會變複雜。
+
+一個常用的順序是：**對數、多項式、三角函數、指數函數**，排在越前面的越適合當 $u$。這只是經驗，不是規定；選錯了，$\int v\,du$ 會變得更難，換一種選法就好。
+
+### 定積分的分部積分
+
+上下限一起代入：
+
+$$
+\int_a^bu\,dv=\Big[uv\Big]_a^b-\int_a^bv\,du
+$$
+
+### 重複使用與繞回原式
+
+- 有時用一次之後，$\int v\,du$ 還是乘積，但比原來簡單，可以**再用一次**（例題 2）。
+- 有時用兩次之後，又出現原來的積分。這時把原來的積分當成未知數 $I$，**解方程式**求出 $I$（例題 3）。
+
+### 表格法
+
+被積函數是「多項式 × $e^{ax}$、$\sin ax$ 或 $\cos ax$」時，要重複分部積分好幾次，每次都讓多項式當 $u$。這時可以把過程排成表格，稱為**表格法**：
+
+1. 左欄（D）：多項式，一直**微分**到 $0$ 為止。
+2. 右欄（I）：另一個函數，一直**積分**（不寫 $C$），寫到和左欄一樣多列。
+3. 符號欄：從 $+$ 開始，$+,-,+,-,\dots$ 交替。
+4. 每一列的 D 乘上**下一列**的 I（斜著乘），加上這一列的符號，全部加起來，最後加 $C$。
+
+以例題 2(a) 的 $\displaystyle\int x^2e^x\,dx$ 為例：
+
+| 符號 | D（微分） | I（積分） |
+|---|---|---|
+| $+$ | $x^2$ | $e^x$ |
+| $-$ | $2x$ | $e^x$ |
+| $+$ | $2$ | $e^x$ |
+|  | $0$ | $e^x$ |
+
+斜著乘：$+x^2e^x-2xe^x+2e^x+C=e^x(x^2-2x+2)+C$，和例題 2(a) 用公式算兩次的結果相同。
+
+**為什麼可以這樣做**：每用一次公式 $\int u\,dv=uv-\int v\,du$，就得到一個乘積 $uv$（D 乘下一列的 I），剩下的積分前面多一個負號，所以符號交替。D 欄微分到 $0$ 時，剩下的積分是 $\int0\,dx$，過程就結束了。
+
+**在任何一列停下來**：表格不一定要做到 D 欄出現 $0$。做到第 $k$ 列時停下來，前面各列照樣斜著乘，最後一列改成**橫著乘、寫成積分**，前面加上這一列的符號：
+
+$$
+\begin{aligned}
+\int u\,dv={}&(\text{前面各列斜著乘})\\
+&\pm\int D_k\,I_k\,dx
+\end{aligned}
+$$
+
+其中 $D_k$、$I_k$ 是第 $k$ 列的 D 和 I，$\pm$ 是第 $k$ 列的符號。
+
+例如 $\int x^2e^x\,dx$ 做到第 2 列就停，得到 $x^2e^x-\int2xe^x\,dx$，正是用一次公式的結果。剩下的積分可以再用任何方法處理。這讓表格法也能用在 D 欄永遠不會變成 $0$ 的積分：
+
+- **剩下的積分可以直接算**：$\int x^2\ln x\,dx$ 要讓 $\ln x$ 當 D（它不容易積分）。做到第 2 列，橫著的積分已經變簡單了：
+
+  | 符號 | D（微分） | I（積分） |
+  |---|---|---|
+  | $+$ | $\ln x$ | $x^2$ |
+  | $-$ | $\frac1x$ | $\frac{x^3}{3}$ |
+
+  $$
+  \begin{aligned}
+  \int x^2\ln x\,dx&=\frac{x^3}{3}\ln x-\int\frac1x\cdot\frac{x^3}{3}\,dx\\
+  &=\frac{x^3}{3}\ln x-\frac{x^3}{9}+C
+  \end{aligned}
+  $$
+
+- **剩下的積分繞回原式**：例題 3 的 $I=\int e^x\sin x\,dx$，讓 $\sin x$ 當 D，做到第 3 列：
+
+  | 符號 | D（微分） | I（積分） |
+  |---|---|---|
+  | $+$ | $\sin x$ | $e^x$ |
+  | $-$ | $\cos x$ | $e^x$ |
+  | $+$ | $-\sin x$ | $e^x$ |
+
+  前兩列斜著乘，第 3 列橫著乘成積分：
+
+  $$
+  \begin{aligned}
+  I={}&e^x\sin x-e^x\cos x\\
+  &+\int(-\sin x)e^x\,dx\\
+  ={}&e^x\sin x-e^x\cos x-I
+  \end{aligned}
+  $$
+
+  原式 $I$ 又出現了，移項解出 $I=\frac{e^x(\sin x-\cos x)}{2}+C$，和例題 3 相同。這就是例題 3「繞回原式」的方法，只是用表格寫得更簡潔。
+
+什麼時候停：橫著的積分**可以直接算**，或者**變回原來的積分**（差一個常數倍），就可以停下來。
+
+## 例題
+
+### 例題 1
+
+求 $\displaystyle\int x\cos x\,dx$。
+
+<Solution>
+
+$x$ 微分後變成 $1$，比較簡單；$\cos x$ 容易積分。令
+
+$$
+\begin{gathered}
+u=x,\quad dv=\cos x\,dx\\
+du=dx,\quad v=\sin x
+\end{gathered}
+$$
+
+代入公式：
+
+$$
+\begin{aligned}
+\int x\cos x\,dx&=x\sin x-\int\sin x\,dx\\
+&=x\sin x+\cos x+C
+\end{aligned}
+$$
+
+驗算：$(x\sin x+\cos x)'=\sin x+x\cos x-\sin x=x\cos x$。
+
+</Solution>
+
+### 例題 2
+
+求 (a) $\displaystyle\int x^2e^x\,dx$　(b) $\displaystyle\int x\ln x\,dx$
+
+<Solution>
+
+(a) 令 $u=x^2$、$dv=e^x\,dx$，$du=2x\,dx$、$v=e^x$：
+
+$$
+\int x^2e^x\,dx=x^2e^x-\int2xe^x\,dx
+$$
+
+剩下的 $\int2xe^x\,dx$ 還是乘積，但 $x$ 的次數從 $2$ 降成 $1$。再用一次，令 $u=2x$、$dv=e^x\,dx$：
+
+$$
+\begin{aligned}
+\int2xe^x\,dx&=2xe^x-\int2e^x\,dx\\
+&=2xe^x-2e^x+C
+\end{aligned}
+$$
+
+合起來（注意第二次的結果整個被減掉）：
+
+$$
+\begin{aligned}
+\int x^2e^x\,dx&=x^2e^x-(2xe^x-2e^x)+C\\
+&=e^x(x^2-2x+2)+C
+\end{aligned}
+$$
+
+驗算：$\big[e^x(x^2-2x+2)\big]'=e^x(x^2-2x+2)+e^x(2x-2)=x^2e^x$。
+
+(b) 這次 $\ln x$ 不容易積分，但微分後變簡單，所以 $\ln x$ 當 $u$。令 $u=\ln x$、$dv=x\,dx$，$du=\frac1x\,dx$、$v=\frac{x^2}{2}$：
+
+$$
+\begin{aligned}
+\int x\ln x\,dx&=\frac{x^2}{2}\ln x-\int\frac{x^2}{2}\cdot\frac1x\,dx\\
+&=\frac{x^2}{2}\ln x-\frac{x^2}{4}+C
+\end{aligned}
+$$
+
+驗算：$\left(\frac{x^2}{2}\ln x-\frac{x^2}{4}\right)'=x\ln x+\frac{x^2}{2}\cdot\frac1x-\frac x2=x\ln x$。
+
+</Solution>
+
+### 例題 3
+
+求 $\displaystyle\int e^x\sin x\,dx$。
+
+<Solution>
+
+設 $I=\displaystyle\int e^x\sin x\,dx$。令 $u=\sin x$、$dv=e^x\,dx$，$du=\cos x\,dx$、$v=e^x$：
+
+$$
+I=e^x\sin x-\int e^x\cos x\,dx
+$$
+
+$\int e^x\cos x\,dx$ 和原來一樣難。再用一次，**仍然讓三角函數當 $u$**：令 $u=\cos x$、$dv=e^x\,dx$，$du=-\sin x\,dx$、$v=e^x$：
+
+$$
+\begin{aligned}
+\int e^x\cos x\,dx&=e^x\cos x+\int e^x\sin x\,dx\\
+&=e^x\cos x+I
+\end{aligned}
+$$
+
+代回第一式：
+
+$$
+I=e^x\sin x-e^x\cos x-I
+$$
+
+原來的積分 $I$ 又出現了。把它移到左邊：$2I=e^x(\sin x-\cos x)$，所以
+
+$$
+\int e^x\sin x\,dx=\frac{e^x(\sin x-\cos x)}{2}+C
+$$
+
+驗算：微分 $\frac12e^x(\sin x-\cos x)$，得 $\frac12e^x(\sin x-\cos x)+\frac12e^x(\cos x+\sin x)=e^x\sin x$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：$u$ 和 $dv$ 選反了。**
+
+- 錯誤寫法：$\displaystyle\int xe^x\,dx$ 令 $u=e^x$、$dv=x\,dx$，得 $\dfrac{x^2}{2}e^x-\displaystyle\int\frac{x^2}{2}e^x\,dx$。
+- 為什麼錯：公式本身沒用錯，但新的積分 $\int\frac{x^2}{2}e^x\,dx$ 比原來的 $\int xe^x\,dx$ 還難（$x$ 的次數變高了），越做越複雜。
+- 正確寫法：讓微分後變簡單的 $x$ 當 $u$：$u=x$、$dv=e^x\,dx$，得 $xe^x-\int e^x\,dx=xe^x-e^x+C$。
+
+**錯誤 2：重複使用時漏了負號。**
+
+- 錯誤寫法：$\displaystyle\int x^2e^x\,dx=x^2e^x-2xe^x-2e^x+C$。
+- 為什麼錯：第二次的結果 $2xe^x-2e^x$ 要**整個**減掉，$-(-2e^x)=+2e^x$。微分檢查：$(x^2e^x-2xe^x-2e^x)'=x^2e^x-4e^x$，多了 $-4e^x$。
+- 正確寫法：$x^2e^x-(2xe^x-2e^x)+C=e^x(x^2-2x+2)+C$。
+
+**錯誤 3：繞回原式時，第二次把 $u$、$dv$ 對調。**
+
+- 錯誤寫法：例題 3 第二次改令 $u=e^x$、$dv=\cos x\,dx$，得 $\int e^x\cos x\,dx=e^x\sin x-I$。代回第一式：$I=e^x\sin x-(e^x\sin x-I)=I$。
+- 為什麼錯：第二次的選法剛好把第一次做的事倒回去，得到 $I=I$，沒有任何資訊。
+- 正確寫法：兩次都讓同一類函數（例如三角函數）當 $u$，原式才會帶著負號繞回來，可以解出 $I$。
+
+## 練習題
+
+**1.** 求 $\displaystyle\int xe^{2x}\,dx$。
+
+<Solution answer>
+
+$u=x$、$dv=e^{2x}\,dx$，$v=\frac12e^{2x}$（〈[變數變換](/calculus/substitution/)〉）：
+
+$$
+\begin{aligned}
+\int xe^{2x}\,dx&=\frac x2e^{2x}-\int\frac12e^{2x}\,dx\\
+&=\frac x2e^{2x}-\frac14e^{2x}+C
+\end{aligned}
+$$
+
+</Solution>
+
+**2.** 求 $\displaystyle\int\ln x\,dx$。
+
+<Solution answer>
+
+把 $\ln x$ 看成 $\ln x\cdot1$：$u=\ln x$、$dv=dx$，$du=\frac1x\,dx$、$v=x$。
+
+$$
+\begin{aligned}
+\int\ln x\,dx&=x\ln x-\int x\cdot\frac1x\,dx\\
+&=x\ln x-x+C
+\end{aligned}
+$$
+
+</Solution>
+
+**3.** 求 $\displaystyle\int_0^\pi x\sin x\,dx$，並說明它代表的面積。
+
+<Solution answer>
+
+$u=x$、$dv=\sin x\,dx$，$v=-\cos x$：
+
+$$
+\begin{aligned}
+&\int_0^\pi x\sin x\,dx\\
+={}&\Big[-x\cos x\Big]_0^\pi+\int_0^\pi\cos x\,dx\\
+={}&(-\pi\cos\pi+0)+\Big[\sin x\Big]_0^\pi\\
+={}&\pi+0=\pi
+\end{aligned}
+$$
+
+$x\sin x$ 在 $[0,\pi]$ 不是負的，所以 $\pi$ 就是曲線和 $x$ 軸之間的面積。
+
+<Graph name="calculus/parts-area" />
+
+</Solution>
+
+**4.** 求 $\displaystyle\int e^x\cos x\,dx$。（需要例題 3 的方法）
+
+<Solution answer>
+
+設 $J=\int e^x\cos x\,dx$。$u=\cos x$、$dv=e^x\,dx$：$J=e^x\cos x+\int e^x\sin x\,dx$。再令 $u=\sin x$、$dv=e^x\,dx$：$\int e^x\sin x\,dx=e^x\sin x-J$。所以 $J=e^x\cos x+e^x\sin x-J$，
+
+$$
+\int e^x\cos x\,dx=\frac{e^x(\sin x+\cos x)}{2}+C
+$$
+
+</Solution>
+
+**5.** 用表格法求 $\displaystyle\int x^3\sin x\,dx$。
+
+<Solution answer>
+
+| 符號 | D（微分） | I（積分） |
+|---|---|---|
+| $+$ | $x^3$ | $\sin x$ |
+| $-$ | $3x^2$ | $-\cos x$ |
+| $+$ | $6x$ | $-\sin x$ |
+| $-$ | $6$ | $\cos x$ |
+|  | $0$ | $\sin x$ |
+
+斜著乘，再加上每一列的符號：
+
+$$
+\begin{aligned}
+&\int x^3\sin x\,dx\\
+={}&x^3(-\cos x)-3x^2(-\sin x)\\
+&+6x\cos x-6\sin x+C\\
+={}&-x^3\cos x+3x^2\sin x\\
+&+6x\cos x-6\sin x+C
+\end{aligned}
+$$
+
+驗算：微分後中間的項兩兩消去，只剩 $x^3\sin x$。
+
+</Solution>

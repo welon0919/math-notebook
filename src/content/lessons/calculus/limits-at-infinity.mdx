@@ -1,0 +1,279 @@
+---
+subject: calculus
+unit: limits-continuity
+order: 3
+title: 無窮遠處的極限與漸近線
+summary: 求 $x\to\pm\infty$ 時的極限與無窮大極限，找出水平與鉛直漸近線，並認識 $e$。
+prerequisites: [limit-techniques]
+formulas: [important-limits]
+---
+
+## 學習目標
+
+- 學完這課，你能把有理函數的分子分母同除以最高次方，求 $x\to\infty$ 的極限。
+- 學完這課，你能找出函數的水平漸近線與鉛直漸近線。
+- 學完這課，你能說明 $\left(1+\frac1n\right)^n$ 趨近 $e$ 的意義。
+
+## 概念說明
+
+### $x\to\infty$：$x$ 無限增大
+
+前兩課的 $x$ 都是靠近一個數 $a$。另一種問題是：$x$ **無限增大**時，$f(x)$ 會靠近哪個數？記作 $\lim\limits_{x\to\infty}f(x)$。$\infty$ 讀作「無限大」，它不是一個數，$x\to\infty$ 只是「$x$ 越來越大、沒有上限」的寫法。同樣地，$x\to-\infty$ 表示 $x$ 往負的方向無限變小。
+
+最基本的例子是 $\dfrac1x$：$x=1000$ 時是 $0.001$，$x=10^6$ 時是 $0.000001$。$x$ 越大，$\dfrac1x$ 越靠近 $0$，所以
+
+$$
+\lim_{x\to\infty}\frac1x=0,\qquad\lim_{x\to\infty}\frac{1}{x^n}=0\quad(n>0)
+$$
+
+$x\to-\infty$ 時也一樣趨近 $0$。上一課的運算性質在 $x\to\pm\infty$ 時同樣成立。
+
+### 有理函數：同除以最高次方
+
+$\lim\limits_{x\to\infty}\dfrac{3x^2+1}{x^2-5}$ 的分子分母都無限變大，不能直接相除。把分子分母**同除以分母的最高次方** $x^2$，讓每一項變成「常數」或「會趨近 $0$ 的項」：
+
+$$
+\begin{aligned}
+\lim_{x\to\infty}\frac{3x^2+1}{x^2-5}&=\lim_{x\to\infty}\frac{3+\frac{1}{x^2}}{1-\frac{5}{x^2}}\\
+&=\frac{3+0}{1-0}=3
+\end{aligned}
+$$
+
+依分子和分母的次數，結果分成三種：
+
+- **分子次數較小**：極限是 $0$。例如 $\dfrac{2x+1}{x^2+3}$ 同除以 $x^2$，分子 $\frac2x+\frac{1}{x^2}\to0$，分母 $\to1$。
+- **次數相同**：極限是兩個最高次項係數的比，例如上面的 $\dfrac31=3$。
+- **分子次數較大**：沒有極限，函數值無限變大或無限變小。例如 $\dfrac{x^2+1}{x-1}$ 同除以 $x$，分子 $x+\frac1x$ 無限變大，分母 $1-\frac1x\to1$。
+
+### 無窮大的極限
+
+第三種情形「沒有極限，但函數值無限變大」，寫成 $\lim\limits_{x\to\infty}\dfrac{x^2+1}{x-1}=\infty$。要注意：**等號右邊寫 $\infty$，仍然表示極限不存在**，只是更清楚地說出它「怎麼不存在」。
+
+$x$ 靠近一個數時也會發生這種情形。看 $\dfrac{1}{x-2}$ 在 $x=2$ 附近：
+
+- $x\to2^+$（例如 $2.01$、$2.001$）：分子是 $1$，分母是很小的正數（$0.01$、$0.001$），商是 $100$、$1000$，無限變大，記作 $\lim\limits_{x\to2^+}\dfrac{1}{x-2}=\infty$。
+- $x\to2^-$（例如 $1.99$）：分母是很小的負數，商是 $-100$、$-1000$，記作 $\lim\limits_{x\to2^-}\dfrac{1}{x-2}=-\infty$。
+
+判斷的方法：分子靠近一個不是 $0$ 的數，分母靠近 $0$，商的絕對值就無限變大；正負號由分子和分母的正負號決定。
+
+### 漸近線
+
+圖形無限延伸時，越來越貼近的直線稱為**漸近線**：
+
+- **水平漸近線** $y=L$：$\lim\limits_{x\to\infty}f(x)=L$ 或 $\lim\limits_{x\to-\infty}f(x)=L$。圖形往右（或往左）延伸時，越來越貼近這條水平線。
+- **鉛直漸近線** $x=a$：$x\to a^+$ 或 $x\to a^-$ 時，$f(x)$ 趨近 $\infty$ 或 $-\infty$。圖形在 $x=a$ 附近往上或往下衝，越來越貼近這條鉛直線。
+
+有理函數的鉛直漸近線，要在**約分之後**分母仍然是 $0$ 的地方找（見常見錯誤 2）。
+
+以 $f(x)=\dfrac{2x+1}{x-1}$ 為例。次數相同，係數比是 $\frac21$，水平漸近線是 $y=2$；$x=1$ 時分母是 $0$、分子是 $3$，鉛直漸近線是 $x=1$。拖動 $t$，看圖形怎麼貼近兩條漸近線：
+
+<Graph name="calculus/asymptotes" />
+
+把式子改寫成 $f(x)=2+\dfrac{3}{x-1}$，就看得出原因：$x$ 很大時 $\dfrac{3}{x-1}$ 很小，$f(x)$ 很靠近 $2$；$x$ 靠近 $1$ 時 $\dfrac{3}{x-1}$ 的絕對值很大。
+
+### 自然對數的底數 $e$
+
+$\left(1+\frac1n\right)^n$ 在 $n\to\infty$ 時，括號裡的 $1+\frac1n$ 越來越靠近 $1$，但指數 $n$ 越來越大。兩股力量拉扯，結果會是多少？算算看：
+
+| $n$ | $\left(1+\frac1n\right)^n$ |
+|---|---|
+| $1$ | $2$ |
+| $10$ | $2.59374$ |
+| $100$ | $2.70481$ |
+| $1000$ | $2.71692$ |
+| $10000$ | $2.71815$ |
+
+數值越來越大，但增加得越來越慢，趨近一個固定的數 $2.71828\ldots$。這個數記作 $e$：
+
+$$
+\lim_{n\to\infty}\left(1+\frac1n\right)^n=e\approx2.71828
+$$
+
+它的意義可以用複利理解：本金 $1$ 元、年利率 $100\%$，一年分 $n$ 次複利，每次利率 $\frac1n$，一年後本利和是 $\left(1+\frac1n\right)^n$ 元。複利次數越多，錢越多，但不會無限多，上限就是 $e$ 元。這個數列為什麼真的有極限，證明在〈[重要極限](/calculus/formulas/important-limits/)〉公式頁。
+
+$e$ 是微積分中最重要的底數：以 $e$ 為底的指數 $e^x$ 和對數 $\log_e x$（記作 $\ln x$，稱為**自然對數**）的導數特別簡單，會在〈[指數、對數與三角函數的導數](/calculus/transcendental-derivatives/)〉看到。
+
+## 例題
+
+### 例題 1
+
+求下列極限：
+
+1. $\lim\limits_{x\to\infty}\dfrac{4x^2-x}{2x^2+5}$
+2. $\lim\limits_{x\to\infty}\dfrac{3x+2}{x^2+1}$
+3. $\lim\limits_{x\to-\infty}\dfrac{x^3}{x^2+1}$
+
+<Solution>
+
+1. 次數相同，同除以 $x^2$：
+
+   $$
+   \frac{4-\frac1x}{2+\frac{5}{x^2}}\to\frac{4}{2}=2
+   $$
+
+2. 分子次數較小，同除以 $x^2$：
+
+   $$
+   \frac{\frac3x+\frac{2}{x^2}}{1+\frac{1}{x^2}}\to\frac{0}{1}=0
+   $$
+
+3. 分子次數較大，同除以 $x^2$：
+
+   $$
+   \frac{x^3}{x^2+1}=\frac{x}{1+\frac{1}{x^2}}
+   $$
+
+   分母 $\to1$，分子 $x\to-\infty$，所以極限是 $-\infty$（不存在，函數值無限變小）。
+
+驗算：$x=1000$ 時第 1 題 $=\dfrac{3999000}{2000005}\approx1.9995$，第 2 題 $=\dfrac{3002}{1000001}\approx0.003$；$x=-1000$ 時第 3 題 $\approx-999.999$。
+
+</Solution>
+
+### 例題 2
+
+求 $f(x)=\dfrac{2x^2-2}{x^2-x-2}$ 的水平漸近線與鉛直漸近線。
+
+<Solution>
+
+**水平漸近線**：次數相同，係數比 $\frac21=2$。$x\to\infty$ 和 $x\to-\infty$ 的極限都是 $2$，水平漸近線是 $y=2$。
+
+**鉛直漸近線**：先分解，再約分：
+
+$$
+\begin{aligned}
+f(x)&=\frac{2(x-1)(x+1)}{(x-2)(x+1)}\\
+&=\frac{2(x-1)}{x-2}\qquad(x\neq-1,\ x\neq2)
+\end{aligned}
+$$
+
+原式的分母在 $x=-1$ 和 $x=2$ 是 $0$，兩點要分別看：
+
+- $x=2$：約分後分母仍是 $0$，分子 $2(2-1)=2\neq0$。$x\to2^+$ 時分母是很小的正數，$f(x)\to\infty$；$x\to2^-$ 時分母是很小的負數，$f(x)\to-\infty$。所以 $x=2$ 是鉛直漸近線。
+- $x=-1$：約分後可以直接代入，$\lim\limits_{x\to-1}f(x)=\dfrac{2(-2)}{-3}=\dfrac43$，是一個有限的數。圖形在 $\left(-1,\frac43\right)$ 只是一個洞，**不是**漸近線。
+
+<Graph name="calculus/asymptotes-example" />
+
+驗算：$x=2.01$ 時 $f=\dfrac{2(1.01)}{0.01}=202$，$x=1.99$ 時 $f=\dfrac{2(0.99)}{-0.01}=-198$，兩側確實衝向 $\pm\infty$。
+
+</Solution>
+
+### 例題 3
+
+一個水槽原有 $200$ 公升清水。從 $t=0$ 起，每分鐘注入 $10$ 公升、每公升含鹽 $50$ 公克的鹽水（水槽夠大，不會滿出來）。
+
+1. 寫出 $t$ 分鐘後水槽中鹽水的濃度 $C(t)$（公克／公升）。
+2. 求 $\lim\limits_{t\to\infty}C(t)$，並說明它的意義。
+3. 何時濃度達到每公升 $40$ 公克？
+
+<Solution>
+
+1. $t$ 分鐘後，鹽有 $50\cdot10t=500t$ 公克，水有 $200+10t$ 公升，所以
+
+   $$
+   C(t)=\frac{500t}{200+10t}=\frac{50t}{20+t}
+   $$
+
+2. 同除以 $t$：$C(t)=\dfrac{50}{\frac{20}{t}+1}\to\dfrac{50}{0+1}=50$。
+
+   時間越久，水槽裡原本的清水所占的比例越小，濃度越接近注入的鹽水的濃度 $50$。但 $C(t)=50-\dfrac{1000}{20+t}$ 永遠小於 $50$，所以濃度永遠到不了 $50$。$C=50$ 是圖形的水平漸近線。
+
+3. $\dfrac{50t}{20+t}=40$，兩邊乘以 $20+t$（是正數）：$50t=800+40t$，$t=80$。第 $80$ 分鐘時濃度達到每公升 $40$ 公克。
+
+   驗算：$C(80)=\dfrac{4000}{100}=40$。
+
+<Graph name="calculus/mixing-tank" />
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把 $\infty-\infty$ 當成 $0$。**
+
+- 錯誤寫法：$x\to\infty$ 時 $\sqrt{x^2+x}$ 和 $x$ 都是 $\infty$，所以 $\lim\limits_{x\to\infty}\left(\sqrt{x^2+x}-x\right)=\infty-\infty=0$。
+- 為什麼錯：兩個都無限變大的量相減，差可能是任何數，$\infty-\infty$ 也是不定型。代 $x=10000$ 檢查：$\sqrt{100010000}\approx10000.49999$，差約 $0.49999$，不靠近 $0$。
+- 正確寫法：用有理化，
+
+  $$
+  \begin{aligned}
+  \sqrt{x^2+x}-x&=\frac{(x^2+x)-x^2}{\sqrt{x^2+x}+x}\\
+  &=\frac{x}{\sqrt{x^2+x}+x}\\
+  &=\frac{1}{\sqrt{1+\frac1x}+1}\to\frac12
+  \end{aligned}
+  $$
+
+  最後一步是分子分母同除以 $x$（$x>0$ 時 $\frac{\sqrt{x^2+x}}{x}=\sqrt{1+\frac1x}$）。
+
+**錯誤 2：分母是 $0$ 的地方都當成鉛直漸近線。**
+
+- 錯誤寫法：$\dfrac{x^2-1}{x-1}$ 的分母在 $x=1$ 是 $0$，所以 $x=1$ 是鉛直漸近線。
+- 為什麼錯：〈[極限](/calculus/limits/)〉一課算過，$\lim\limits_{x\to1}\dfrac{x^2-1}{x-1}=2$，函數值沒有無限變大，圖形在 $(1,2)$ 只是一個洞。
+- 正確寫法：先約分。約分後分母仍是 $0$（而分子不是 $0$）的地方，才是鉛直漸近線。$\dfrac{x^2-1}{x-1}=x+1$（$x\neq1$）沒有鉛直漸近線。
+
+**錯誤 3：把 $1^\infty$ 當成 $1$。**
+
+- 錯誤寫法：$1+\frac1n\to1$，而 $1$ 的任何次方都是 $1$，所以 $\lim\limits_{n\to\infty}\left(1+\frac1n\right)^n=1$。
+- 為什麼錯：底數只是**靠近** $1$，不是等於 $1$；比 $1$ 大一點點的數，自乘很多次，可以累積成明顯比 $1$ 大的數。$n=1000$ 時 $1.001^{1000}\approx2.717$。$1^\infty$ 也是不定型。
+- 正確寫法：$\lim\limits_{n\to\infty}\left(1+\frac1n\right)^n=e\approx2.718$。
+
+## 練習題
+
+**1.** 求 (a) $\lim\limits_{x\to\infty}\dfrac{5x^3-2x}{2x^3+x^2}$　(b) $\lim\limits_{x\to-\infty}\dfrac{x+1}{x^2+1}$。
+
+<Solution answer>
+
+(a) 同除以 $x^3$：$\dfrac{5-\frac{2}{x^2}}{2+\frac1x}\to\dfrac52$。
+
+(b) 分子次數較小，同除以 $x^2$：$\dfrac{\frac1x+\frac{1}{x^2}}{1+\frac{1}{x^2}}\to0$。
+
+</Solution>
+
+**2.** 求 $\lim\limits_{x\to\infty}\left(\sqrt{x^2+6x}-x\right)$。（需要上一課的有理化）
+
+<Solution answer>
+
+$$
+\begin{aligned}
+\sqrt{x^2+6x}-x&=\frac{6x}{\sqrt{x^2+6x}+x}\\
+&=\frac{6}{\sqrt{1+\frac6x}+1}\to\frac{6}{2}=3
+\end{aligned}
+$$
+
+驗算：$x=10000$ 時 $\sqrt{100060000}-10000\approx2.9996$。
+
+</Solution>
+
+**3.** 求 $\lim\limits_{x\to-\infty}\dfrac{\sqrt{4x^2+1}}{x}$。
+
+<Solution answer>
+
+$x<0$ 時 $\sqrt{x^2}=|x|=-x$，所以 $x=-\sqrt{x^2}$。分子分母同除以 $-x=\sqrt{x^2}$（正數）：
+
+$$
+\frac{\sqrt{4x^2+1}}{x}=\frac{\sqrt{4+\frac{1}{x^2}}}{-1}\to-2
+$$
+
+檢查正負號：$x<0$ 時分子是正的、分母是負的，商是負的，所以答案是 $-2$ 而不是 $2$。
+
+</Solution>
+
+**4.** 求 $f(x)=\dfrac{x+3}{x^2-9}$ 的所有漸近線，並說明 $x\to3^+$ 和 $x\to3^-$ 時 $f(x)$ 的變化。
+
+<Solution answer>
+
+$f(x)=\dfrac{x+3}{(x-3)(x+3)}=\dfrac{1}{x-3}$（$x\neq\pm3$）。
+
+- 水平漸近線：分子次數較小，$y=0$。
+- 鉛直漸近線：$x=3$。$x=-3$ 約分後 $f\to-\frac16$，是洞，不是漸近線。
+- $x\to3^+$ 時 $f(x)\to\infty$，$x\to3^-$ 時 $f(x)\to-\infty$。
+
+</Solution>
+
+**5.** 求 $\lim\limits_{n\to\infty}\left(1+\frac1n\right)^{2n}$。
+
+<Solution answer>
+
+$\left(1+\frac1n\right)^{2n}=\left[\left(1+\frac1n\right)^n\right]^2$。括號裡趨近 $e$，由極限的乘法性質，平方趨近 $e^2\approx7.389$。
+
+驗算：$n=1000$ 時 $1.001^{2000}\approx7.382$。
+
+</Solution>

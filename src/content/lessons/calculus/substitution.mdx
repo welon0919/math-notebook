@@ -1,0 +1,224 @@
+---
+subject: calculus
+unit: integrals
+order: 16
+title: 變數變換
+summary: 把連鎖律倒過來用，換成新變數來化簡積分；定積分換元時上下限也要跟著換。
+prerequisites: [definite-integrals, chain-rule]
+formulas: [chain-rule, basic-integrals]
+theorems: [fundamental-theorem-of-calculus]
+---
+
+## 學習目標
+
+- 學完這課，你能找出適合的 $u$，並把 $dx$ 換成 $du$。
+- 學完這課，你能用變數變換求不定積分。
+- 學完這課，你能在定積分換元時一起換上下限。
+
+## 概念說明
+
+### 把連鎖律倒過來
+
+基本積分公式只能處理 $x^n$、$e^x$、$\sin x$ 這類簡單的函數。像 $\displaystyle\int2x(x^2+1)^3\,dx$，展開也可以算，但次方一大就很麻煩。
+
+觀察：由〈[連鎖律](/calculus/chain-rule/)〉，
+
+$$
+\frac{d}{dx}\left[\frac{(x^2+1)^4}{4}\right]=(x^2+1)^3\cdot2x
+$$
+
+所以 $\dfrac{(x^2+1)^4}{4}$ 正是 $2x(x^2+1)^3$ 的反導函數。被積函數長成「外層函數的導數（在內層 $x^2+1$ 取值）× 內層的導數 $2x$」，這就是連鎖律的結果。一般地：
+
+> 若 $F'=f$，則 $\displaystyle\int f\big(g(x)\big)\,g'(x)\,dx=F\big(g(x)\big)+C$。
+
+理由：微分右邊，由連鎖律得 $F'(g(x))\,g'(x)=f(g(x))\,g'(x)$，正是被積函數。
+
+### 換成新變數 $u$
+
+實際計算時，令內層 $u=g(x)$。$u$ 對 $x$ 的導數是 $\dfrac{du}{dx}=g'(x)$，寫成
+
+$$
+du=g'(x)\,dx
+$$
+
+意思是：$x$ 變化一小段 $dx$ 時，$u$ 跟著變化 $g'(x)\,dx$。把被積函數裡的 $g(x)$ 換成 $u$、$g'(x)\,dx$ 換成 $du$，整個積分就變成只含 $u$ 的簡單積分。這個方法稱為**變數變換**（也稱換元積分）。
+
+以 $\displaystyle\int2x(x^2+1)^3\,dx$ 為例，令 $u=x^2+1$，$du=2x\,dx$：
+
+$$
+\begin{aligned}
+\int2x(x^2+1)^3\,dx&=\int u^3\,du=\frac{u^4}{4}+C\\
+&=\frac{(x^2+1)^4}{4}+C
+\end{aligned}
+$$
+
+步驟：
+
+1. **選 $u$**：通常選某個括號、根號、指數或分母裡的式子，而且**它的導數（差一個常數倍也可以）也出現在被積函數裡**。
+2. **算 $du$**，把被積函數全部換成 $u$。如果導數差一個常數倍，例如 $du=3x^2\,dx$ 而式子裡只有 $x^2\,dx$，就寫成 $x^2\,dx=\frac13du$。
+3. **對 $u$ 積分**。
+4. **代回 $x$**，然後微分驗算。
+
+換完之後，積分裡**不能再有 $x$**。如果還剩下 $x$，表示這個 $u$ 選得不對。
+
+### 定積分的變數變換
+
+定積分也可以換元，但上下限是 $x$ 的值，換成 $u$ 之後，上下限要換成對應的 $u$ 值：
+
+> 令 $u=g(x)$，則 $\displaystyle\int_a^bf\big(g(x)\big)\,g'(x)\,dx=\int_{g(a)}^{g(b)}f(u)\,du$。
+
+這樣算完就不必代回 $x$。理由：兩邊都等於 $F(g(b))-F(g(a))$（微積分基本定理）。
+
+## 例題
+
+### 例題 1
+
+求 (a) $\displaystyle\int x^2(x^3+1)^5\,dx$　(b) $\displaystyle\int\cos3x\,dx$
+
+<Solution>
+
+(a) 令 $u=x^3+1$，$du=3x^2\,dx$，所以 $x^2\,dx=\frac13du$：
+
+$$
+\begin{aligned}
+\int x^2(x^3+1)^5\,dx&=\int u^5\cdot\frac13du\\
+&=\frac13\cdot\frac{u^6}{6}+C\\
+&=\frac{(x^3+1)^6}{18}+C
+\end{aligned}
+$$
+
+驗算：$\left[\dfrac{(x^3+1)^6}{18}\right]'=\dfrac{6(x^3+1)^5\cdot3x^2}{18}=x^2(x^3+1)^5$。
+
+(b) 令 $u=3x$，$du=3\,dx$，$dx=\frac13du$：
+
+$$
+\begin{aligned}
+\int\cos3x\,dx&=\frac13\int\cos u\,du\\
+&=\frac13\sin3x+C
+\end{aligned}
+$$
+
+驗算：$\left(\frac13\sin3x\right)'=\frac13\cdot3\cos3x=\cos3x$。
+
+</Solution>
+
+### 例題 2
+
+求 (a) $\displaystyle\int xe^{x^2}\,dx$　(b) $\displaystyle\int\tan x\,dx$
+
+<Solution>
+
+(a) 令 $u=x^2$，$du=2x\,dx$，$x\,dx=\frac12du$：
+
+$$
+\int xe^{x^2}\,dx=\frac12\int e^u\,du=\frac12e^{x^2}+C
+$$
+
+(b) $\tan x=\dfrac{\sin x}{\cos x}$。分母 $\cos x$ 的導數是 $-\sin x$，正好出現在分子。令 $u=\cos x$，$du=-\sin x\,dx$，$\sin x\,dx=-du$：
+
+$$
+\begin{aligned}
+\int\frac{\sin x}{\cos x}\,dx&=-\int\frac1u\,du=-\ln|u|+C\\
+&=-\ln|\cos x|+C
+\end{aligned}
+$$
+
+驗算 (b)：$\cos x>0$ 時，$\big(-\ln(\cos x)\big)'=-\dfrac{-\sin x}{\cos x}=\tan x$。
+
+</Solution>
+
+### 例題 3
+
+求 $\displaystyle\int_0^{\sqrt3}x\sqrt{x^2+1}\,dx$。
+
+<Solution>
+
+令 $u=x^2+1$，$du=2x\,dx$，$x\,dx=\frac12du$。**換上下限**：$x=0$ 時 $u=1$；$x=\sqrt3$ 時 $u=4$。
+
+$$
+\begin{aligned}
+\int_0^{\sqrt3}x\sqrt{x^2+1}\,dx&=\frac12\int_1^4u^{1/2}\,du\\
+&=\frac12\cdot\frac23\Big[u^{3/2}\Big]_1^4\\
+&=\frac13(8-1)=\frac73
+\end{aligned}
+$$
+
+其中 $4^{3/2}=(\sqrt4)^3=8$。
+
+驗算：先求不定積分 $\frac13(x^2+1)^{3/2}$，代回原來的上下限：$\frac13\cdot4^{3/2}-\frac13\cdot1^{3/2}=\frac83-\frac13=\frac73$，相同。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：缺少 $g'(x)$ 也硬換。**
+
+- 錯誤寫法：$\displaystyle\int(x^2+1)^3\,dx=\frac{(x^2+1)^4}{4\cdot2x}+C$ 或 $\dfrac{(x^2+1)^4}{8}+C$。
+- 為什麼錯：被積函數裡沒有 $2x$，$dx$ 換不成 $du$。微分回去檢查：$\left[\dfrac{(x^2+1)^4}{8}\right]'=x(x^2+1)^3$，多了一個 $x$。
+- 正確寫法：這一題不適合變數變換，先展開：$\displaystyle\int(x^6+3x^4+3x^2+1)\,dx=\frac{x^7}{7}+\frac{3x^5}{5}+x^3+x+C$。
+
+**錯誤 2：換成 $u$ 之後沒有換上下限。**
+
+- 錯誤寫法：$\displaystyle\int_0^{\sqrt3}x\sqrt{x^2+1}\,dx=\frac12\int_0^{\sqrt3}u^{1/2}\,du=\frac13\Big[u^{3/2}\Big]_0^{\sqrt3}\approx0.760$。
+- 為什麼錯：$0$ 和 $\sqrt3$ 是 $x$ 的值，但現在積分的變數是 $u$。$x$ 從 $0$ 到 $\sqrt3$ 時，$u=x^2+1$ 是從 $1$ 到 $4$。
+- 正確寫法：上下限換成 $1$ 和 $4$，答案 $\frac73\approx2.333$（例題 3）。或者先代回 $x$，再用原來的上下限。
+
+**錯誤 3：把含 $x$ 的因子提到積分外面。**
+
+- 錯誤寫法：$\displaystyle\int(x^2+1)^3\,dx=\frac{1}{2x}\int u^3\,du$。
+- 為什麼錯：只有**常數**可以提到積分符號外面。$\frac{1}{2x}$ 會隨 $x$ 改變，不是常數。
+- 正確寫法：換完之後如果還有 $x$ 留下，表示這個方法不適用，要換別的方法（錯誤 1 的正確寫法）。
+
+## 練習題
+
+**1.** 求 $\displaystyle\int(2x+3)^4\,dx$。
+
+<Solution answer>
+
+令 $u=2x+3$，$dx=\frac12du$：$\dfrac12\cdot\dfrac{u^5}{5}+C=\dfrac{(2x+3)^5}{10}+C$。
+
+</Solution>
+
+**2.** 用兩種不同的 $u$ 求 $\displaystyle\int\sin x\cos x\,dx$，並說明兩個答案為什麼都對。
+
+<Solution answer>
+
+- 令 $u=\sin x$，$du=\cos x\,dx$：$\displaystyle\int u\,du=\frac{\sin^2x}{2}+C$。
+- 令 $u=\cos x$，$du=-\sin x\,dx$：$\displaystyle-\int u\,du=-\frac{\cos^2x}{2}+C$。
+
+兩個答案相減：$\frac{\sin^2x}{2}+\frac{\cos^2x}{2}=\frac12$，是常數。不定積分本來就只確定到差一個常數，所以兩個都對，差別被 $C$ 吸收了。
+
+</Solution>
+
+**3.** 求 $\displaystyle\int\frac{e^x}{1+e^x}\,dx$。
+
+<Solution answer>
+
+令 $u=1+e^x$，$du=e^x\,dx$：$\displaystyle\int\frac1u\,du=\ln|u|+C=\ln(1+e^x)+C$（$1+e^x>0$，絕對值可以拿掉）。
+
+</Solution>
+
+**4.** 求 $\displaystyle\int_1^e\frac{\ln x}{x}\,dx$。（需要〈[指數、對數與三角函數的導數](/calculus/transcendental-derivatives/)〉）
+
+<Solution answer>
+
+令 $u=\ln x$，$du=\frac1x\,dx$。$x=1$ 時 $u=0$，$x=e$ 時 $u=1$：$\displaystyle\int_0^1u\,du=\left[\frac{u^2}{2}\right]_0^1=\frac12$。
+
+</Solution>
+
+**5.** 求 $\displaystyle\int_0^1x(1-x^2)^4\,dx$。
+
+<Solution answer>
+
+令 $u=1-x^2$，$du=-2x\,dx$，$x\,dx=-\frac12du$。$x=0$ 時 $u=1$，$x=1$ 時 $u=0$：
+
+$$
+\begin{aligned}
+-\frac12\int_1^0u^4\,du&=\frac12\int_0^1u^4\,du\\
+&=\frac12\cdot\frac15=\frac1{10}
+\end{aligned}
+$$
+
+換限後下限比上限大沒有關係；用 $\int_b^a=-\int_a^b$ 交換上下限，負號就消掉了。
+
+</Solution>

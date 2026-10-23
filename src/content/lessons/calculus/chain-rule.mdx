@@ -1,0 +1,246 @@
+---
+subject: calculus
+unit: derivatives
+order: 7
+title: 連鎖律
+summary: 合成函數的導數等於外層導數乘內層導數。
+prerequisites: [differentiation-rules, function-transformations]
+formulas: [chain-rule]
+---
+
+## 學習目標
+
+- 學完這課，你能把函數拆成外層和內層，套用連鎖律。
+- 學完這課，你能對多層合成的函數重複使用連鎖律。
+- 學完這課，你能結合乘法、除法法則與連鎖律求導數。
+
+## 概念說明
+
+### 少了一個因數
+
+$y=(3x+1)^2$ 可以先展開再微分：
+
+$$
+\begin{aligned}
+y&=9x^2+6x+1\\
+y'&=18x+6=2(3x+1)\cdot3
+\end{aligned}
+$$
+
+如果把 $3x+1$ 當成一整塊、直接用冪次法則，會得到 $2(3x+1)$，比正確答案少了一個因數 $3$。這個 $3$ 正是括號裡 $3x+1$ 的導數。
+
+原因是：$y$ 跟著括號裡的量 $u=3x+1$ 變化，而 $u$ 又跟著 $x$ 變化。$u$ 的變化速度是 $x$ 的 $3$ 倍，所以 $y$ 對 $x$ 的變化率，要把兩段變化率相乘。
+
+### 變化率相乘
+
+想像三個咬合的齒輪：$x$ 轉 $1$ 圈時 $u$ 轉 $3$ 圈，$u$ 轉 $1$ 圈時 $y$ 轉 $2$ 圈，那 $x$ 轉 $1$ 圈時 $y$ 轉 $3\times2=6$ 圈。變化率也一樣，一段一段相乘。
+
+> **連鎖律**：若 $y=f(u)$、$u=g(x)$，則
+>
+> $$
+> \frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}
+> $$
+>
+> 寫成函數的形式：$\big(f(g(x))\big)'=f'\big(g(x)\big)\cdot g'(x)$。
+
+直觀的理由：$x$ 變化 $\Delta x$ 時，$u$ 變化 $\Delta u$，$y$ 變化 $\Delta y$，而
+
+$$
+\frac{\Delta y}{\Delta x}=\frac{\Delta y}{\Delta u}\cdot\frac{\Delta u}{\Delta x}
+$$
+
+$\Delta x\to0$ 時 $\Delta u\to0$（$g$ 可微所以連續），右邊兩個因式分別趨近 $\frac{dy}{du}$ 和 $\frac{du}{dx}$。這個說法有一個漏洞：$\Delta u$ 可能剛好是 $0$，不能除。補上漏洞的完整證明在〈[連鎖律](/calculus/formulas/chain-rule/)〉公式頁。
+
+### 外層與內層
+
+〈[函數的平移、伸縮與合成](/algebra/function-transformations/)〉學過合成函數 $f(g(x))$：先算內層 $g(x)$，再把結果放進外層 $f$。連鎖律的用法是：
+
+1. 找出外層 $f$ 和內層 $g$。
+2. 外層微分，**裡面保持不動**：$f'(g(x))$。
+3. 乘上內層的導數 $g'(x)$。
+
+例如 $y=\sqrt{x^2+1}$：外層是 $\sqrt u=u^{1/2}$，內層是 $u=x^2+1$。
+
+$$
+\begin{aligned}
+y'&=\frac12(x^2+1)^{-1/2}\cdot2x\\
+&=\frac{x}{\sqrt{x^2+1}}
+\end{aligned}
+$$
+
+外層是次方時，連鎖律可以寫成一個常用的公式：
+
+$$
+\big(g(x)^n\big)'=n\,g(x)^{n-1}\cdot g'(x)
+$$
+
+### 多層合成
+
+函數有三層以上時，從外往內一層一層剝，每剝一層就乘上那一層的導數：
+
+$$
+\begin{aligned}
+&\Big(f\big(g(h(x))\big)\Big)'\\
+={}&f'\big(g(h(x))\big)\cdot g'\big(h(x)\big)\cdot h'(x)
+\end{aligned}
+$$
+
+## 例題
+
+### 例題 1
+
+求導數：(a) $y=(x^2+1)^5$　(b) $y=\dfrac{1}{(2x-1)^3}$
+
+<Solution>
+
+(a) 外層 $u^5$，內層 $u=x^2+1$，內層導數 $2x$：
+
+$$
+y'=5(x^2+1)^4\cdot2x=10x(x^2+1)^4
+$$
+
+(b) 先寫成次方：$y=(2x-1)^{-3}$。外層 $u^{-3}$，內層 $u=2x-1$，內層導數 $2$：
+
+$$
+\begin{aligned}
+y'&=-3(2x-1)^{-4}\cdot2\\
+&=-\frac{6}{(2x-1)^4}
+\end{aligned}
+$$
+
+驗算 (a)：$x=1$ 時 $y'=10\cdot1\cdot2^4=160$；差商 $\dfrac{y(1.001)-y(1)}{0.001}\approx160.5$，接近 $160$。
+
+</Solution>
+
+### 例題 2
+
+求導數：(a) $y=\big((x^2+1)^3+2\big)^2$　(b) $y=x^2\sqrt{1-x}$
+
+<Solution>
+
+(a) 三層：最外層是平方，中間是 $u^3+2$，最內層是 $x^2+1$。從外往內：
+
+$$
+\begin{aligned}
+y'&=2\big((x^2+1)^3+2\big)\cdot3(x^2+1)^2\cdot2x\\
+&=12x(x^2+1)^2\big((x^2+1)^3+2\big)
+\end{aligned}
+$$
+
+驗算：$x=1$ 時 $y'=12\cdot4\cdot(8+2)=480$。另外 $x=0$ 時 $y'=0$，因為內層 $x^2+1$ 在 $x=0$ 的切線水平。
+
+(b) 是乘積，先用乘法法則；其中 $\sqrt{1-x}$ 的導數要用連鎖律，內層 $1-x$ 的導數是 $-1$：
+
+$$
+\begin{aligned}
+\left(\sqrt{1-x}\right)'&=\frac{1}{2\sqrt{1-x}}\cdot(-1)\\
+&=-\frac{1}{2\sqrt{1-x}}
+\end{aligned}
+$$
+
+所以
+
+$$
+\begin{aligned}
+y'&=2x\sqrt{1-x}-\frac{x^2}{2\sqrt{1-x}}\\
+&=\frac{4x(1-x)-x^2}{2\sqrt{1-x}}\\
+&=\frac{4x-5x^2}{2\sqrt{1-x}}
+\end{aligned}
+$$
+
+第二行是通分：第一項分子分母同乘 $2\sqrt{1-x}$。
+
+驗算：$x=0$ 時 $y'=0$；$x=\frac12$ 時 $y'=\dfrac{2-\frac54}{2\sqrt{1/2}}=\dfrac{3}{4\sqrt2}\approx0.530$，差商 $\dfrac{y(0.501)-y(0.5)}{0.001}\approx0.530$。
+
+</Solution>
+
+### 例題 3
+
+一顆石頭丟進平靜的水面，圓形漣漪的半徑每秒增加 $3$ 公分。第 $2$ 秒時，漣漪圍成的面積以多快的速率增加？
+
+<Solution>
+
+設 $t$ 秒時半徑是 $r$ 公分，面積 $A=\pi r^2$ 平方公分。$r$ 是 $t$ 的函數，所以 $A$ 是合成函數：外層 $A=\pi r^2$，內層 $r=r(t)$。由連鎖律
+
+$$
+\frac{dA}{dt}=\frac{dA}{dr}\cdot\frac{dr}{dt}=2\pi r\cdot3
+$$
+
+第 $2$ 秒時 $r=3\cdot2=6$，所以 $\dfrac{dA}{dt}=2\pi\cdot6\cdot3=36\pi\approx113$ 平方公分／秒。
+
+驗算：直接寫出 $A=\pi(3t)^2=9\pi t^2$，$A'(t)=18\pi t$，$A'(2)=36\pi$，相同。
+
+意義：半徑增加的速率固定，但面積增加得越來越快，因為圓越大，同樣增加 $1$ 公分的半徑，多出的那一圈越長。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：忘了乘內層的導數。**
+
+- 錯誤寫法：$\big((3x+1)^5\big)'=5(3x+1)^4$。
+- 為什麼錯：外層微分後還要乘內層 $3x+1$ 的導數 $3$。代 $x=0$ 檢查：差商 $\dfrac{(1.003)^5-1}{0.001}\approx15.09$，而 $5\cdot1^4=5$。
+- 正確寫法：$\big((3x+1)^5\big)'=5(3x+1)^4\cdot3=15(3x+1)^4$。
+
+**錯誤 2：把內層的導數放進外層裡。**
+
+- 錯誤寫法：$\big((x^2+1)^5\big)'=5(2x)^4$。
+- 為什麼錯：外層微分時，裡面要**保持原來的** $x^2+1$，內層的導數是另外乘在外面。代 $x=1$ 檢查：正確值是 $160$（例題 1），而 $5\cdot2^4=80$。
+- 正確寫法：$5(x^2+1)^4\cdot2x=10x(x^2+1)^4$。
+
+**錯誤 3：根號的連鎖律把內層換成內層的導數。**
+
+- 錯誤寫法：$\left(\sqrt{x^2+9}\right)'=\dfrac{1}{2\sqrt{2x}}$。
+- 為什麼錯：同樣是把內層的導數 $2x$ 放進了外層。代 $x=4$ 檢查：$\sqrt{x^2+9}$ 在 $x=4$ 附近，$x$ 增加 $0.001$ 時函數值約增加 $0.0008$，斜率約 $0.8$；而 $\dfrac{1}{2\sqrt8}\approx0.18$。
+- 正確寫法：$\dfrac{1}{2\sqrt{x^2+9}}\cdot2x=\dfrac{x}{\sqrt{x^2+9}}$，$x=4$ 時是 $\dfrac45$。
+
+## 練習題
+
+**1.** 求 $y=(1-4x)^3$ 的導數。
+
+<Solution answer>
+
+$y'=3(1-4x)^2\cdot(-4)=-12(1-4x)^2$。
+
+</Solution>
+
+**2.** 求 $y=\sqrt{x^2+9}$ 在 $x=4$ 的切線方程式。（需要〈[導數的定義與意義](/calculus/derivatives/)〉的切線方程式）
+
+<Solution answer>
+
+$y'=\dfrac{x}{\sqrt{x^2+9}}$，斜率 $y'(4)=\dfrac45$。切點 $(4,5)$，切線 $y-5=\frac45(x-4)$，即 $y=\frac45x+\frac95$。
+
+</Solution>
+
+**3.** 求 $y=\dfrac{x}{(x^2+1)^2}$ 的導數並化簡。
+
+<Solution answer>
+
+除法法則，分母 $(x^2+1)^2$ 的導數用連鎖律：$2(x^2+1)\cdot2x=4x(x^2+1)$。
+
+$$
+\begin{aligned}
+y'&=\frac{(x^2+1)^2-x\cdot4x(x^2+1)}{(x^2+1)^4}\\
+&=\frac{(x^2+1)-4x^2}{(x^2+1)^3}=\frac{1-3x^2}{(x^2+1)^3}
+\end{aligned}
+$$
+
+第二步是分子分母同除以 $x^2+1$。
+
+</Solution>
+
+**4.** 已知 $g(1)=2$、$g'(1)=3$、$f(2)=5$、$f'(2)=-1$，求 $h(x)=f(g(x))$ 在 $x=1$ 的導數。（需要代數〈[函數的平移、伸縮與合成](/algebra/function-transformations/)〉的合成函數）
+
+<Solution answer>
+
+$h'(1)=f'\big(g(1)\big)\cdot g'(1)=f'(2)\cdot3=-3$。注意外層的導數要代 $g(1)=2$，不是代 $1$；也用不到 $f(2)=5$。
+
+</Solution>
+
+**5.** 一個球形氣球的半徑 $t$ 秒時是 $r=2+t$ 公分。求第 $1$ 秒時體積 $V=\frac43\pi r^3$ 的變化率。
+
+<Solution answer>
+
+$\dfrac{dV}{dt}=\dfrac{dV}{dr}\cdot\dfrac{dr}{dt}=4\pi r^2\cdot1$。第 $1$ 秒時 $r=3$，$\dfrac{dV}{dt}=36\pi\approx113$ 立方公分／秒。
+
+</Solution>

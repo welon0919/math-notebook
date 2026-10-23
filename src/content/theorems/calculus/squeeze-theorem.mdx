@@ -1,0 +1,84 @@
+---
+subject: calculus
+order: 1
+name: 夾擠定理
+statement: 若在 $a$ 附近（$a$ 本身可以除外）$g(x)\le f(x)\le h(x)$，且 $\displaystyle\lim_{x\to a}g(x)=\lim_{x\to a}h(x)=L$，則 $\displaystyle\lim_{x\to a}f(x)=L$。
+note: 被夾在兩個趨近同一個數的函數中間，自己也只能趨近那個數。
+proofType: sketch
+related: [important-limits, intermediate-value-theorem]
+---
+
+## 白話解釋
+
+想像三個人並排走在一條走廊上：A 走在左邊，B 走在中間，C 走在右邊，B 永遠夾在 A 和 C 之間。走廊盡頭只有一扇門，如果 A 和 C 都一定要從這扇門走出去，那麼夾在他們中間的 B，也只能從同一扇門出去。
+
+對應到定理：$g(x)$ 是 A，$f(x)$ 是 B，$h(x)$ 是 C；$g(x)\le f(x)\le h(x)$ 就是「B 永遠走在 A 和 C 中間」，而 $g$、$h$ 的極限都是 $L$，就是「A 和 C 都走向同一扇門 $L$」。
+
+$f(x)$ 的式子可能很複雜、沒辦法化簡，但只要找到一個比它小的 $g(x)$ 和一個比它大的 $h(x)$，而且 $g$、$h$ 的極限相同，$f$ 的極限就跟著確定了。
+
+條件只要求在 $a$ **附近**成立，$a$ 本身不必：極限本來就不看 $x=a$ 這一點。$x\to\infty$ 時也有同樣的定理，條件改成「$x$ 夠大時 $g(x)\le f(x)\le h(x)$」。
+
+## 展示
+
+$x^2\sin\frac1x$ 在 $x=0$ 附近振盪得越來越快，表格很難看出極限。但 $-1\le\sin\frac1x\le1$，乘上 $x^2\ge0$ 得
+
+$$
+-x^2\le x^2\sin\frac1x\le x^2
+$$
+
+用滑桿縮小 $x$，看三個點怎麼被擠向 $0$：
+
+<Graph name="calculus/squeeze" />
+
+## 使用時機
+
+- 式子裡有**振盪但有界**的部分，例如 $\sin\frac1x$、$\cos x$，而且乘上一個趨近 $0$ 的量。
+- 證明 $\lim\limits_{x\to0}\frac{\sin x}{x}=1$：用面積證出 $\cos x<\frac{\sin x}{x}<1$，兩邊都趨近 $1$（見〈[重要極限](/calculus/formulas/important-limits/)〉）。
+- 不容易直接計算，但容易估計大小的極限。
+
+## 例題
+
+**例題 1**　求 $\lim\limits_{x\to0}x^2\sin\frac1x$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$\sin\frac1x$ 在 $x\to0$ 時沒有極限，所以不能用「極限的乘積等於乘積的極限」。改用夾擠：對所有 $x\neq0$，$-1\le\sin\frac1x\le1$，兩邊乘以正數 $x^2$，
+
+$$
+-x^2\le x^2\sin\frac1x\le x^2.
+$$
+
+$\lim\limits_{x\to0}(-x^2)=0$、$\lim\limits_{x\to0}x^2=0$，由夾擠定理，$\lim\limits_{x\to0}x^2\sin\frac1x=0$。
+
+**驗算**：$x=0.01$ 時 $0.0001\cdot\sin100\approx-0.0000506$，確實在 $-0.0001$ 和 $0.0001$ 之間。
+
+</details>
+
+**例題 2**　求 $\lim\limits_{x\to\infty}\frac{\sin x}{x}$。
+
+<details class="example-solution">
+<summary>看解答</summary>
+
+$x>0$ 時，$-1\le\sin x\le1$，兩邊除以正數 $x$，
+
+$$
+-\frac1x\le\frac{\sin x}{x}\le\frac1x.
+$$
+
+$x\to\infty$ 時 $\pm\frac1x\to0$，由夾擠定理，極限是 $0$。
+
+**驗算**：$x=1000$ 時 $\frac{\sin1000}{1000}\approx0.000827$，在 $\pm0.001$ 之間。
+
+注意這和 $\lim\limits_{x\to0}\frac{\sin x}{x}=1$ 不同：$x\to\infty$ 時分子在 $-1$ 和 $1$ 之間，分母越來越大；$x\to0$ 時分子分母都趨近 $0$。
+
+</details>
+
+## 證明概要
+
+完整證明需要極限的精確定義（$\varepsilon$-$\delta$ 定義），這裡用「任意靠近」的說法說明想法：
+
+1. 任意給一個範圍 $L-\varepsilon<y<L+\varepsilon$，不論 $\varepsilon>0$ 多小。
+2. $g(x)\to L$，所以 $x$ 夠靠近 $a$ 時，$g(x)>L-\varepsilon$；$h(x)\to L$，所以 $x$ 夠靠近 $a$ 時，$h(x)<L+\varepsilon$。取兩個「夠靠近」中比較嚴格的那個，兩件事同時成立。
+3. 這時 $L-\varepsilon<g(x)\le f(x)\le h(x)<L+\varepsilon$，所以 $f(x)$ 也在範圍內。
+4. $\varepsilon$ 可以任意小，這就是 $f(x)$ 可以任意靠近 $L$，也就是 $\lim\limits_{x\to a}f(x)=L$。

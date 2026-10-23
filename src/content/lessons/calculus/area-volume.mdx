@@ -1,0 +1,289 @@
+---
+subject: calculus
+unit: integrals
+order: 18
+title: 積分的應用：面積、體積與弧長
+summary: 求兩曲線之間的面積，用截面積、圓盤法與墊圈法求立體的體積，並求曲線的弧長。
+prerequisites: [substitution, sine-cosine-graphs]
+formulas: [basic-integrals]
+theorems: [fundamental-theorem-of-calculus]
+---
+
+## 學習目標
+
+- 學完這課，你能找出交點，用「上減下」求兩曲線之間的面積。
+- 學完這課，你能用已知截面積、圓盤法與墊圈法求立體和旋轉體的體積。
+- 學完這課，你能用弧長公式求曲線的長度。
+
+## 概念說明
+
+### 切成細條，再加起來
+
+〈[定積分與面積](/calculus/definite-integrals/)〉用細長的長方形逼近曲線底下的面積。同樣的想法可以算很多量：**把要求的量切成很多細小的部分，每一部分用簡單的形狀近似，加起來再取極限，就得到一個定積分**。這一課用它算兩曲線之間的面積、立體的體積，以及曲線的長度。
+
+### 兩曲線之間的面積
+
+設在 $[a,b]$ 上 $f(x)\ge g(x)$，也就是 $y=f(x)$ 在上、$y=g(x)$ 在下。在 $x$ 處切一條寬 $\Delta x$ 的細長條，高是「上減下」$f(x)-g(x)$，面積約 $\big(f(x)-g(x)\big)\Delta x$。全部加起來取極限：
+
+> $$
+> \text{面積}=\int_a^b\big(f(x)-g(x)\big)\,dx
+> $$
+
+$f-g\ge0$，所以這個積分沒有正負抵消的問題。不論兩條曲線在 $x$ 軸上方或下方，高都是 $f(x)-g(x)$。
+
+步驟：
+
+1. 解 $f(x)=g(x)$，找出交點，作為積分的上下限。
+2. 確認哪一條在上（在區間內取一個點代入比較）。
+3. 如果兩條曲線在區間內**交叉**，在交點分段，每一段都用「上減下」。
+
+### 已知截面積求體積
+
+一個立體沿著 $x$ 軸從 $a$ 延伸到 $b$。在 $x$ 處垂直 $x$ 軸切下去，截面的面積是 $A(x)$。把立體切成很多厚度 $\Delta x$ 的薄片，每一片近似一個柱體，體積約 $A(x)\,\Delta x$。加起來取極限：
+
+> $$
+> V=\int_a^bA(x)\,dx
+> $$
+
+這說明了一件直觀的事：兩個立體在每個高度的截面積都相同，體積就相同（**祖暅原理**，西方稱為卡瓦列里原理）。
+
+### 圓盤法
+
+把 $y=f(x)$（$f\ge0$）、$x$ 軸、$x=a$、$x=b$ 圍成的區域繞 $x$ 軸轉一圈，得到**旋轉體**。在 $x$ 處垂直切下去，截面是半徑 $f(x)$ 的圓，面積 $A(x)=\pi f(x)^2$。所以
+
+> $$
+> V=\int_a^b\pi f(x)^2\,dx
+> $$
+
+每一片薄片都是一個薄圓盤，所以稱為**圓盤法**。例如 $y=\sqrt x$ 在 $[0,4]$ 繞 $x$ 軸，截面積 $\pi(\sqrt x)^2=\pi x$，體積
+
+$$
+V=\int_0^4\pi x\,dx=\pi\left[\frac{x^2}{2}\right]_0^4=8\pi
+$$
+
+拖動 $x$，看薄圓盤的大小怎麼變：
+
+<Graph name="calculus/disk-method" />
+
+### 墊圈法
+
+如果旋轉的區域不貼著 $x$ 軸，而是夾在兩條曲線 $y=f(x)$（外）和 $y=g(x)$（內）之間，$f(x)\ge g(x)\ge0$，旋轉後的立體中間是空的。在 $x$ 處切下去，截面是一個**圓環**：外半徑 $f(x)$，內半徑 $g(x)$，像一個墊圈。圓環的面積是大圓減去小圓：
+
+$$
+A(x)=\pi f(x)^2-\pi g(x)^2
+$$
+
+所以
+
+> $$
+> V=\int_a^b\pi\Big(f(x)^2-g(x)^2\Big)\,dx
+> $$
+
+這稱為**墊圈法**。注意是兩個半徑**各自平方再相減**，不是相減後再平方（見常見錯誤 3）。拖動 $x$ 看看 $y=x$ 和 $y=x^2$ 之間的區域旋轉後的墊圈：
+
+<Graph name="calculus/washer-method" />
+
+### 弧長
+
+曲線 $y=f(x)$ 從 $x=a$ 到 $x=b$ 有多長？用同樣的想法：把曲線切成很多小段，每一小段用直線段近似。
+
+在 $x$ 處取一小段，水平方向走 $\Delta x$，垂直方向約走 $\Delta y\approx f'(x)\,\Delta x$（切線的斜率乘上水平距離）。由畢氏定理，這一小段的長度約為
+
+$$
+\begin{aligned}
+&\sqrt{(\Delta x)^2+(\Delta y)^2}\\
+\approx{}&\sqrt{(\Delta x)^2+f'(x)^2(\Delta x)^2}\\
+={}&\sqrt{1+f'(x)^2}\;\Delta x
+\end{aligned}
+$$
+
+全部加起來取極限（$f'$ 在 $[a,b]$ 連續時）：
+
+> $$
+> L=\int_a^b\sqrt{1+f'(x)^2}\,dx
+> $$
+
+**檢查**：直線 $y=2x$ 從 $x=0$ 到 $x=1$，$f'(x)=2$，$L=\int_0^1\sqrt5\,dx=\sqrt5$，正是 $(0,0)$ 到 $(1,2)$ 的距離。
+
+被積函數有根號，大部分的弧長積分算不出來，只能用數值方法近似；課本的例題都是挑選過、剛好能積分的曲線。增加折線的段數，看折線長怎麼逼近曲線長：
+
+<Graph name="calculus/arc-length" />
+
+## 例題
+
+### 例題 1
+
+求直線 $y=x+2$ 和拋物線 $y=x^2$ 圍成的區域面積。
+
+<Solution>
+
+**交點**：$x^2=x+2$，$x^2-x-2=(x-2)(x+1)=0$，$x=-1$ 或 $x=2$。
+
+**誰在上**：取 $x=0$，直線 $y=2$，拋物線 $y=0$，直線在上。
+
+$$
+\begin{aligned}
+\text{面積}&=\int_{-1}^2(x+2-x^2)\,dx\\
+&=\left[\frac{x^2}{2}+2x-\frac{x^3}{3}\right]_{-1}^2\\
+&=\left(2+4-\frac83\right)-\left(\frac12-2+\frac13\right)\\
+&=\frac{10}{3}+\frac76=\frac92
+\end{aligned}
+$$
+
+<Graph name="calculus/area-between" />
+
+</Solution>
+
+### 例題 2
+
+把 $y=x$ 和 $y=x^2$ 在 $0\le x\le1$ 之間的區域繞 $x$ 軸旋轉，求旋轉體的體積。
+
+<Solution>
+
+$0\le x\le1$ 時 $x\ge x^2$，所以外半徑 $f(x)=x$、內半徑 $g(x)=x^2$（上面的互動圖）。由墊圈法
+
+$$
+\begin{aligned}
+V&=\int_0^1\pi\left(x^2-x^4\right)dx\\
+&=\pi\left[\frac{x^3}{3}-\frac{x^5}{5}\right]_0^1\\
+&=\pi\left(\frac13-\frac15\right)=\frac{2\pi}{15}
+\end{aligned}
+$$
+
+驗算：這個立體是「$y=x$ 旋轉成的圓錐」挖掉「$y=x^2$ 旋轉成的立體」。圓錐的體積用圓盤法是 $\int_0^1\pi x^2\,dx=\frac{\pi}{3}$，挖掉的部分是 $\int_0^1\pi x^4\,dx=\frac{\pi}{5}$，相減 $\frac{\pi}{3}-\frac{\pi}{5}=\frac{2\pi}{15}$，相同。
+
+</Solution>
+
+### 例題 3
+
+求曲線 $y=\frac23x^{3/2}$ 從 $x=0$ 到 $x=3$ 的長度。
+
+<Solution>
+
+$f'(x)=\frac23\cdot\frac32x^{1/2}=\sqrt x$，所以 $1+f'(x)^2=1+x$。
+
+$$
+\begin{aligned}
+L&=\int_0^3\sqrt{1+x}\,dx=\left[\frac23(1+x)^{3/2}\right]_0^3\\
+&=\frac23\left(4^{3/2}-1\right)=\frac23(8-1)=\frac{14}{3}
+\end{aligned}
+$$
+
+第一行的積分用〈[變數變換](/calculus/substitution/)〉，令 $u=1+x$。
+
+驗算：兩個端點是 $(0,0)$ 和 $(3,2\sqrt3)$，直線距離 $\sqrt{9+12}=\sqrt{21}\approx4.58$。曲線比連接兩端點的直線長一點，$\frac{14}{3}\approx4.67$，合理。上面的互動圖中，折線長也從下方逼近 $4.67$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：用下減上。**
+
+- 錯誤寫法：例題 1 的面積 $=\displaystyle\int_{-1}^2(x^2-x-2)\,dx=-\frac92$。
+- 為什麼錯：$x^2$ 在下方，$x^2-(x+2)\le0$，積分出來是負的。面積不可能是負數。
+- 正確寫法：上減下，$\displaystyle\int_{-1}^2(x+2-x^2)\,dx=\frac92$。
+
+**錯誤 2：兩曲線交叉時沒有分段。**
+
+- 錯誤寫法：$y=x$ 和 $y=x^3$ 在 $-1\le x\le1$ 之間圍成的面積 $=\displaystyle\int_{-1}^1(x-x^3)\,dx=0$。
+- 為什麼錯：兩條曲線在 $x=0$ 交叉。$0<x<1$ 時 $x>x^3$，但 $-1<x<0$ 時 $x^3>x$（例如 $x=-\frac12$：$-\frac18>-\frac12$），「上減下」在左半邊變成負的，兩邊互相抵消。
+- 正確寫法：分段，每段都用上減下：
+
+  $$
+  \begin{aligned}
+  &\int_{-1}^0(x^3-x)\,dx+\int_0^1(x-x^3)\,dx\\
+  ={}&\frac14+\frac14=\frac12
+  \end{aligned}
+  $$
+
+**錯誤 3：墊圈法把半徑相減後再平方。**
+
+- 錯誤寫法：例題 2 的體積 $=\displaystyle\int_0^1\pi\left(x-x^2\right)^2dx=\frac{\pi}{30}$。
+- 為什麼錯：截面是圓環，面積是「大圓減小圓」$\pi R^2-\pi r^2$，不是半徑差 $R-r$ 為半徑的圓 $\pi(R-r)^2$。例如外半徑 $2$、內半徑 $1$ 的圓環，面積是 $4\pi-\pi=3\pi$，但 $\pi(2-1)^2=\pi$。同樣地，圓盤法也不能漏掉平方：截面積是 $\pi r^2$，不是 $\pi r$。
+- 正確寫法：$\displaystyle\int_0^1\pi\left(x^2-x^4\right)dx=\frac{2\pi}{15}$。
+
+## 練習題
+
+**1.** 求曲線 $y=\sqrt x$ 和 $y=x^2$ 圍成的區域面積。
+
+<Solution answer>
+
+交點：$\sqrt x=x^2$，$x=0$ 或 $x=1$。在 $0<x<1$ 時 $\sqrt x>x^2$（例如 $x=\frac14$：$\frac12>\frac1{16}$）。
+
+$$
+\begin{aligned}
+\int_0^1\left(\sqrt x-x^2\right)dx&=\left[\frac23x^{3/2}-\frac{x^3}{3}\right]_0^1\\
+&=\frac23-\frac13=\frac13
+\end{aligned}
+$$
+
+</Solution>
+
+**2.** 求 $y=\sin x$ 和 $y=\cos x$ 在 $0\le x\le\frac{\pi}{2}$ 之間圍成的總面積。（需要三角〈[正弦與餘弦函數的圖形](/trig/sine-cosine-graphs/)〉）
+
+<Solution answer>
+
+兩條曲線在 $x=\frac{\pi}{4}$ 交叉：之前 $\cos x$ 在上，之後 $\sin x$ 在上。由對稱，兩段面積相同：
+
+$$
+\begin{aligned}
+&2\int_0^{\pi/4}(\cos x-\sin x)\,dx\\
+={}&2\Big[\sin x+\cos x\Big]_0^{\pi/4}\\
+={}&2\left(\sqrt2-1\right)\approx0.828
+\end{aligned}
+$$
+
+</Solution>
+
+**3.** 用圓盤法推導底面半徑 $r$、高 $h$ 的圓錐體積公式。
+
+<Solution answer>
+
+把圓錐橫放，頂點在原點、軸沿著 $x$ 軸。它是直線 $y=\dfrac rhx$（$0\le x\le h$）繞 $x$ 軸旋轉而成：$x=h$ 時半徑是 $r$。
+
+$$
+\begin{aligned}
+V&=\int_0^h\pi\left(\frac rhx\right)^2dx=\frac{\pi r^2}{h^2}\int_0^hx^2\,dx\\
+&=\frac{\pi r^2}{h^2}\cdot\frac{h^3}{3}=\frac13\pi r^2h
+\end{aligned}
+$$
+
+這就是國中學過的「圓錐體積是同底同高圓柱的三分之一」。
+
+</Solution>
+
+**4.** 一個立體的底面是半徑 $2$ 的圓 $x^2+y^2\le4$。垂直 $x$ 軸切下去，每個截面都是正方形。求這個立體的體積。
+
+<Solution answer>
+
+在 $x$ 處，底面圓的弦長 $2\sqrt{4-x^2}$ 就是正方形的邊長，截面積 $A(x)=4(4-x^2)$。
+
+$$
+\begin{aligned}
+V&=\int_{-2}^2(16-4x^2)\,dx\\
+&=\left[16x-\frac{4x^3}{3}\right]_{-2}^2\\
+&=2\left(32-\frac{32}{3}\right)=\frac{128}{3}
+\end{aligned}
+$$
+
+合理性檢查：截面積最大是 $16$（$x=0$），如果每個截面都是 $16$，體積是 $16\times4=64$；實際的截面越往兩端越小，$\frac{128}{3}\approx42.7<64$。
+
+</Solution>
+
+**5.** 求曲線 $y=x^{3/2}$ 從 $x=0$ 到 $x=4$ 的長度。（需要〈[變數變換](/calculus/substitution/)〉）
+
+<Solution answer>
+
+$f'(x)=\frac32x^{1/2}$，$1+f'(x)^2=1+\frac94x$。令 $u=1+\frac94x$，$dx=\frac49du$，$x=0$ 時 $u=1$，$x=4$ 時 $u=10$：
+
+$$
+\begin{aligned}
+L&=\int_0^4\sqrt{1+\tfrac94x}\,dx=\frac49\int_1^{10}u^{1/2}\,du\\
+&=\frac49\cdot\frac23\Big[u^{3/2}\Big]_1^{10}\\
+&=\frac{8}{27}\left(10\sqrt{10}-1\right)\approx9.07
+\end{aligned}
+$$
+
+合理性檢查：兩端點 $(0,0)$、$(4,8)$ 的距離是 $\sqrt{80}\approx8.94$，曲線長一點。
+
+</Solution>

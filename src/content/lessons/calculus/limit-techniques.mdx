@@ -1,0 +1,263 @@
+---
+subject: calculus
+unit: limits-continuity
+order: 2
+title: 極限的計算技巧
+summary: 用極限的運算性質、約分、有理化和夾擠定理求極限，包括 $\lim_{x\to0}\frac{\sin x}{x}=1$。
+prerequisites: [limits, factoring]
+formulas: [important-limits]
+theorems: [squeeze-theorem]
+---
+
+## 學習目標
+
+- 學完這課，你能用極限的四則運算性質直接計算極限。
+- 學完這課，你能在遇到 $\frac00$ 時，用約分或有理化化簡再求極限。
+- 學完這課，你能用 $\lim\limits_{x\to0}\frac{\sin x}{x}=1$ 求含三角函數的極限。
+
+## 概念說明
+
+### 極限的運算性質
+
+上一課用表格估計極限，但表格只能估計。這一課學怎麼把極限**算**出來。基本工具是下面的性質：設 $\lim\limits_{x\to a}f(x)=L$、$\lim\limits_{x\to a}g(x)=M$，則
+
+$$
+\begin{aligned}
+\lim_{x\to a}\big(f(x)\pm g(x)\big)&=L\pm M\\
+\lim_{x\to a}c\,f(x)&=cL\quad(c\text{ 是常數})\\
+\lim_{x\to a}f(x)g(x)&=LM\\
+\lim_{x\to a}\frac{f(x)}{g(x)}&=\frac{L}{M}\quad(M\neq0)
+\end{aligned}
+$$
+
+直觀理由：$f(x)$ 很靠近 $L$、$g(x)$ 很靠近 $M$，兩者相加就很靠近 $L+M$，相乘就很靠近 $LM$。嚴格的證明需要極限的 $\varepsilon$-$\delta$ 定義，本課不證明。
+
+注意除法的條件 $M\neq0$：分母的極限是 $0$ 時，這個性質不能用，要另外處理（下面的約分與有理化）。
+
+### 直接代入
+
+最簡單的兩個極限是 $\lim\limits_{x\to a}c=c$（常數不管 $x$ 怎麼變都不變）和 $\lim\limits_{x\to a}x=a$。多項式是由常數和 $x$ 經過加、減、乘組成的，重複使用運算性質，就得到
+
+> 多項式 $p(x)$ 滿足 $\lim\limits_{x\to a}p(x)=p(a)$；有理函數 $\frac{p(x)}{q(x)}$ 在 $q(a)\neq0$ 時，極限就是 $\frac{p(a)}{q(a)}$。
+
+例如 $\lim\limits_{x\to2}(x^3-2x+1)=8-4+1=5$。根式、$\sin x$、$\cos x$、指數和對數函數在定義域內也可以直接代入（這裡先直觀接受，下下課〈[連續性](/calculus/continuity/)〉會說明這就是「連續」）。
+
+### 遇到 $\frac00$：約分
+
+$\lim\limits_{x\to2}\dfrac{x^2-4}{x-2}$ 直接代入得到 $\dfrac00$，除法性質不能用。$\frac00$ 不是答案，而是「還需要化簡」的訊號。
+
+分子分母都是 $0$，表示兩者都有因式 $x-2$（因式定理）。把它約掉：
+
+$$
+\begin{aligned}
+\frac{x^2-4}{x-2}&=\frac{(x-2)(x+2)}{x-2}\\
+&=x+2\qquad(x\neq2)
+\end{aligned}
+$$
+
+為什麼可以約分？極限只看 $x\neq2$ 的點，而在這些點 $x-2\neq0$，約分是合法的。約分後的 $x+2$ 可以直接代入：
+
+$$
+\lim_{x\to2}\frac{x^2-4}{x-2}=\lim_{x\to2}(x+2)=4
+$$
+
+### 遇到 $\frac00$：有理化
+
+式子含根號時，常常不能直接分解。這時分子分母同乘**共軛式**，用 $(\sqrt A-B)(\sqrt A+B)=A-B^2$ 把根號消掉。例如 $\lim\limits_{x\to4}\dfrac{\sqrt x-2}{x-4}$ 代入是 $\dfrac00$：
+
+$$
+\begin{aligned}
+\frac{\sqrt x-2}{x-4}&=\frac{(\sqrt x-2)(\sqrt x+2)}{(x-4)(\sqrt x+2)}\\
+&=\frac{x-4}{(x-4)(\sqrt x+2)}\\
+&=\frac{1}{\sqrt x+2}\qquad(x\neq4)
+\end{aligned}
+$$
+
+所以極限是 $\dfrac{1}{\sqrt4+2}=\dfrac14$。
+
+### 夾擠與 $\lim\limits_{x\to0}\frac{\sin x}{x}$
+
+有些極限沒辦法化簡，例如 $\dfrac{\sin x}{x}$。這時可以用[夾擠定理](/calculus/theorems/squeeze-theorem/)：如果 $f(x)$ 在 $a$ 附近被夾在 $g(x)$ 和 $h(x)$ 中間，而 $g$、$h$ 的極限都是 $L$，那 $f$ 沒有別的地方可去，極限也是 $L$。
+
+$x$ 以**弧度**為單位、$0<|x|<\frac{\pi}{2}$ 時，用單位圓上三塊面積的大小關係可以證明
+
+$$
+\cos x<\frac{\sin x}{x}<1
+$$
+
+（證明和圖解在〈[重要極限](/calculus/formulas/important-limits/)〉公式頁）。$x\to0$ 時 $\cos x\to1$，左右兩邊都趨近 $1$，由夾擠定理
+
+$$
+\lim_{x\to0}\frac{\sin x}{x}=1
+$$
+
+用它可以求出其他極限。例如
+
+$$
+\frac{\tan x}{x}=\frac{\sin x}{x}\cdot\frac{1}{\cos x}
+$$
+
+兩個因式的極限都是 $1$，所以 $\lim\limits_{x\to0}\dfrac{\tan x}{x}=1$。
+
+## 例題
+
+### 例題 1
+
+求 $\lim\limits_{x\to3}\dfrac{x^2-x-6}{x^2-9}$。
+
+<Solution>
+
+代入 $x=3$：分子 $9-3-6=0$，分母 $9-9=0$，是 $\frac00$。用十字交乘分解分子，平方差分解分母：
+
+$$
+\begin{aligned}
+\frac{x^2-x-6}{x^2-9}&=\frac{(x-3)(x+2)}{(x-3)(x+3)}\\
+&=\frac{x+2}{x+3}\qquad(x\neq3)
+\end{aligned}
+$$
+
+現在分母代入 $3$ 是 $6\neq0$，可以直接代入：
+
+$$
+\lim_{x\to3}\frac{x+2}{x+3}=\frac{5}{6}
+$$
+
+驗算：$x=3.001$ 時原式 $=\dfrac{0.005001}{0.006001}\approx0.83336$，$\dfrac56\approx0.83333$。
+
+</Solution>
+
+### 例題 2
+
+求 $\lim\limits_{x\to0}\dfrac{\sqrt{x+9}-3}{x}$。（上一課例題 1 用表格估計它大約是 $\frac16$。）
+
+<Solution>
+
+代入是 $\frac00$。分子分母同乘共軛式 $\sqrt{x+9}+3$：
+
+$$
+\begin{aligned}
+\frac{\sqrt{x+9}-3}{x}&=\frac{(x+9)-9}{x\left(\sqrt{x+9}+3\right)}\\
+&=\frac{x}{x\left(\sqrt{x+9}+3\right)}\\
+&=\frac{1}{\sqrt{x+9}+3}\qquad(x\neq0)
+\end{aligned}
+$$
+
+分母代入 $0$ 是 $\sqrt9+3=6\neq0$，所以
+
+$$
+\lim_{x\to0}\frac{\sqrt{x+9}-3}{x}=\frac{1}{6}
+$$
+
+和上一課表格的估計 $0.16666\ldots$ 一致。
+
+</Solution>
+
+### 例題 3
+
+求下列極限：
+
+1. $\lim\limits_{x\to0}\dfrac{\sin4x}{2x}$
+2. $\lim\limits_{x\to0}\dfrac{1-\cos x}{x^2}$
+
+<Solution>
+
+1. 要用 $\frac{\sin t}{t}\to1$，分母要湊成和 $\sin$ 裡面一樣的 $4x$：
+
+   $$
+   \frac{\sin4x}{2x}=2\cdot\frac{\sin4x}{4x}
+   $$
+
+   令 $t=4x$，$x\to0$ 時 $t\to0$，所以 $\dfrac{\sin4x}{4x}\to1$，極限是 $2\cdot1=2$。
+
+   驗算：$x=0.001$ 時 $\dfrac{\sin0.004}{0.002}\approx1.999995$。
+
+2. 代入是 $\frac00$。像有理化一樣，分子分母同乘 $1+\cos x$，用 $1-\cos^2x=\sin^2x$：
+
+   $$
+   \begin{aligned}
+   \frac{1-\cos x}{x^2}&=\frac{1-\cos^2x}{x^2(1+\cos x)}\\
+   &=\left(\frac{\sin x}{x}\right)^2\cdot\frac{1}{1+\cos x}
+   \end{aligned}
+   $$
+
+   $x\to0$ 時第一個因式 $\to1^2=1$，第二個 $\to\dfrac{1}{1+1}=\dfrac12$。所以極限是 $\dfrac12$。
+
+   驗算：$x=0.01$ 時 $\dfrac{1-\cos0.01}{0.0001}\approx0.499996$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把 $\frac00$ 當成答案。**
+
+- 錯誤寫法：$\lim\limits_{x\to2}\dfrac{x^2-4}{x-2}=\dfrac00=1$（或 $0$，或「不存在」）。
+- 為什麼錯：$\frac00$ 型的極限可以是任何數。比較三個代入都是 $\frac00$ 的例子：$\dfrac{x^2-4}{x-2}=x+2\to4$；$\dfrac{x-2}{x-2}=1\to1$；$\dfrac{(x-2)^2}{x-2}=x-2\to0$。所以 $\frac00$ 本身不能決定答案，這種形式稱為**不定型**。
+- 正確寫法：先約分成 $x+2$，再代入，極限是 $4$。
+
+**錯誤 2：角度用度數。**
+
+- 錯誤寫法：用度數的 $\sin$ 計算，$\lim\limits_{x\to0}\dfrac{\sin x^\circ}{x}=1$。
+- 為什麼錯：$\cos x<\frac{\sin x}{x}<1$ 是用扇形面積 $\frac12r^2\theta$ 證出來的，這個公式中的角要用弧度。$x^\circ=\frac{\pi x}{180}$ 弧度，例如 $\dfrac{\sin1^\circ}{1}\approx0.017452$，根本不靠近 $1$。
+- 正確寫法：$\dfrac{\sin x^\circ}{x}=\dfrac{\pi}{180}\cdot\dfrac{\sin(\pi x/180)}{\pi x/180}\to\dfrac{\pi}{180}\approx0.017453$。微積分中的三角函數一律用弧度。
+
+**錯誤 3：$\sin$ 裡面和分母不一樣，也當成 $1$。**
+
+- 錯誤寫法：$\lim\limits_{x\to0}\dfrac{\sin3x}{x}=1$。
+- 為什麼錯：$\frac{\sin t}{t}\to1$ 要求分子 $\sin$ 裡面和分母是**同一個**趨近 $0$ 的量。代 $x=0.01$ 檢查：$\dfrac{\sin0.03}{0.01}\approx2.9996$，靠近 $3$ 而不是 $1$。
+- 正確寫法：$\dfrac{\sin3x}{x}=3\cdot\dfrac{\sin3x}{3x}\to3\cdot1=3$。
+
+## 練習題
+
+**1.** 求 $\lim\limits_{x\to2}\dfrac{x^3-8}{x-2}$。（需要代數〈[因式分解](/algebra/factoring/)〉的立方差公式）
+
+<Solution answer>
+
+$x^3-8=(x-2)(x^2+2x+4)$，約分得 $x^2+2x+4$（$x\neq2$），代入 $x=2$：$4+4+4=12$。
+
+</Solution>
+
+**2.** 求 $\lim\limits_{x\to1}\dfrac{\sqrt{x+3}-2}{x-1}$。
+
+<Solution answer>
+
+同乘 $\sqrt{x+3}+2$：$\dfrac{(x+3)-4}{(x-1)\left(\sqrt{x+3}+2\right)}=\dfrac{1}{\sqrt{x+3}+2}$（$x\neq1$），代入得 $\dfrac{1}{2+2}=\dfrac14$。
+
+</Solution>
+
+**3.** 求 (a) $\lim\limits_{x\to0}\dfrac{\sin5x}{2x}$　(b) $\lim\limits_{x\to0}\dfrac{\sin2x}{\sin3x}$。
+
+<Solution answer>
+
+(a) $\dfrac{\sin5x}{2x}=\dfrac52\cdot\dfrac{\sin5x}{5x}\to\dfrac52$。
+
+(b) 分子分母同除以 $x$ 再湊形式：
+
+$$
+\frac{\sin2x}{\sin3x}=\frac{2\cdot\frac{\sin2x}{2x}}{3\cdot\frac{\sin3x}{3x}}\to\frac{2\cdot1}{3\cdot1}=\frac23
+$$
+
+</Solution>
+
+**4.** 用夾擠定理求 $\lim\limits_{x\to0}x\cos\dfrac1x$。
+
+<Solution answer>
+
+$\cos\dfrac1x$ 沒有極限（一直振盪），不能用乘法性質。但不論 $x$ 是多少，$\left|\cos\dfrac1x\right|\le1$，所以
+
+$$
+-|x|\le x\cos\frac1x\le|x|
+$$
+
+$x\to0$ 時 $-|x|\to0$、$|x|\to0$，由夾擠定理，極限是 $0$。
+
+</Solution>
+
+**5.** 一顆球從高處自由落下，$t$ 秒內落下的距離是 $s(t)=5t^2$ 公尺。求從 $t=2$ 到 $t=2+h$ 的平均速度，並求 $h\to0$ 時的極限。這個極限代表什麼？
+
+<Solution answer>
+
+平均速度 $=\dfrac{s(2+h)-s(2)}{h}=\dfrac{5(4+4h+h^2)-20}{h}=\dfrac{20h+5h^2}{h}=20+5h$（$h\neq0$）。
+
+$h\to0$ 時極限是 $20$。時間間隔越短，平均速度越接近 $t=2$ 那一瞬間的速度，所以這個極限是球在第 2 秒的**瞬時速度**，每秒 $20$ 公尺。〈[導數的定義與意義](/calculus/derivatives/)〉會把這個想法推廣成導數。
+
+</Solution>

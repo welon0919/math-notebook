@@ -21,7 +21,9 @@ export default defineConfig({
     '/trig/02-unit-circle-radians': '/trig/unit-circle-radians',
     '/trig/03-solving-triangles': '/trig/solving-triangles',
     '/calculus/01-limits': '/calculus/limits',
-    '/calculus/02-derivatives-extrema': '/calculus/derivatives-extrema',
+    // 導數與極值 was split into 導數的定義與意義 and 極值與單調性; both old URLs go to the first.
+    '/calculus/02-derivatives-extrema': '/calculus/derivatives',
+    '/calculus/derivatives-extrema': '/calculus/derivatives',
     '/calculus/03-integrals': '/calculus/definite-integrals',
     '/linear/01-vectors-dot-product': '/linear/vectors-dot-product',
     '/linear/02-matrix-operations': '/linear/matrix-operations',

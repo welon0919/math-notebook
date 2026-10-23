@@ -1,0 +1,239 @@
+---
+subject: calculus
+unit: series
+order: 20
+title: 無窮級數與斂散性
+summary: 用部分和定義無窮級數的和，認識幾何級數與調和級數，並用直接比較與比值審斂法判斷斂散。
+prerequisites: [limits-at-infinity, sequences-series, binomial-theorem]
+theorems: [series-tests]
+---
+
+## 學習目標
+
+- 學完這課，你能用部分和的極限判斷級數是否收斂。
+- 學完這課，你能用一般項檢驗說明某些級數發散，並說明調和級數為什麼發散。
+- 學完這課，你能用直接比較與比值審斂法判斷級數的斂散。
+
+## 概念說明
+
+### 部分和
+
+〈[數列與級數](/algebra/sequences-series/)〉學過無窮等比級數：$\frac12+\frac14+\frac18+\cdots=1$。無限多個數相加，意思是「加越多項，總和越接近某個數」。一般地，對無窮級數
+
+$$
+\sum_{n=1}^\infty a_n=a_1+a_2+a_3+\cdots
+$$
+
+把前 $n$ 項的和記作 $S_n=a_1+a_2+\cdots+a_n$，稱為**部分和**。
+
+> 若 $\lim\limits_{n\to\infty}S_n=S$ 存在，就說級數**收斂**，和是 $S$，寫成 $\sum\limits_{n=1}^\infty a_n=S$。若極限不存在，就說級數**發散**。
+
+注意有兩個數列：一般項 $a_n$，和部分和 $S_n$。級數的斂散看的是 $S_n$。切換下面三個級數，看部分和是不是趨近一條水平線：
+
+<Graph name="calculus/partial-sums" />
+
+### 等比級數
+
+〈[數列與級數](/algebra/sequences-series/)〉的結果：首項 $a\neq0$、公比 $r$ 的等比級數，$|r|<1$ 時收斂，和是 $\dfrac{a}{1-r}$；$|r|\ge1$ 時發散。它是判斷其他級數最重要的比較對象。
+
+### 一般項檢驗
+
+如果級數收斂，$S_n\to S$，也 $S_{n-1}\to S$，所以 $a_n=S_n-S_{n-1}\to S-S=0$。反過來說：
+
+> **一般項檢驗**：若 $a_n$ 不趨近 $0$，則 $\sum a_n$ 發散。
+
+這個檢驗只能證明**發散**。$a_n\to0$ 時，級數可能收斂，也可能發散。
+
+### 調和級數發散
+
+**調和級數** $\sum\limits_{n=1}^\infty\dfrac1n=1+\dfrac12+\dfrac13+\cdots$ 的每一項都趨近 $0$，但它發散。從第三項開始，每 $2$ 項、$4$ 項、$8$ 項……分成一組：
+
+$$
+1+\frac12+\underbrace{\frac13+\frac14}_{>\frac14+\frac14=\frac12}+\underbrace{\frac15+\frac16+\frac17+\frac18}_{>4\times\frac18=\frac12}+\cdots
+$$
+
+每一組裡的每一項都至少是那一組的最後一項，所以每組的和都大於 $\frac12$。加到第 $2^k$ 項時，$S_{2^k}>1+\frac k2$，$k$ 越大越沒有上限。所以調和級數發散。
+
+它發散得非常慢：上圖中 $S_{30}$ 還不到 $4$，要加到大約一萬多項，部分和才會超過 $10$。
+
+### 直接比較
+
+各項都是正數時，部分和 $S_n$ 一直增加。一直增加的數列只有兩種可能：沒有上限，或者有一個上限、越來越貼近某個數（這是實數的基本性質，稱為**單調收斂定理**）。所以只要找到一個上限，級數就收斂。
+
+上限可以從另一個已知收斂的級數得到：
+
+> **直接比較**：設 $0\le a_n\le b_n$（至少從某一項以後）。
+>
+> - 若 $\sum b_n$ 收斂，則 $\sum a_n$ 收斂：比收斂的小，就收斂。
+> - 若 $\sum a_n$ 發散，則 $\sum b_n$ 發散：比發散的大，就發散。
+
+理由：$\sum a_n$ 的每個部分和都不超過 $\sum b_n$ 的部分和，而後者不超過它的和，所以 $\sum a_n$ 的部分和有上限。第二點是同一件事反過來說。
+
+**注意方向**：比收斂的級數**大**、或比發散的級數**小**，都**不能**下結論。例如 $\frac{1}{n^2}\le1$，而 $\sum1$ 發散，但這不能說明 $\sum\frac1{n^2}$ 發散。
+
+比較的對象通常是等比級數、調和級數，或例題 1 那種能算出和的級數。例如 $n\ge2$ 時 $n^2\ge n(n-1)$，所以
+
+$$
+0<\frac{1}{n^2}\le\frac{1}{n(n-1)}
+$$
+
+而 $\sum\limits_{n=2}^\infty\frac{1}{n(n-1)}$ 和例題 1 一樣，部分和會互相消掉，收斂（和是 $1$）。由直接比較，$\sum\frac{1}{n^2}$ 收斂，這解釋了上面的圖。
+
+### 比值審斂法
+
+等比級數相鄰兩項的比固定是 $r$。很多級數的比雖然不固定，但 $n$ 很大時趨近一個數，這時它的表現就像公比是那個數的等比級數：
+
+> **比值審斂法**：設 $\lim\limits_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|=L$。
+>
+> - $L<1$：級數收斂。
+> - $L>1$（或 $\infty$）：級數發散。
+> - $L=1$：**無法判斷**。
+
+直觀理由：$L<1$ 時，取一個 $r$ 介於 $L$ 和 $1$ 之間，$n$ 夠大後每一項都不超過前一項的 $r$ 倍，整個級數被一個收斂的等比級數壓住；$L>1$ 時，各項越來越大，不趨近 $0$。
+
+$L=1$ 時真的無法判斷：調和級數的 $\dfrac{n}{n+1}\to1$，發散；$\sum\dfrac{1}{n^2}$ 的 $\dfrac{n^2}{(n+1)^2}\to1$，卻收斂（上一節的直接比較）。
+
+比值審斂法特別適合含 $n!$（〈[二項式定理](/algebra/binomial-theorem/)〉）或 $r^n$ 的級數，因為相除後大部分會約掉。
+
+### 其他審斂法
+
+除了這一課的方法，還有 $p$ 級數、極限比較、積分審斂法、根值審斂法、交錯級數審斂法等，以及交錯級數「誤差不超過下一項」的估計，整理在〈[級數審斂法](/calculus/theorems/series-tests/)〉定理頁。
+
+## 例題
+
+### 例題 1
+
+求 $\displaystyle\sum_{k=1}^\infty\frac{1}{k(k+1)}$。
+
+<Solution>
+
+先拆成兩個分式：$\dfrac{1}{k(k+1)}=\dfrac1k-\dfrac{1}{k+1}$（通分驗算：$\frac{(k+1)-k}{k(k+1)}$）。部分和中，中間的項一正一負全部消掉：
+
+$$
+\begin{aligned}
+S_n={}&\left(1-\frac12\right)+\left(\frac12-\frac13\right)\\
+&+\cdots+\left(\frac1n-\frac1{n+1}\right)\\
+={}&1-\frac{1}{n+1}
+\end{aligned}
+$$
+
+$n\to\infty$ 時 $\frac{1}{n+1}\to0$，所以級數收斂，和是 $1$。
+
+驗算：$S_1=\frac12$，$S_2=\frac12+\frac16=\frac23$，$S_3=\frac23+\frac1{12}=\frac34$，都符合 $1-\frac{1}{n+1}$。
+
+</Solution>
+
+### 例題 2
+
+判斷下列級數是否收斂：(a) $\displaystyle\sum_{n=1}^\infty\frac{n}{n+1}$　(b) $\displaystyle\sum_{n=1}^\infty\frac{1}{2^n+n}$　(c) $\displaystyle\sum_{n=1}^\infty\frac{1}{\sqrt n}$
+
+<Solution>
+
+(a) $a_n=\dfrac{n}{n+1}\to1\neq0$。由一般項檢驗，發散。每一項都接近 $1$，加無限多個接近 $1$ 的數，總和沒有上限。
+
+(b) 分母比 $2^n$ 大，所以 $0<\dfrac{1}{2^n+n}<\dfrac{1}{2^n}$。$\sum\left(\frac12\right)^n$ 是公比 $\frac12$ 的等比級數，收斂。比收斂的小，由直接比較，收斂。
+
+(c) $a_n=\frac{1}{\sqrt n}\to0$，一般項檢驗無法判斷。$n\ge1$ 時 $\sqrt n\le n$，所以 $\dfrac{1}{\sqrt n}\ge\dfrac1n$。調和級數發散，比發散的大，由直接比較，發散。
+
+注意 (b) 和 (c) 的比較方向：(b) 要找一個**比它大**而且收斂的級數，(c) 要找一個**比它小**而且發散的級數。
+
+</Solution>
+
+### 例題 3
+
+用比值審斂法判斷：(a) $\displaystyle\sum_{n=1}^\infty\frac{n}{2^n}$　(b) $\displaystyle\sum_{n=1}^\infty\frac{2^n}{n!}$　(c) $\displaystyle\sum_{n=1}^\infty\frac{n!}{10^n}$
+
+<Solution>
+
+(a) $\dfrac{a_{n+1}}{a_n}=\dfrac{n+1}{2^{n+1}}\cdot\dfrac{2^n}{n}=\dfrac{n+1}{2n}\to\dfrac12<1$，收斂。
+
+(b) $(n+1)!=(n+1)\cdot n!$，所以
+
+$$
+\frac{a_{n+1}}{a_n}=\frac{2^{n+1}}{(n+1)!}\cdot\frac{n!}{2^n}=\frac{2}{n+1}\to0<1
+$$
+
+收斂。
+
+(c) $\dfrac{a_{n+1}}{a_n}=\dfrac{(n+1)!}{10^{n+1}}\cdot\dfrac{10^n}{n!}=\dfrac{n+1}{10}\to\infty$，發散。前幾項會變小（$\frac{1}{10},\frac{2}{100},\frac{6}{1000},\dots$），但 $n>9$ 之後每一項都比前一項大，$n!$ 終究比 $10^n$ 長得快。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：以為一般項趨近 $0$ 就收斂。**
+
+- 錯誤寫法：$\dfrac1n\to0$，所以 $\sum\dfrac1n$ 收斂。
+- 為什麼錯：一般項檢驗只能證明發散，不能證明收斂。調和級數的每一項都趨近 $0$，但分組後看出部分和沒有上限。
+- 正確寫法：$a_n\to0$ 只是收斂的必要條件，還要用其他方法判斷。$\sum\frac1n$ 發散。
+
+**錯誤 2：把一般項的極限當成級數的和。**
+
+- 錯誤寫法：$\left(\frac12\right)^n\to0$，所以 $\sum\limits_{n=1}^\infty\left(\frac12\right)^n=0$。
+- 為什麼錯：$0$ 是一般項的極限。級數的和是部分和的極限：$S_1=\frac12$，$S_2=\frac34$，$S_3=\frac78$……趨近 $1$。各項都是正的，和不可能是 $0$。
+- 正確寫法：$\sum\limits_{n=1}^\infty\left(\frac12\right)^n=\dfrac{1/2}{1-1/2}=1$。
+
+**錯誤 3：比值審斂法 $L=1$ 時下結論。**
+
+- 錯誤寫法：$\sum\dfrac{1}{n^2}$ 的 $\dfrac{a_{n+1}}{a_n}\to1$，所以發散（或所以收斂）。
+- 為什麼錯：$L=1$ 時比值審斂法無法判斷。調和級數的 $L$ 也是 $1$，但一個發散、一個收斂。
+- 正確寫法：換別的方法。$\sum\frac1{n^2}$ 是 $p=2$ 的 $p$ 級數，收斂（〈[級數審斂法](/calculus/theorems/series-tests/)〉）。
+
+## 練習題
+
+**1.** 求 $\displaystyle\sum_{n=0}^\infty\left(\frac23\right)^n$。
+
+<Solution answer>
+
+首項 $1$（$n=0$）、公比 $\frac23$，$|r|<1$，收斂，和 $\dfrac{1}{1-2/3}=3$。
+
+</Solution>
+
+**2.** 求 $\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+2)}$。
+
+<Solution answer>
+
+$\dfrac{1}{n(n+2)}=\dfrac12\left(\dfrac1n-\dfrac{1}{n+2}\right)$。相隔兩項的會互相消掉，只剩前兩個正項和最後兩個負項：
+
+$$
+\begin{aligned}
+S_n&=\frac12\left(1+\frac12-\frac{1}{n+1}-\frac{1}{n+2}\right)\\
+&\to\frac12\cdot\frac32=\frac34
+\end{aligned}
+$$
+
+</Solution>
+
+**3.** 判斷 $\displaystyle\sum_{n=1}^\infty\frac{n^2+1}{2n^2}$ 是否收斂。（需要〈[無窮遠處的極限與漸近線](/calculus/limits-at-infinity/)〉）
+
+<Solution answer>
+
+同除以 $n^2$：$a_n=\dfrac{1+1/n^2}{2}\to\dfrac12\neq0$。由一般項檢驗，發散。
+
+</Solution>
+
+**4.** 判斷 $\displaystyle\sum_{n=1}^\infty\frac{n^2}{3^n}$ 是否收斂。
+
+<Solution answer>
+
+$\dfrac{a_{n+1}}{a_n}=\dfrac{(n+1)^2}{3n^2}=\dfrac13\left(1+\dfrac1n\right)^2\to\dfrac13<1$，收斂。
+
+</Solution>
+
+**5.** 判斷 $\displaystyle\sum_{n=1}^\infty\frac{3^n}{n^2}$ 是否收斂。
+
+<Solution answer>
+
+$\dfrac{a_{n+1}}{a_n}=\dfrac{3n^2}{(n+1)^2}\to3>1$，發散。（也可以用一般項檢驗：$\frac{3^n}{n^2}\to\infty$。）
+
+</Solution>
+
+**6.** 用直接比較判斷 (a) $\displaystyle\sum_{n=1}^\infty\frac{1}{3^n+1}$　(b) $\displaystyle\sum_{n=3}^\infty\frac{\ln n}{n}$ 是否收斂。
+
+<Solution answer>
+
+(a) $0<\dfrac{1}{3^n+1}<\dfrac{1}{3^n}$，$\sum\left(\frac13\right)^n$ 收斂，所以收斂。
+
+(b) $n\ge3$ 時 $\ln n\ge\ln3>1$，所以 $\dfrac{\ln n}{n}>\dfrac1n$。調和級數（從 $n=3$ 開始也一樣）發散，所以發散。
+
+</Solution>

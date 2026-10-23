@@ -1,52 +1,245 @@
 ---
 subject: calculus
 unit: integrals
-order: 17
-title: 積分
-summary: 用長方形逼近曲線下的面積得到定積分，再用微積分基本定理以反導數計算。
-prerequisites: [derivatives-extrema]
-formulas: [basic-integrals]
+order: 15
+title: 定積分與面積
+summary: 用長方形逼近曲線下的面積得到定積分，再用微積分基本定理以反導函數計算。
+prerequisites: [antiderivatives, sequences-series]
+formulas: [basic-integrals, sum-of-powers]
 theorems: [fundamental-theorem-of-calculus]
-example: 求 $y=x^2$ 與 $x$ 軸在 $0\le x\le 3$ 之間所圍的面積。
-solution: 面積 $=\displaystyle\int_0^3 x^2\,dx=\left[\frac{x^3}{3}\right]_0^3=\frac{27}{3}-0=9$。
 ---
 
-## 定積分：面積
+## 學習目標
 
-把區間 $[a,b]$ 切成 $n$ 段，每段寬 $\Delta x$，用長方形面積 $f(x_i)\Delta x$ 近似，再讓 $n\to\infty$：
+- 學完這課，你能用黎曼和說明定積分是長方形面積和的極限。
+- 學完這課，你能用微積分基本定理計算定積分。
+- 學完這課，你能說明在 $x$ 軸下方的部分為什麼是負的，並求圖形與 $x$ 軸圍成的總面積。
 
-$$
-\int_a^b f(x)\,dx=\lim_{n\to\infty}\sum_{i=1}^{n}f(x_i)\,\Delta x
-$$
+## 概念說明
 
-這就是曲線下方的（有號）面積：在 $x$ 軸下方的部分算負的。以下面例題的 $\displaystyle\int_0^3 x^2\,dx$ 為例，增加長方形的數量，看總和怎麼逼近 $9$：
+### 面積問題
+
+長方形、三角形的面積有公式，但曲線 $y=x^2$ 和 $x$ 軸在 $0\le x\le3$ 之間圍成的區域，邊界是彎的，沒有現成的公式。
+
+想法是用很多細長的長方形去逼近：
+
+1. 把區間 $[a,b]$ 切成 $n$ 段，每段寬 $\Delta x=\dfrac{b-a}{n}$，分點是 $x_i=a+i\,\Delta x$。
+2. 第 $i$ 段用高 $f(x_i)$ 的長方形近似，面積 $f(x_i)\,\Delta x$。
+3. 全部加起來：$\displaystyle\sum_{i=1}^nf(x_i)\,\Delta x$，稱為**黎曼和**。
+
+長方形越多、越細，黎曼和越接近真正的面積。用滑桿增加 $n$ 看看：
 
 <Graph name="calculus/riemann-sum" />
 
-## 不定積分：反導數
+### 定積分
 
-若 $F'(x)=f(x)$，就稱 $F$ 是 $f$ 的反導數，記作
+> 讓 $n\to\infty$，黎曼和的極限稱為 $f$ 從 $a$ 到 $b$ 的**定積分**：
+>
+> $$
+> \int_a^bf(x)\,dx=\lim_{n\to\infty}\sum_{i=1}^nf(x_i)\,\Delta x
+> $$
 
-$$
-\int f(x)\,dx=F(x)+C
-$$
+記號的來源：$\sum$ 變成拉長的 S，也就是 $\int$；$\Delta x$ 變成 $dx$；$a$、$b$ 稱為積分的**下限**和**上限**。$f$ 在 $[a,b]$ 連續時，這個極限一定存在（證明屬於高等微積分），而且長方形的高取每一段的左端點、右端點或任何一點，極限都一樣。
 
-例如 $\displaystyle\int x^n\,dx=\frac{x^{n+1}}{n+1}+C$（$n\neq -1$）。
+### 有號面積
 
-## 微積分基本定理
-
-定積分可以用反導數來算：
-
-$$
-\int_a^b f(x)\,dx=F(b)-F(a)
-$$
-
-原本需要無限多個長方形相加的問題，變成只要找到反導數再代兩個值相減。
-
-## 換元積分
-
-連鎖律反過來用。例如令 $u=x^2+1$，$du=2x\,dx$：
+黎曼和裡的 $f(x_i)$ 可以是負的。$f$ 在 $x$ 軸下方的那幾段，長方形的「面積」$f(x_i)\Delta x$ 是負的。所以定積分是**有號面積**：
 
 $$
-\int 2x\,(x^2+1)^3\,dx=\int u^3\,du=\frac{u^4}{4}+C=\frac{(x^2+1)^4}{4}+C
+\begin{aligned}
+\int_a^bf(x)\,dx={}&(x\text{ 軸上方的面積})\\
+&-(x\text{ 軸下方的面積})
+\end{aligned}
 $$
+
+要求圖形和 $x$ 軸圍成的**總面積**，要先找出 $f$ 變號的點，把區間分段，下方那幾段取絕對值再相加（見例題 3）。
+
+定積分的基本性質，都可以從黎曼和看出來：
+
+- $\displaystyle\int_a^bcf(x)\,dx=c\int_a^bf(x)\,dx$，$\displaystyle\int_a^b\big(f(x)\pm g(x)\big)dx=\int_a^bf(x)\,dx\pm\int_a^bg(x)\,dx$。
+- 區間可以拆開：$\displaystyle\int_a^bf(x)\,dx+\int_b^cf(x)\,dx=\int_a^cf(x)\,dx$。
+- 規定 $\displaystyle\int_a^af(x)\,dx=0$，$\displaystyle\int_b^af(x)\,dx=-\int_a^bf(x)\,dx$。
+
+### 微積分基本定理
+
+用定義算定積分要先求和、再取極限，很麻煩（例題 1）。微積分基本定理把它變成代兩個值相減：
+
+> **[微積分基本定理](/calculus/theorems/fundamental-theorem-of-calculus/)**：若 $f$ 在 $[a,b]$ 連續，$F$ 是 $f$ 的一個反導函數，則
+>
+> $$
+> \int_a^bf(x)\,dx=F(b)-F(a)
+> $$
+
+$F(b)-F(a)$ 常寫成 $\big[F(x)\big]_a^b$。不管用哪一個反導函數，$F+C$ 的 $C$ 在相減時都會消掉，所以不必寫 $C$。
+
+**直觀理由**：$F$ 的變化率是 $f$。把 $[a,b]$ 切成很多小段，在第 $i$ 小段上，$F$ 的變化量約等於「變化率 × 時間」：
+
+$$
+\begin{aligned}
+F(x_i)-F(x_{i-1})&\approx F'(x_i)\,\Delta x\\
+&=f(x_i)\,\Delta x
+\end{aligned}
+$$
+
+把所有小段加起來，左邊中間的項一正一負全部消掉，只剩 $F(b)-F(a)$；右邊是黎曼和。$n\to\infty$ 時右邊趨近定積分，近似也越來越準，所以兩者相等。例如 $f$ 是速度、$F$ 是位置時，這說的是：**速度對時間的定積分等於位移**。
+
+嚴格的證明和逐步的圖解在定理頁。
+
+## 例題
+
+### 例題 1
+
+求 $y=x^2$ 和 $x$ 軸在 $0\le x\le3$ 之間圍成的面積：先用黎曼和的極限計算，再用微積分基本定理驗算。
+
+<Solution>
+
+**用定義**：$\Delta x=\frac3n$，右端點 $x_i=\frac{3i}{n}$，$f(x_i)=\frac{9i^2}{n^2}$。
+
+$$
+\sum_{i=1}^nf(x_i)\,\Delta x=\sum_{i=1}^n\frac{9i^2}{n^2}\cdot\frac3n=\frac{27}{n^3}\sum_{i=1}^ni^2
+$$
+
+由〈[數列與級數](/algebra/sequences-series/)〉的平方和公式 $\sum\limits_{i=1}^ni^2=\dfrac{n(n+1)(2n+1)}{6}$：
+
+$$
+\begin{aligned}
+&\frac{27}{n^3}\cdot\frac{n(n+1)(2n+1)}{6}\\
+={}&\frac92\cdot\frac{n+1}{n}\cdot\frac{2n+1}{n}\\
+={}&\frac92\left(1+\frac1n\right)\left(2+\frac1n\right)
+\end{aligned}
+$$
+
+$n\to\infty$ 時 $\frac1n\to0$，極限是 $\frac92\cdot1\cdot2=9$。
+
+**用基本定理**：$\frac{x^3}{3}$ 是 $x^2$ 的反導函數，
+
+$$
+\int_0^3x^2\,dx=\left[\frac{x^3}{3}\right]_0^3=\frac{27}{3}-0=9
+$$
+
+兩種方法都是 $9$。例如 $n=6$ 時黎曼和是 $\frac92\cdot\frac76\cdot\frac{13}{6}\approx11.4$，比 $9$ 大，因為右端點的長方形都比曲線高一點。
+
+</Solution>
+
+### 例題 2
+
+求 (a) $\displaystyle\int_1^2(3x^2-2x+1)\,dx$　(b) $\displaystyle\int_0^{\pi/2}\cos x\,dx$
+
+<Solution>
+
+(a) 反導函數 $x^3-x^2+x$：
+
+$$
+\begin{aligned}
+&\big[x^3-x^2+x\big]_1^2\\
+={}&(8-4+2)-(1-1+1)\\
+={}&6-1=5
+\end{aligned}
+$$
+
+(b) 反導函數 $\sin x$：
+
+$$
+\big[\sin x\big]_0^{\pi/2}=\sin\frac{\pi}{2}-\sin0=1
+$$
+
+$\cos x$ 在 $\left[0,\frac{\pi}{2}\right]$ 不是負的，所以 $1$ 就是這一拱曲線底下的面積。
+
+</Solution>
+
+### 例題 3
+
+一個物體沿直線運動，$t$ 秒時的速度是 $v(t)=t^2-4t+3$ 公尺／秒。求 $0\le t\le3$ 這段時間的位移和走過的路程。
+
+<Solution>
+
+**位移**是速度的定積分：
+
+$$
+\begin{aligned}
+\int_0^3(t^2-4t+3)\,dt&=\left[\frac{t^3}{3}-2t^2+3t\right]_0^3\\
+&=(9-18+9)-0=0
+\end{aligned}
+$$
+
+物體最後回到出發點。
+
+**路程**要看速度的正負號。$v(t)=(t-1)(t-3)$，在 $0<t<1$ 時是正的（往前走），在 $1<t<3$ 時是負的（往回走）。分段計算，令 $F(t)=\frac{t^3}{3}-2t^2+3t$，$F(0)=0$、$F(1)=\frac13-2+3=\frac43$、$F(3)=0$：
+
+$$
+\begin{aligned}
+\int_0^1v\,dt&=F(1)-F(0)=\frac43\\
+\int_1^3v\,dt&=F(3)-F(1)=-\frac43
+\end{aligned}
+$$
+
+往前走 $\frac43$ 公尺，再往回走 $\frac43$ 公尺，路程是 $\frac43+\frac43=\frac83$ 公尺。
+
+<Graph name="calculus/velocity-area" />
+
+位移是有號面積（兩塊抵消），路程是總面積（兩塊都算正的）。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：把定積分當成總面積。**
+
+- 錯誤寫法：例題 3 中，曲線和 $t$ 軸在 $0\le t\le3$ 圍成的面積是 $\displaystyle\int_0^3v\,dt=0$。
+- 為什麼錯：圖上明明有兩塊區域，面積不可能是 $0$。定積分把 $t$ 軸下方的部分算成負的，兩塊剛好抵消。
+- 正確寫法：在變號的地方分段，下方的部分取絕對值：總面積 $\frac43+\left|-\frac43\right|=\frac83$。
+
+**錯誤 2：忘了減去下限的值。**
+
+- 錯誤寫法：$\displaystyle\int_1^2(3x^2-2x+1)\,dx=\big[x^3-x^2+x\big]_1^2=6$。
+- 為什麼錯：只代了上限。$F(1)=1$ 不是 $0$，不能省略。只有下限是 $0$、而且 $F(0)=0$ 時，減去的部分才剛好是 $0$。
+- 正確寫法：$F(2)-F(1)=6-1=5$。
+
+**錯誤 3：被積函數不連續時也直接用基本定理。**
+
+- 錯誤寫法：$\displaystyle\int_0^2\frac{1}{(x-1)^2}\,dx=\left[-\frac{1}{x-1}\right]_0^2=-1-1=-2$。
+- 為什麼錯：$\frac{1}{(x-1)^2}$ 處處是正的，積分不可能是負的。問題在 $x=1$：函數在那裡沒有定義，而且趨近 $\infty$，基本定理要求 $f$ 在整個 $[a,b]$ 連續，條件不成立。
+- 正確寫法：先確認被積函數在區間上連續。這種被積函數趨近無限大的積分稱為「瑕積分」，要用極限處理，這個積分其實發散（見〈[瑕積分](/calculus/improper-integrals/)〉例題 2）。
+
+## 練習題
+
+**1.** 求 $\displaystyle\int_0^1(x^3+e^x)\,dx$。
+
+<Solution answer>
+
+$\left[\dfrac{x^4}{4}+e^x\right]_0^1=\left(\dfrac14+e\right)-(0+1)=e-\dfrac34\approx1.968$。
+
+</Solution>
+
+**2.** 求 $\displaystyle\int_{-1}^1x^3\,dx$，以及 $y=x^3$ 和 $x$ 軸在 $-1\le x\le1$ 之間圍成的總面積。
+
+<Solution answer>
+
+$\left[\dfrac{x^4}{4}\right]_{-1}^1=\dfrac14-\dfrac14=0$。$x^3$ 在 $[-1,0]$ 是負的，總面積 $=\left|\displaystyle\int_{-1}^0x^3\,dx\right|+\int_0^1x^3\,dx=\dfrac14+\dfrac14=\dfrac12$。
+
+</Solution>
+
+**3.** 用 $n=4$、取右端點的黎曼和估計 $\displaystyle\int_0^2x^2\,dx$，再和精確值比較。（需要代數〈[數列與級數](/algebra/sequences-series/)〉的 $\Sigma$ 記號）
+
+<Solution answer>
+
+$\Delta x=0.5$，右端點 $0.5,1,1.5,2$：
+
+$$
+\begin{aligned}
+&0.5\times(0.25+1+2.25+4)\\
+={}&0.5\times7.5=3.75
+\end{aligned}
+$$
+
+精確值 $\left[\frac{x^3}{3}\right]_0^2=\frac83\approx2.667$。估計值偏大，因為 $x^2$ 在 $[0,2]$ 遞增，右端點是每一段的最高點，長方形都比曲線高。
+
+</Solution>
+
+**4.** 求 $\dfrac{d}{dx}\displaystyle\int_0^x\sqrt{1+t^2}\,dt$。
+
+<Solution answer>
+
+由微積分基本定理的第二部分（定理頁）：若 $f$ 連續，$\frac{d}{dx}\int_a^xf(t)\,dt=f(x)$。所以答案是 $\sqrt{1+x^2}$。不必（也很難）先求出 $\sqrt{1+t^2}$ 的反導函數。
+
+</Solution>

@@ -1,0 +1,224 @@
+---
+subject: calculus
+unit: derivative-applications
+order: 13
+title: 羅必達法則
+summary: 遇到 $\frac00$ 或 $\frac\infty\infty$ 時，用分子分母各自的導數求極限。
+prerequisites: [transcendental-derivatives, limits-at-infinity]
+formulas: [important-limits]
+theorems: [lhopitals-rule]
+---
+
+## 學習目標
+
+- 學完這課，你能確認極限是 $\frac00$ 或 $\frac\infty\infty$ 型，才使用羅必達法則。
+- 學完這課，你能在必要時重複使用羅必達法則。
+- 學完這課，你能把 $0\cdot\infty$、$\infty-\infty$、$1^\infty$ 等型改寫成可以使用的形式。
+
+## 概念說明
+
+### 為什麼需要新方法
+
+〈[極限的計算技巧](/calculus/limit-techniques/)〉遇到 $\frac00$ 時，用約分或有理化化簡。但像
+
+$$
+\lim_{x\to0}\frac{e^{2x}-1}{\sin x}
+$$
+
+分子和分母都不是多項式，沒有共同的因式可以約，也沒有根號可以有理化。
+
+### 直觀想法：靠近 $a$ 時只剩斜率
+
+設 $f(a)=g(a)=0$。在 $a$ 附近，曲線和自己的切線貼得很近（〈[導數的定義與意義](/calculus/derivatives/)〉）：
+
+$$
+\begin{gathered}
+f(x)\approx f'(a)(x-a)\\
+g(x)\approx g'(a)(x-a)
+\end{gathered}
+$$
+
+兩者相除，$(x-a)$ 約掉，剩下斜率的比：
+
+$$
+\frac{f(x)}{g(x)}\approx\frac{f'(a)}{g'(a)}
+$$
+
+$x$ 越靠近 $a$，近似越準確。用滑桿縮小 $h$ 看看：
+
+<Graph name="calculus/lhopital-zoom" />
+
+### 羅必達法則
+
+> **[羅必達法則](/calculus/theorems/lhopitals-rule/)**：若 $\lim\limits_{x\to a}\dfrac{f(x)}{g(x)}$ 是 $\dfrac00$ 型或 $\dfrac\infty\infty$ 型，而且 $\lim\limits_{x\to a}\dfrac{f'(x)}{g'(x)}$ 存在（或是 $\pm\infty$），則
+>
+> $$
+> \lim_{x\to a}\frac{f(x)}{g(x)}=\lim_{x\to a}\frac{f'(x)}{g'(x)}
+> $$
+>
+> $x\to a^\pm$、$x\to\pm\infty$ 時也成立。
+
+上面的直觀想法只說明了 $f'(a)$、$g'(a)$ 存在而且 $g'(a)\neq0$ 的情形。法則對更一般的情形也成立，證明要用到均值定理的推廣（柯西均值定理），寫在定理頁。
+
+使用時要注意三件事：
+
+1. **先確認型態**。只有 $\frac00$ 或 $\frac\infty\infty$ 才能用，其他情形用了會算錯（見常見錯誤 1）。
+2. **分子、分母各自微分**，不是用除法法則微分整個分式。
+3. 微分後還是 $\frac00$ 或 $\frac\infty\infty$，可以**再用一次**；每次都要重新確認型態。
+
+### 其他不定型
+
+$0\cdot\infty$、$\infty-\infty$、$1^\infty$、$0^0$、$\infty^0$ 也都是不定型（〈[無窮遠處的極限與漸近線](/calculus/limits-at-infinity/)〉看過 $1^\infty$ 和 $\infty-\infty$），答案要看兩邊誰「贏」。先改寫成 $\frac00$ 或 $\frac\infty\infty$：
+
+- **$0\cdot\infty$**：把其中一個因式移到分母。例如 $x\ln x=\dfrac{\ln x}{1/x}$，$x\to0^+$ 時是 $\frac{-\infty}{\infty}$ 型。
+- **$\infty-\infty$**：通分，合成一個分式。
+- **$1^\infty$、$0^0$、$\infty^0$**：設 $y$ 是原式，先求 $\ln y$ 的極限（指數變成乘法），得到 $\ln y\to L$ 之後，原式 $y=e^{\ln y}\to e^L$。
+
+## 例題
+
+### 例題 1
+
+求 (a) $\lim\limits_{x\to0}\dfrac{e^{2x}-1}{\sin x}$　(b) $\lim\limits_{x\to0}\dfrac{x-\sin x}{x^3}$
+
+<Solution>
+
+(a) $x=0$ 時分子 $e^0-1=0$，分母 $\sin0=0$，是 $\frac00$ 型。分子、分母各自微分：
+
+$$
+\lim_{x\to0}\frac{e^{2x}-1}{\sin x}=\lim_{x\to0}\frac{2e^{2x}}{\cos x}=\frac{2}{1}=2
+$$
+
+和上面的圖一致。
+
+(b) $\frac00$ 型。每一步都先確認還是 $\frac00$，再微分：
+
+$$
+\begin{aligned}
+\lim_{x\to0}\frac{x-\sin x}{x^3}&=\lim_{x\to0}\frac{1-\cos x}{3x^2}\\
+&=\lim_{x\to0}\frac{\sin x}{6x}\\
+&=\lim_{x\to0}\frac{\cos x}{6}=\frac16
+\end{aligned}
+$$
+
+第一行和第二行的右邊代入 $x=0$ 都仍是 $\frac00$，所以可以繼續用。
+
+最後一步分母 $6\neq0$，直接代入。第二行也可以直接用 $\frac{\sin x}{x}\to1$。
+
+驗算：$x=0.01$ 時 $\dfrac{0.01-\sin0.01}{0.000001}\approx0.166666$。
+
+</Solution>
+
+### 例題 2
+
+求 $\lim\limits_{x\to\infty}\dfrac{x^2}{e^x}$，並說明它的意義。
+
+<Solution>
+
+$x\to\infty$ 時分子、分母都趨近 $\infty$，是 $\frac\infty\infty$ 型：
+
+$$
+\lim_{x\to\infty}\frac{x^2}{e^x}=\lim_{x\to\infty}\frac{2x}{e^x}=\lim_{x\to\infty}\frac{2}{e^x}=0
+$$
+
+第一次微分後仍是 $\frac\infty\infty$，再用一次；第二次後分子是常數 $2$，分母趨近 $\infty$，商趨近 $0$。
+
+意義：$x^2$ 和 $e^x$ 都無限變大，但 $e^x$ 長得快得多，最後 $x^2$ 和它比起來可以忽略。換成 $x^{10}$ 也一樣，只是要用十次羅必達法則：**指數函數比任何多項式長得快**。例如 $x=20$ 時 $\frac{400}{e^{20}}\approx8\times10^{-7}$。
+
+</Solution>
+
+### 例題 3
+
+求 $\lim\limits_{x\to0^+}(1+2x)^{1/x}$。
+
+<Solution>
+
+底數趨近 $1$、指數趨近 $\infty$，是 $1^\infty$ 型。設 $y=(1+2x)^{1/x}$，取自然對數：
+
+$$
+\ln y=\frac1x\ln(1+2x)=\frac{\ln(1+2x)}{x}
+$$
+
+$x\to0^+$ 時是 $\frac00$ 型，用羅必達法則（分子用連鎖律）：
+
+$$
+\lim_{x\to0^+}\frac{\ln(1+2x)}{x}=\lim_{x\to0^+}\frac{\frac{2}{1+2x}}{1}=2
+$$
+
+所以 $\ln y\to2$，$y=e^{\ln y}\to e^2$（$e^x$ 連續）。答案是 $e^2\approx7.389$。
+
+驗算：$x=0.001$ 時 $1.002^{1000}\approx7.374$，接近 $e^2$。和〈[無窮遠處的極限與漸近線](/calculus/limits-at-infinity/)〉練習 5 比較：令 $x=\frac1{2n}$，原式就是 $\left(1+\frac1n\right)^{2n}\to e^2$，結果相同。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：不是不定型也用羅必達法則。**
+
+- 錯誤寫法：$\lim\limits_{x\to1}\dfrac{x^2+1}{x+1}=\lim\limits_{x\to1}\dfrac{2x}{1}=2$。
+- 為什麼錯：$x=1$ 時分子 $2$、分母 $2$，不是 $\frac00$，直接代入就是答案。羅必達法則只在 $\frac00$ 或 $\frac\infty\infty$ 型時成立。
+- 正確寫法：直接代入，$\dfrac{1+1}{1+1}=1$。
+
+**錯誤 2：用除法法則微分整個分式。**
+
+- 錯誤寫法：$\lim\limits_{x\to0}\dfrac{e^{2x}-1}{\sin x}$，把 $\dfrac{e^{2x}-1}{\sin x}$ 用除法法則求導數，再取極限。
+- 為什麼錯：羅必達法則是**分子的導數除以分母的導數** $\dfrac{f'}{g'}$，不是整個分式的導數 $\left(\dfrac fg\right)'$。用除法法則會得到一個更複雜、而且極限不同的式子。
+- 正確寫法：$\lim\limits_{x\to0}\dfrac{(e^{2x}-1)'}{(\sin x)'}=\lim\limits_{x\to0}\dfrac{2e^{2x}}{\cos x}=2$。
+
+**錯誤 3：取對數後忘了變回來。**
+
+- 錯誤寫法：例題 3 中 $\ln y\to2$，所以 $\lim\limits_{x\to0^+}(1+2x)^{1/x}=2$。
+- 為什麼錯：$2$ 是 $\ln y$ 的極限，不是 $y$ 的極限。代 $x=0.001$ 檢查：$1.002^{1000}\approx7.37$，不是 $2$。
+- 正確寫法：$y=e^{\ln y}\to e^2$。
+
+## 練習題
+
+**1.** 用羅必達法則求 $\lim\limits_{x\to0}\dfrac{1-\cos x}{x^2}$，並和〈[極限的計算技巧](/calculus/limit-techniques/)〉例題 3 的結果比較。
+
+<Solution answer>
+
+$\frac00$ 型：$\lim\limits_{x\to0}\dfrac{\sin x}{2x}=\dfrac12$（最後一步可以再用一次羅必達，得 $\frac{\cos x}{2}\to\frac12$）。和那一課用 $1+\cos x$ 改寫的結果相同。
+
+</Solution>
+
+**2.** 求 $\lim\limits_{x\to0^+}x\ln x$。
+
+<Solution answer>
+
+$0\cdot(-\infty)$ 型，改寫成 $\dfrac{\ln x}{1/x}$，是 $\frac{-\infty}{\infty}$ 型：
+
+$$
+\lim_{x\to0^+}\frac{1/x}{-1/x^2}=\lim_{x\to0^+}(-x)=0
+$$
+
+</Solution>
+
+**3.** 求 $\lim\limits_{x\to0}\left(\dfrac1x-\dfrac{1}{e^x-1}\right)$。
+
+<Solution answer>
+
+$\infty-\infty$ 型，先通分：$\dfrac{e^x-1-x}{x(e^x-1)}$，是 $\frac00$ 型。
+
+$$
+\begin{aligned}
+&\lim_{x\to0}\frac{e^x-1}{e^x-1+xe^x}&&\text{（仍是 }\tfrac00\text{）}\\
+={}&\lim_{x\to0}\frac{e^x}{2e^x+xe^x}=\frac12
+\end{aligned}
+$$
+
+</Solution>
+
+**4.** 求 $\lim\limits_{x\to\infty}\left(1+\dfrac3x\right)^x$。
+
+<Solution answer>
+
+$1^\infty$ 型。$\ln y=x\ln\left(1+\frac3x\right)=\dfrac{\ln(1+3/x)}{1/x}$，是 $\frac00$ 型。分子的導數是 $\dfrac{-3/x^2}{1+3/x}$，分母的導數是 $-\dfrac{1}{x^2}$，相除得 $\dfrac{3}{1+3/x}\to3$。所以原式 $\to e^3\approx20.09$。
+
+</Solution>
+
+**5.** 求 $\lim\limits_{x\to0^+}x^x$。（需要練習 2）
+
+<Solution answer>
+
+$0^0$ 型。$\ln y=x\ln x\to0$（練習 2），所以 $y\to e^0=1$。驗算：$0.001^{0.001}\approx0.9931$。
+
+</Solution>
