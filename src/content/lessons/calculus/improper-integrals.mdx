@@ -1,0 +1,257 @@
+---
+subject: calculus
+unit: integrals
+order: 19
+title: 瑕積分
+summary: 積分範圍無限大或被積函數趨近無限大時，用定積分的極限定義積分，並判斷它收斂或發散。
+prerequisites: [definite-integrals, limits-at-infinity, integration-by-parts, lhopitals-rule]
+formulas: [basic-integrals]
+theorems: [series-tests, fundamental-theorem-of-calculus]
+---
+
+## 學習目標
+
+- 學完這課，你能把積分範圍無限大的積分寫成定積分的極限，判斷收斂或發散。
+- 學完這課，你能處理被積函數在區間端點或內部趨近無限大的積分。
+- 學完這課，你能判斷 $\int_1^\infty\frac{1}{x^p}\,dx$ 的斂散，並用比較法判斷瑕積分的斂散。
+
+## 概念說明
+
+### 什麼是瑕積分
+
+〈定積分與面積〉的定積分 $\int_a^bf(x)\,dx$ 有兩個前提：區間 $[a,b]$ 有限長，而且 $f$ 在區間上連續（所以不會衝到無限大）。少了其中一個，黎曼和就沒有意義，例如：
+
+- $\displaystyle\int_1^\infty\frac{1}{x^2}\,dx$：區間無限長，沒辦法切成 $n$ 段等寬的小段。
+- $\displaystyle\int_0^1\frac{1}{\sqrt x}\,dx$：$x\to0^+$ 時 $\frac{1}{\sqrt x}\to\infty$，靠近 $0$ 的長方形高度沒有上限。
+
+這兩種積分稱為**瑕積分**（「瑕」是有缺點的意思）。處理的想法相同：**先在沒有問題的範圍內算定積分，再取極限**。
+
+### 第一類：積分範圍無限大
+
+> $$
+> \int_a^\infty f(x)\,dx=\lim_{t\to\infty}\int_a^tf(x)\,dx
+> $$
+>
+> 極限存在（是一個有限的數）時，就說瑕積分**收斂**；否則說它**發散**。
+
+$\int_{-\infty}^bf(x)\,dx$ 同理，令下限 $t\to-\infty$。
+
+兩端都是無限大時，在中間任選一點 $c$ 切開：
+
+$$
+\begin{aligned}
+\int_{-\infty}^\infty f(x)\,dx={}&\int_{-\infty}^cf(x)\,dx\\
+&+\int_c^\infty f(x)\,dx
+\end{aligned}
+$$
+
+**兩個都收斂**，原積分才收斂；只要有一個發散，原積分就發散（見常見錯誤 2）。
+
+在圖上，$\int_1^\infty f(x)\,dx$ 是曲線底下、一直向右延伸的區域面積。區域無限長，面積卻可能是有限的。切換兩個函數，把 $t$ 往右拉：
+
+<Graph name="calculus/improper-area" />
+
+### 第二類：被積函數趨近無限大
+
+若 $f$ 在 $(a,b]$ 連續，但 $x\to a^+$ 時 $f(x)$ 趨近 $\pm\infty$，就避開 $a$，從旁邊逼近：
+
+> $$
+> \int_a^bf(x)\,dx=\lim_{t\to a^+}\int_t^bf(x)\,dx
+> $$
+
+右端點出問題時，令 $t\to b^-$。如果出問題的點 $c$ 在區間**內部**，就在 $c$ 切開成兩個瑕積分，兩個都收斂，原積分才收斂。〈定積分與面積〉常見錯誤 3 的 $\int_0^2\frac{1}{(x-1)^2}\,dx$ 就是這種情形（例題 2）。
+
+### $p$ 積分
+
+最重要的比較對象是 $\frac{1}{x^p}$（$p>0$）。$p\neq1$ 時，
+
+$$
+\int_1^t\frac{1}{x^p}\,dx=\left[\frac{x^{1-p}}{1-p}\right]_1^t=\frac{t^{1-p}-1}{1-p}
+$$
+
+- $p>1$：$1-p<0$，$t^{1-p}\to0$，積分收斂到 $\dfrac{1}{p-1}$。
+- $p<1$：$t^{1-p}\to\infty$，發散。
+- $p=1$：$\int_1^t\frac1x\,dx=\ln t\to\infty$，發散。
+
+> $\displaystyle\int_1^\infty\frac{1}{x^p}\,dx$ 在 $p>1$ 時收斂，在 $p\le1$ 時發散。
+
+同樣的計算可以得到另一個方向：$\displaystyle\int_0^1\frac{1}{x^p}\,dx$ 在 $p<1$ 時收斂，在 $p\ge1$ 時發散（推導方法相同，用 $\int_t^1$ 再讓 $t\to0^+$）。$p=1$ 在兩邊都是發散的分界。
+
+### 比較法
+
+很多瑕積分算不出反導函數，但可以和 $p$ 積分比較大小：
+
+> 設 $x\ge a$ 時 $0\le f(x)\le g(x)$。
+>
+> - 若 $\int_a^\infty g(x)\,dx$ 收斂，則 $\int_a^\infty f(x)\,dx$ 收斂。
+> - 若 $\int_a^\infty f(x)\,dx$ 發散，則 $\int_a^\infty g(x)\,dx$ 發散。
+
+理由和級數的直接比較相同（〈無窮級數與斂散性〉）：$f\ge0$，所以 $\int_a^tf\,dx$ 隨 $t$ 增加；它不超過 $\int_a^\infty g\,dx$，有上限，所以有極限。
+
+瑕積分和無窮級數關係密切：〈[級數審斂法](/calculus/theorems/series-tests/)〉的**積分審斂法**說，$\sum\frac1{n^p}$ 和 $\int_1^\infty\frac{1}{x^p}\,dx$ 同時收斂或發散，所以 $p$ 級數的結論和 $p$ 積分完全相同。
+
+## 例題
+
+### 例題 1
+
+判斷 (a) $\displaystyle\int_1^\infty\frac{1}{x^2}\,dx$　(b) $\displaystyle\int_1^\infty\frac1x\,dx$ 是否收斂，收斂時求出它的值。
+
+<Solution>
+
+(a)
+
+$$
+\int_1^t\frac{1}{x^2}\,dx=\left[-\frac1x\right]_1^t=1-\frac1t
+$$
+
+$t\to\infty$ 時 $\frac1t\to0$，所以 $\displaystyle\int_1^\infty\frac{1}{x^2}\,dx=1$，收斂。
+
+(b)
+
+$$
+\int_1^t\frac1x\,dx=\Big[\ln x\Big]_1^t=\ln t
+$$
+
+$t\to\infty$ 時 $\ln t\to\infty$，發散。
+
+兩個函數在 $x\to\infty$ 時都趨近 $0$，但 $\frac{1}{x^2}$ 趨近得夠快，面積有上限；$\frac1x$ 太慢，面積沒有上限。這是 $p$ 積分以 $p=1$ 為分界的兩個例子。
+
+</Solution>
+
+### 例題 2
+
+判斷 (a) $\displaystyle\int_0^1\frac{1}{\sqrt x}\,dx$　(b) $\displaystyle\int_0^2\frac{1}{(x-1)^2}\,dx$ 是否收斂。
+
+<Solution>
+
+(a) $x\to0^+$ 時被積函數趨近 $\infty$，是第二類瑕積分：
+
+$$
+\begin{aligned}
+\int_t^1x^{-1/2}\,dx&=\Big[2\sqrt x\Big]_t^1=2-2\sqrt t\\
+&\to2\quad(t\to0^+)
+\end{aligned}
+$$
+
+收斂，值是 $2$。曲線底下的區域往上無限延伸，面積卻是有限的。
+
+<Graph name="calculus/improper-sqrt" />
+
+(b) 被積函數在區間內部的 $x=1$ 趨近 $\infty$，要在 $x=1$ 切開。先看左半：
+
+$$
+\begin{aligned}
+\int_0^t\frac{1}{(x-1)^2}\,dx&=\left[-\frac{1}{x-1}\right]_0^t\\
+&=-\frac{1}{t-1}-1
+\end{aligned}
+$$
+
+$t\to1^-$ 時 $t-1$ 是很小的負數，$-\frac{1}{t-1}\to\infty$，左半發散。只要一半發散，整個積分就發散，右半不必再算。
+
+這說明了〈定積分與面積〉常見錯誤 3：直接代基本定理得到 $-2$ 是錯的，因為 $x=1$ 不連續，正確的結論是發散。
+
+</Solution>
+
+### 例題 3
+
+求 $\displaystyle\int_0^\infty xe^{-x}\,dx$。
+
+<Solution>
+
+先求定積分 $\int_0^txe^{-x}\,dx$。用〈分部積分〉，$u=x$、$dv=e^{-x}\,dx$，$du=dx$、$v=-e^{-x}$：
+
+$$
+\begin{aligned}
+\int_0^txe^{-x}\,dx&=\Big[-xe^{-x}\Big]_0^t+\int_0^te^{-x}\,dx\\
+&=-te^{-t}+\Big[-e^{-x}\Big]_0^t\\
+&=-te^{-t}-e^{-t}+1
+\end{aligned}
+$$
+
+再讓 $t\to\infty$：$e^{-t}\to0$；$te^{-t}=\frac{t}{e^t}$ 是 $\frac\infty\infty$ 型，由〈羅必達法則〉$\lim\limits_{t\to\infty}\frac{t}{e^t}=\lim\limits_{t\to\infty}\frac{1}{e^t}=0$。所以
+
+$$
+\int_0^\infty xe^{-x}\,dx=0-0+1=1
+$$
+
+驗算：$t=10$ 時 $-10e^{-10}-e^{-10}+1\approx0.9995$，接近 $1$。
+
+</Solution>
+
+## 常見錯誤
+
+**錯誤 1：沒注意區間內部的不連續點。**
+
+- 錯誤寫法：$\displaystyle\int_{-1}^1\frac{1}{x^2}\,dx=\left[-\frac1x\right]_{-1}^1=-1-1=-2$。
+- 為什麼錯：$\frac{1}{x^2}>0$，積分不可能是負的。$x=0$ 時被積函數趨近 $\infty$，這是瑕積分，不能直接用基本定理。
+- 正確寫法：在 $x=0$ 切開。$\displaystyle\int_0^1\frac{1}{x^2}\,dx=\lim_{t\to0^+}\left(\frac1t-1\right)=\infty$，發散，所以原積分發散。
+
+**錯誤 2：兩端都是無限大時，用對稱抵消。**
+
+- 錯誤寫法：$x$ 是奇函數，所以 $\displaystyle\int_{-\infty}^\infty x\,dx=\lim_{t\to\infty}\int_{-t}^tx\,dx=\lim_{t\to\infty}0=0$。
+- 為什麼錯：定義要求在中間切開，兩半**各自**收斂。$\displaystyle\int_0^\infty x\,dx=\lim_{t\to\infty}\frac{t^2}{2}=\infty$，右半就發散了。左右同時往外延伸，只是剛好讓兩個無限大互相抵消。
+- 正確寫法：$\displaystyle\int_{-\infty}^\infty x\,dx$ 發散。
+
+**錯誤 3：以為被積函數趨近 $0$，瑕積分就收斂。**
+
+- 錯誤寫法：$x\to\infty$ 時 $\frac1x\to0$，所以 $\displaystyle\int_1^\infty\frac1x\,dx$ 收斂。
+- 為什麼錯：被積函數趨近 $0$ 只是必要的條件，還要趨近得夠快。例題 1 中 $\int_1^t\frac1x\,dx=\ln t\to\infty$。這和級數的「一般項趨近 $0$ 不保證收斂」是同一件事。
+- 正確寫法：要實際算出極限，或和 $p$ 積分比較。$\frac1x$ 是 $p=1$，發散。
+
+## 練習題
+
+**1.** 求 $\displaystyle\int_1^\infty\frac{1}{x^3}\,dx$。
+
+<Solution answer>
+
+$\displaystyle\int_1^tx^{-3}\,dx=\left[-\frac{1}{2x^2}\right]_1^t=\frac12-\frac{1}{2t^2}\to\frac12$。也可以直接用 $p$ 積分的結果 $\frac{1}{p-1}=\frac12$。
+
+</Solution>
+
+**2.** 求 $\displaystyle\int_0^\infty e^{-2x}\,dx$。
+
+<Solution answer>
+
+$\displaystyle\int_0^te^{-2x}\,dx=\left[-\frac12e^{-2x}\right]_0^t=\frac12-\frac12e^{-2t}\to\frac12$。
+
+</Solution>
+
+**3.** 求 $\displaystyle\int_0^1\ln x\,dx$。（需要〈分部積分〉和〈羅必達法則〉）
+
+<Solution answer>
+
+$x\to0^+$ 時 $\ln x\to-\infty$。由〈分部積分〉練習 2，$\int\ln x\,dx=x\ln x-x+C$：
+
+$$
+\begin{aligned}
+\int_t^1\ln x\,dx&=(0-1)-(t\ln t-t)\\
+&=-1-t\ln t+t
+\end{aligned}
+$$
+
+$t\to0^+$ 時 $t\ln t\to0$（〈羅必達法則〉練習 2），所以積分是 $-1$。負號是因為 $\ln x$ 在 $0<x<1$ 是負的。
+
+</Solution>
+
+**4.** 用比較法判斷 $\displaystyle\int_1^\infty\frac{1}{x^2+1}\,dx$ 是否收斂。
+
+<Solution answer>
+
+$x\ge1$ 時 $0<\dfrac{1}{x^2+1}<\dfrac{1}{x^2}$，而 $\int_1^\infty\frac{1}{x^2}\,dx=1$ 收斂，所以原積分收斂，而且值小於 $1$。（實際的值是 $\frac{\pi}{4}$，要用到反三角函數的導數，屬於大學微積分。）
+
+</Solution>
+
+**5.** 地球對質量 $m$ 的物體的引力是 $F=\dfrac{GMm}{r^2}$，$r$ 是到地心的距離。把 $m=1$ 公斤的物體從地表（$r=R$）移到無限遠，需要做的功是 $W=\displaystyle\int_R^\infty\frac{GM}{r^2}\,dr$。
+
+(a) 證明 $W=gR$，其中 $g=\dfrac{GM}{R^2}$ 是地表的重力加速度。
+(b) 取 $g=9.8$ 公尺／秒²、$R=6.4\times10^6$ 公尺，求 $W$。若物體以速度 $v$ 出發，動能 $\frac12v^2$ 至少要等於 $W$ 才能脫離地球，求 $v$。
+
+<Solution answer>
+
+(a) $\displaystyle\int_R^t\frac{GM}{r^2}\,dr=GM\left(\frac1R-\frac1t\right)\to\frac{GM}{R}$。而 $GM=gR^2$，所以 $W=\frac{gR^2}{R}=gR$。
+
+(b) $W=9.8\times6.4\times10^6\approx6.27\times10^7$ 焦耳。$\frac12v^2=gR$，$v=\sqrt{2gR}=\sqrt{1.2544\times10^8}\approx1.12\times10^4$ 公尺／秒，約每秒 $11.2$ 公里，這就是地球的**脫離速度**。
+
+距離無限遠，需要的功卻是有限的，因為引力隨距離的平方減小，正是 $p=2>1$ 的瑕積分。
+
+</Solution>
